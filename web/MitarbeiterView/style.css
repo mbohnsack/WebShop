@@ -13,21 +13,24 @@ body {
 #kopfbereich {
     background-color: lightgreen;
     font-size:45px;
-
 }
 
 #inhalt {
     margin-left: 25%;
+    background-color: lightgreen;
+    height: 90%;
 }
 
 #steuerung {
     background-color: lightgreen;
     float: left;
     width:25%;
+    height: 90%;
 }
 .navlinks {
     margin-bottom: 5%;
     margin-top: 5%;
     margin-left: 15%;
+
 }
 -->

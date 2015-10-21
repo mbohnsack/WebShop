@@ -29,6 +29,7 @@
 
   <div id="inhalt">
     hier kommt nun der Inhalt Ihrer Website
+    bla bla
   </div>
 
 </div>
