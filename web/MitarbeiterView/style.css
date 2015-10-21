@@ -1,0 +1,33 @@
+<!--
+body {
+    font: 100.01% Verdana, Arial, Helvetica, sans-serif;
+    margin:0;
+    padding:0;
+}
+
+#seite {
+    width: auto;
+    margin: 0 auto;
+}
+
+#kopfbereich {
+    background-color: lightgreen;
+    font-size:45px;
+
+}
+
+#inhalt {
+    margin-left: 25%;
+}
+
+#steuerung {
+    background-color: lightgreen;
+    float: left;
+    width:25%;
+}
+.navlinks {
+    margin-bottom: 5%;
+    margin-top: 5%;
+    margin-left: 15%;
+}
+-->
