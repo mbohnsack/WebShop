@@ -11,7 +11,7 @@ public class DatabaseHelper{
         try {
             Class.forName("org.postgresql.Driver");
             c = DriverManager.getConnection(
-                "jdbc:postgresql://HOSTNAME:PORT/Webshop", "postgres", ""); //Hier später die entsprechende Serveranbindung
+                "jdbc:postgresql://mbohnbowling.ddns.net:5432/Webshop", "webuser", "winf114"); //Hier später die entsprechende Serveranbindung
             Statement stmt = c.createStatement();
         } catch (Exception e) {
             System.out.println("Could not create a statement");
@@ -80,5 +80,18 @@ public class DatabaseHelper{
             e.printStackTrace();
         }
         return frei;
+    }
+    public boolean login(String name, String password){
+        Boolean loginstate=false;
+        try {
+            ResultSet rs=stmt.executeQuery("SELECT * FROM tbl_kunde WHERE kun_benutzer=" + name + ";");
+            rs.next();
+            if (rs.getString("kun_passwort")==password){
+                loginstate=true;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return loginstate;
     }
 }
