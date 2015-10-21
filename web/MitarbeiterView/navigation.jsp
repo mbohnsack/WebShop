@@ -20,7 +20,7 @@
 
   <div id="steuerung">
     <div class="navlinks">Willkommen, "User" </br> du bist angemeldet als "Admin" <input value="Logout" type="submit"></div>
-    <div class="navlinks"><a href="home.html" ><b>Home</b></a></div>
+    <div class="navlinks"><a href="../test.html" ><b>Home</b></a></div>
     <div class="navlinks"><a href="kontakt.html"><b>Kontakt</b></a></div>
     <div class="navlinks"><a href="beispiele.html"><b>Beispiele</b></a></div>
     <div class="navlinks"><a href="info.html"><b>Infos</b></a></div>

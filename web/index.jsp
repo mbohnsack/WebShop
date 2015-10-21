@@ -11,6 +11,5 @@
     <title>Hipster Rental Corps.</title>
   </head>
   <body>
-
   </body>
 </html>
