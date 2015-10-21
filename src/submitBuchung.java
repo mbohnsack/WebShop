@@ -20,7 +20,7 @@ public class submitBuchung {
         String buchungen[] = request.getParameterValues("buchung");
         if (buchungen != null) {
             for (String lang : buchungen){
-                    //db.submitBuchung(buchungen);
+                    //db.submitBuchung(buchungen
                 }
         }
     }
