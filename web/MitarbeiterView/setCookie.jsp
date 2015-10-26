@@ -20,11 +20,12 @@
 
 <html>
 <head>
-  <meta http-equiv="refresh" content="0; URL=<%=targetPage %>>
+
   <title>Cookie Saved</title>
 </head>
 <body>
 <--! automatische Weiterleitung -->
-
+<meta http-equiv="refresh" content="0; URL=<%=targetPage %>">
 </body>
+</html>
 
