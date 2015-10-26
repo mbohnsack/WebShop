@@ -1,14 +1,10 @@
 /**
  * Created by Malte on 26.10.2015.
  */
-import java.util.Properties;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.util.Properties;
 public class SendMailSSL {
     public static void sendMail() {
 
@@ -35,8 +31,8 @@ public class SendMailSSL {
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse("m.bohnsack99@web.de"));
             message.setSubject("Testing Subject");
-            message.setText("Dear Mail Crawler,"
-                    + "\n\n No spam to my email, please!");
+            message.setText("Dear Employee,"
+                    + "\n\n Login Succesfull!");
 
             Transport.send(message);
 

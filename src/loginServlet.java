@@ -29,6 +29,7 @@ public class loginServlet extends HttpServlet {
             login = db.loginKunde(user, pwd);
         }
         if (login == true) {
+            SendMailSSL.sendMail();
             request.setAttribute("username", user);
             request.setAttribute("targetpage", targetPage);
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/MitarbeiterView/setCookie.jsp");
