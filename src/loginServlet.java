@@ -19,11 +19,13 @@ public class loginServlet extends HttpServlet {
         String user = request.getParameter("username");
         String pwd = request.getParameter("password");
         String targetPage = request.getParameter("targetpage");
+        String sourcePage = request.getParameter("sourcepage");
+
         DatabaseHelper db = new DatabaseHelper();
         if (db.login(user, pwd) == true) {
             response.sendRedirect(targetPage);
         } else {
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/test.html");
+            RequestDispatcher rd = getServletContext().getRequestDispatcher(sourcePage);
             PrintWriter out = response.getWriter();
             out.println("<font color=red>Either user name or password is wrong.</font>");
             rd.include(request, response);

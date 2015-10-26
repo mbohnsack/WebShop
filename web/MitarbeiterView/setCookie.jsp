@@ -26,6 +26,7 @@
   <title>Cookie Saved</title>
 </head>
 <body>
+<meta http-equiv="refresh" content="0; URL=main.jsp">
 <p><a href="testCookie.jsp">Next Page to view the cookie value</a><p>
 
 </body>
