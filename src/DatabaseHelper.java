@@ -1,3 +1,5 @@
+import MD5.MD5;
+
 import java.sql.*;
 
 /**
@@ -21,7 +23,7 @@ public class DatabaseHelper{
 
     public void createMitarbeiter(String name, String passwort){
         try {
-            stmt.executeUpdate("INSERT INTO tbl_mitarbeiter (mit_benutzer,mit_passwort,mit_typ) VALUES (" + name + "," + passwort + ",buero);");
+            stmt.executeUpdate("INSERT INTO tbl_mitarbeiter (mit_benutzer,mit_passwort,mit_typ) VALUES ('" + name + "','" + MD5.getMD5(passwort) + "','buero');");
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -29,16 +31,16 @@ public class DatabaseHelper{
 
     public void deleteMitarbeiter(String name){
         try {
-            stmt.executeUpdate("DELETE FROM tbl_mitarbeiter WHERE mit_benutzer="+name+";");
+            stmt.executeUpdate("DELETE FROM tbl_mitarbeiter WHERE mit_benutzer='"+name+"';");
         }catch(Exception e){
             e.printStackTrace();
         }
     }
 
-    public boolean MitarbeiterFrei(String name){
+    public boolean mitarbeiterFrei(String name){
         Boolean frei=false;
         try {
-            ResultSet rs=stmt.executeQuery("SELECT * FROM tbl_mitarbeiter WHERE mit_benutzer=" + name + ";");
+            ResultSet rs=stmt.executeQuery("SELECT * FROM tbl_mitarbeiter WHERE UPPER(mit_benutzer)=UPPER('" + name + "');");
             if (rs==null){
                 frei=true;
             }
@@ -63,7 +65,7 @@ public class DatabaseHelper{
             ResultSet rs =stmt.executeQuery( "SELECT MAX(kun_nummer) AS MaxID FROM tbl_kunde;" );
             int nummer=rs.getInt("MaxID")+1;
             stmt.executeUpdate("INSERT INTO tbl_kunde (kun_nummer, kun_benutzer, kun_passwort, kun_name, kun_vorname, kun_strasse, kun_hausnummer, kun_plz, kun_ort, kun_telefon, kun_mobil, kun_email)" +
-                    "VALUES ("+nummer+","+name+","+passwort+","+nname+","+vname+","+strasse+","+hnummer+","+plz+","+ort+","+tel+","+mobil+","+email+");");
+                    "VALUES ("+nummer+",'"+name+"','"+passwort+"','"+nname+"','"+vname+"','"+strasse+"','"+hnummer+"',"+plz+",'"+ort+"',"+tel+","+mobil+",'"+email+"');");
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -72,7 +74,7 @@ public class DatabaseHelper{
     public boolean KundeFrei(String name){
         Boolean frei=false;
         try {
-            ResultSet rs=stmt.executeQuery("SELECT * FROM tbl_kunde WHERE kun_benutzer=" + name + ";");
+            ResultSet rs=stmt.executeQuery("SELECT * FROM tbl_kunde WHERE kun_benutzer='" + name + "';");
             if (rs==null){
                 frei=true;
             }
@@ -81,16 +83,16 @@ public class DatabaseHelper{
         }
         return frei;
     }
-    public boolean login(String name, String password){
-        Boolean loginstate=false;
+    public boolean login(String name, String password) {
+        Boolean loginstate = false;
         try {
-            ResultSet rs=stmt.executeQuery("SELECT * FROM tbl_kunde WHERE kun_benutzer='" + name + "'");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM tbl_kunde WHERE kun_benutzer='" + name + "'");
             while (rs.next()) {
-                if (rs.getString("kun_passwort").equals(password)) {
+                if (rs.getString("kun_passwort").equals(MD5.getMD5(password))) {
                     loginstate = true;
                 }
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return loginstate;
