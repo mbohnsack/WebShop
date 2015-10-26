@@ -37,7 +37,7 @@ public class SendMailSSL {
             Transport.send(message);
 
 
-        } catch (MessagingException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
