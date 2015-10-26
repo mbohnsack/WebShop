@@ -23,13 +23,16 @@ public class loginServlet extends HttpServlet {
 
         Boolean login = false;
         DatabaseHelper db = new DatabaseHelper();
-        if(targetPage.equals("MitarbeiterView/setCookie.jsp")){
+        if(targetPage.equals("main.jsp")){
             login = db.loginMitarbeiter(user, pwd);
         } else if(targetPage.equals("")){
             login = db.loginKunde(user, pwd);
         }
         if (login == true) {
-            response.sendRedirect(targetPage);
+            request.setAttribute("username", user);
+            request.setAttribute("targetpage", targetPage);
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/MitarbeiterView/setCookie.jsp");
+            rd.forward(request,response);
         } else {
             RequestDispatcher rd = getServletContext().getRequestDispatcher(sourcePage);
             PrintWriter out = response.getWriter();
