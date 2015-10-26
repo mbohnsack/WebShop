@@ -52,7 +52,7 @@
       </div>
 
       <div id="inhalt">
-        hier kommt nun der Inhalt Ihrer Website
+        hier kommt nun der Inhalt Ihrer Website11
         bla bla
       </div>
 
