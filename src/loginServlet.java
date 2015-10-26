@@ -18,9 +18,10 @@ public class loginServlet extends HttpServlet {
         // code to process the form...
         String user = request.getParameter("username");
         String pwd = request.getParameter("password");
+        String targetPage = request.getParameter("targetpage");
         DatabaseHelper db = new DatabaseHelper();
         if (db.login(user, pwd) == true) {
-            response.sendRedirect("index.html");
+            response.sendRedirect(targetPage);
         } else {
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/test.html");
             PrintWriter out = response.getWriter();
