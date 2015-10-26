@@ -19,12 +19,7 @@ public class SendMailSSL {
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", "465");
 
-        Session session = Session.getDefaultInstance(props,
-                new javax.mail.Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("username", "password");
-                    }
-                });
+        Session session = Session.getDefaultInstance(props);
 
 
         try {
@@ -37,11 +32,15 @@ public class SendMailSSL {
             message.setText("Dear Employee,"
                     + "\n\n Login Succesfull!");
 
-            Transport.send(message);
+            Transport transport = session.getTransport("smtp");
+            transport.connect("smtp.gmail.com", username, password);
+            transport.sendMessage(message, message.getAllRecipients());
+            transport.close();
 
 
         } catch (Exception e) {
             e.printStackTrace();
+
         }
     }
 }
