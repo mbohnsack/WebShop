@@ -19,6 +19,8 @@ public class loginServlet extends HttpServlet {
         String user = request.getParameter("username");
         String pwd = request.getParameter("password");
         String targetPage = request.getParameter("targetpage");
+        String sourcePage = request.getParameter("sourcepage");
+
         Boolean login = false;
         DatabaseHelper db = new DatabaseHelper();
         if(targetPage.equals("main.jsp")){
@@ -29,7 +31,7 @@ public class loginServlet extends HttpServlet {
         if (login == true) {
             response.sendRedirect(targetPage);
         } else {
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/test.html");
+            RequestDispatcher rd = getServletContext().getRequestDispatcher(sourcePage);
             PrintWriter out = response.getWriter();
             out.println("<font color=red>Either user name or password is wrong.</font>");
             rd.include(request, response);

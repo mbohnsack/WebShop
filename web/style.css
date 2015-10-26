@@ -140,7 +140,7 @@ div.oferta_pagination span.current {
     clear:both;
 }
 /*---------------- menu tab----------------------*/
-#menu_tab{
+#navigation_top{
     width:1000px;
     height:50px;
     background-color:#fff;
@@ -218,7 +218,7 @@ span.current{
 }
 
 /*-------------left_content------------------*/
-.left_content{
+.navigation_left{
     width:196px;
     float:left;
 }
@@ -316,7 +316,7 @@ a.join{
 }
 
 /*center content--------------------------*/
-.center_content{
+.content{
     width:585px;
     float:left;
     padding:5px 10px;
@@ -336,7 +336,7 @@ a.join{
 }
 
 /*----------------------right content--------------*/
-.right_content{
+.navigation_right{
     width:196px;
     float:left;
     padding:5px 0 0 0;
