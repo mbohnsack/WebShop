@@ -16,7 +16,7 @@
   Username: <input type="text" name="username"/> <br/>
   Password: <input type="password" name="password"/> <br/>
   <input type="hidden" name="targetpage" value="MitarbeiterView/setCookie.jsp"/> <br/>
-  <input type="hidden" name="sourcepage" value="MitarbeiterView/login.jsp"/> <br/>
+  <input type="hidden" name="sourcepage" value="/MitarbeiterView/login.jsp"/> <br/>
   <input type="submit" value="Login" />
 </form>
 </body>

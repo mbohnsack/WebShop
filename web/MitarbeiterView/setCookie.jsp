@@ -10,6 +10,7 @@
 <%-- Cookie erzeugen --%>
 <%
   String username=request.getParameter("username");
+  String targetPage =request.getParameter("targetpage");
   if(username==null) username="";
   Cookie cookie = new Cookie ("username",username);
   cookie.setMaxAge(365 * 24 * 60 * 60);
@@ -23,6 +24,6 @@
 </head>
 <body>
 <--! automatische Weiterleitung -->
-<meta http-equiv="refresh" content="0; URL=main.jsp">
+<meta http-equiv="refresh" content="0; URL=<%=targetPage %>">
 </body>
 
