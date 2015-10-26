@@ -83,12 +83,27 @@ public class DatabaseHelper{
         }
         return frei;
     }
-    public boolean login(String name, String password) {
+    public boolean loginKunde(String name, String password) {
         Boolean loginstate = false;
         try {
             ResultSet rs = stmt.executeQuery("SELECT * FROM tbl_kunde WHERE kun_benutzer='" + name + "'");
             while (rs.next()) {
                 if (rs.getString("kun_passwort").equals(MD5.getMD5(password))) {
+                    loginstate = true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return loginstate;
+    }
+
+    public boolean loginMitarbeiter(String name, String password) {
+        Boolean loginstate = false;
+        try {
+            ResultSet rs = stmt.executeQuery("SELECT * FROM tbl_mitarbeiter WHERE mit_benutzer='" + name + "'");
+            while (rs.next()) {
+                if (rs.getString("mit_passwort").equals(MD5.getMD5(password))) {
                     loginstate = true;
                 }
             }

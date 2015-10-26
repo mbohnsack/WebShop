@@ -19,10 +19,16 @@ public class loginServlet extends HttpServlet {
         String user = request.getParameter("username");
         String pwd = request.getParameter("password");
         String targetPage = request.getParameter("targetpage");
+        Boolean login = false;
         String sourcePage = request.getParameter("sourcepage");
 
         DatabaseHelper db = new DatabaseHelper();
-        if (db.login(user, pwd) == true) {
+        if(targetPage.equals("")){
+            login = db.loginMitarbeiter(user, pwd);
+        } else if(targetPage.equals("")){
+            login = db.loginKunde(user, pwd);
+        }
+        if (login == true) {
             response.sendRedirect(targetPage);
         } else {
             RequestDispatcher rd = getServletContext().getRequestDispatcher(sourcePage);
