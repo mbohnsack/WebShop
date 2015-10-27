@@ -33,7 +33,7 @@ public class loginServlet extends HttpServlet {
             request.setAttribute("username", user);
             request.setAttribute("targetpage", targetPage);
             System.out.println("Test");
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/MitarbeiterView/setCookie.jsp");
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/general/setCookie.jsp");
             System.out.println("Test II");
             rd.forward(request,response);
         } else {
