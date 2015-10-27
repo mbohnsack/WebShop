@@ -6,6 +6,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<head>
+
+</head>
+
 <%
   String cookieName = "LoginCookie";
   Cookie cookies [] = request.getCookies ();
@@ -44,22 +49,27 @@
       </div>
 
       <div id="steuerung">
-        <div class="navlinks">Willkommen, <%=myCookie.getValue()%> </br> du bist angemeldet als "Admin" <input value="Logout" type="submit"></div>
-        <form action=<%changeDiv();%> id="form_2">
-        <div class="navlinks"><a type="submit" href=""><b>Buchungen anlegen</b></a></div>
-        </form>
-        <div class="navlinks"><a href="info.html"><b>Pakete anlegen</b></a></div>
-        <div class="navlinks"><a href="beispiele.html"><b>Pakete verwalten</b></a></div>
-        <div class="navlinks"><a href="info.html"><b>Produkte anlegen</b></a></div>
-        <div class="navlinks"><a href="info.html"><b>Produkte verwalten</b></a></div>
-        <div class="navlinks"><a href="info.html"><b>Kategorie anlegen</b></a></div>
-        <div class="navlinks"><a href="info.html"><b>Kategorie verwalten</b></a></div>
-        <div class="navlinks"><a href="info.html"><b>Mitarbeiter anlegen</b></a></div>
-        <div class="navlinks"><a href="info.html"><b>Mitarbeiter verwalten</b></a></div>
+          <div class="navlinks">Willkommen, <%=myCookie.getValue()%> </br> du bist angemeldet als "Admin" <input value="Logout" type="submit"></div>
+          <label class="naviLabel">Buchungen</label>
+          <div class="navlinks"><a href="buchungAnlegen.jsp"><b>Buchungen anlegen</b></a></div>
+          <div class="navlinks"><a href="buchungsVerwaltung.jsp"><b>Buchungen verwalten</b></a></div>
+          <label class="naviLabel">Pakete</label>
+          <div class="navlinks"><a href="paketeAnlegen.jsp" ><b>Pakete anlegen</b></a></div>
+          <div class="navlinks"><a href="paketeVerwalten.jsp" ><b>Pakete verwalten</b></a></div>
+          <label class="naviLabel">Produkte</label>
+          <div class="navlinks"><a href="info.html"><b>Produkte anlegen</b></a></div>
+          <div class="navlinks"><a href="info.html"><b>Produkte verwalten</b></a></div>
+          <label class="naviLabel">Kategorie</label>
+          <div class="navlinks"><a href="info.html"><b>Kategorie anlegen</b></a></div>
+          <div class="navlinks"><a href="info.html"><b>Kategorien verwalten</b></a></div>
+          <label class="naviLabel">Mitarbeiter</label>
+          <div class="navlinks"><a href="info.html"><b>Mitarbeiter anlegen</b></a></div>
+          <div class="navlinks"><a href="info.html"><b>Mitarbeiter verwalten</b></a></div>
       </div>
 
-      <div id="inhalt">
-        <jsp:include page="buchungsVerwaltung.jsp" />
+      <div id="rightdiv">
+          Hallo Welt
+
       </div>
 
     </div>
@@ -67,11 +77,4 @@
   }
   %>
 </body>
-
-
 </html>
-<%!
-  private void changeDiv(String jspName) {
-   String divPage = jsp
-  }
-%>
