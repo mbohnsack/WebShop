@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-  //Cookie abrufen
+  //Cookie abrufen um auf die LoginURL zuzugreifen
   String cookieName = "LoginCookieURL";
   Cookie cookies [] = request.getCookies ();
   Cookie myCookie = null;
@@ -24,6 +24,7 @@
   }
   String targetPage = myCookie.getValue();
 
+  //Cookie mit den Anmeldedaten auslesen und löschen
   cookieName = "LoginCookie";
   if (cookies != null)
   {

@@ -44,25 +44,7 @@
       </div>
 
       <div id="steuerung">
-          <div class="navlinks">
-              Willkommen, <%=myCookie.getValue()%> </br> du bist angemeldet als "Admin"
-              <a href="../general/logout.jsp"><b>Logout</b></a>
-          </div>
-          <label class="naviLabel">Buchungen</label>
-          <div class="navlinks"><a href="buchungAnlegen.jsp"><b>Buchungen anlegen</b></a></div>
-          <div class="navlinks"><a href="buchungsVerwaltung.jsp"><b>Buchungen verwalten</b></a></div>
-          <label class="naviLabel">Pakete</label>
-          <div class="navlinks"><a href="paketeAnlegen.jsp" ><b>Pakete anlegen</b></a></div>
-          <div class="navlinks"><a href="paketeVerwalten.jsp" ><b>Pakete verwalten</b></a></div>
-          <label class="naviLabel">Produkte</label>
-          <div class="navlinks"><a href="info.html"><b>Produkte anlegen</b></a></div>
-          <div class="navlinks"><a href="info.html"><b>Produkte verwalten</b></a></div>
-          <label class="naviLabel">Kategorie</label>
-          <div class="navlinks"><a href="info.html"><b>Kategorie anlegen</b></a></div>
-          <div class="navlinks"><a href="info.html"><b>Kategorien verwalten</b></a></div>
-          <label class="naviLabel">Mitarbeiter</label>
-          <div class="navlinks"><a href="info.html"><b>Mitarbeiter anlegen</b></a></div>
-          <div class="navlinks"><a href="info.html"><b>Mitarbeiter verwalten</b></a></div>
+          <jsp:include page="default/navigation.jsp" />
       </div>
 
       <div id="rightdiv">
