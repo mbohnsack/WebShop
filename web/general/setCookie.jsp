@@ -18,18 +18,17 @@
 
   Cookie logoutCookie = null;
   if(targetPage.equals("MitarbeiterView/main.jsp")){
-    logoutCookie = new Cookie ("LoginCookieURL","MitarbeiterView/login.jsp");
+    logoutCookie = new Cookie ("LoginCookieURL","../MitarbeiterView/login.jsp");
   }else if(targetPage.equals("index.html")) {
     logoutCookie = new Cookie("LoginCookieURL", "index.html");
   }
 
   cookie.setMaxAge(30 * 60); //nach 30 Minuten wird der Cookie gelöscht
-  response.addCookie(cookie2);
+  response.addCookie(logoutCookie);
 %>
 
 <html>
 <head>
-  <--! automatische Weiterleitung -->
   <meta http-equiv="refresh" content="0; URL=<%=targetPage %>">
   <title>Cookie Saved</title>
 </head>

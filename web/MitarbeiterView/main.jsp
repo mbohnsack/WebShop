@@ -6,11 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-<head>
-
-</head>
-
 <%
   String cookieName = "LoginCookie";
   Cookie cookies [] = request.getCookies ();
@@ -49,7 +44,10 @@
       </div>
 
       <div id="steuerung">
-          <div class="navlinks">Willkommen, <%=myCookie.getValue()%> </br> du bist angemeldet als "Admin" <input value="Logout" type="submit"></div>
+          <div class="navlinks">
+              Willkommen, <%=myCookie.getValue()%> </br> du bist angemeldet als "Admin"
+              <a href="../general/logout.jsp"><b>Logout</b></a>
+          </div>
           <label class="naviLabel">Buchungen</label>
           <div class="navlinks"><a href="buchungAnlegen.jsp"><b>Buchungen anlegen</b></a></div>
           <div class="navlinks"><a href="buchungsVerwaltung.jsp"><b>Buchungen verwalten</b></a></div>

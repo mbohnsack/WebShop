@@ -17,15 +17,15 @@ body {
 
 #rightdiv {
     margin-left: 25%;
-    background-color:white;
-    margin: 0 auto;
+    background-color:blue;
+
     position: relative;
 }
 
 #steuerung {
     background-color: gray;
     float: left;
-    width:25%;
+    width: 25%;
     height: 90%;
 }
 .navlinks {

@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
   //Cookie abrufen
-  String cookieName = "LoginCookie";
+  String cookieName = "LoginCookieURL";
   Cookie cookies [] = request.getCookies ();
   Cookie myCookie = null;
   if (cookies != null)
@@ -22,7 +22,20 @@
       }
     }
   }
+  String targetPage = myCookie.getValue();
 
+  cookieName = "LoginCookie";
+  if (cookies != null)
+  {
+    for (int i = 0; i < cookies.length; i++)
+    {
+      if (cookies [i].getName().equals (cookieName))
+      {
+        myCookie = cookies[i];
+        break;
+      }
+    }
+  }
   //Kill Cookie
   myCookie.setMaxAge(0);
   myCookie.setPath("/");
@@ -30,8 +43,7 @@
 %>
 <html>
 <head>
-  <--! automatische Weiterleitung -->
-  <meta http-equiv="refresh" content="0; URL=<%=targetPage %>">
+  <meta http-equiv="refresh" content="0; URL=<%=targetPage%>">
     <title></title>
 </head>
 <body>
