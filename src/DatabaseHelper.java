@@ -112,4 +112,14 @@ public class DatabaseHelper{
         }
         return loginstate;
     }
+
+    public ResultSet draftBestellung(){
+        ResultSet rs=null;
+        try{
+            rs=stmt.executeQuery("SELECT * FROM tbl_buchungsliste WHERE buch_status='draft' ORDER BY buch_abholdatum ASC");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return rs;
+    }
 }
