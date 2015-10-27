@@ -60,6 +60,16 @@ public class DatabaseHelper{
         return rs;
     }
 
+    public ResultSet getAllProducts(){
+        ResultSet rs=null;
+        try{
+            rs=stmt.executeQuery("SELECT * FROM tbl_produkt");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
     public void createKunde(String name,String passwort,String nname, String vname, String strasse, String hnummer, int plz,String ort, int tel, int mobil, String email){
         try{
             ResultSet rs =stmt.executeQuery( "SELECT MAX(kun_nummer) AS MaxID FROM tbl_kunde;" );
@@ -111,5 +121,29 @@ public class DatabaseHelper{
             e.printStackTrace();
         }
         return loginstate;
+    }
+
+    public ResultSet draftBestellung(){
+        ResultSet rs=null;
+        try{
+            rs=stmt.executeQuery("SELECT * FROM tbl_buchungsliste WHERE buch_status='draft' ORDER BY buch_abholdatum ASC");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+    public void submitBuchung (String buchung){
+        try {
+            int buchungi=Integer.parseInt(buchung);
+            stmt.executeUpdate("UPDATE tbl_buchungsliste SET buch_status='angenommen'");
+            ResultSet rs=stmt.executeQuery("SELECT * FROM tbl_buchungsliste b JOIN tbl_produkk p WHERE b.buch_code='"+buchungi+"' AND b.buch_produkt=p.prod_id");
+            rs.next();
+            String produkt=rs.getString("prod_bezeichn");
+            String datum=rs.getString("buch_abholdatum");
+            SendMailSSL.sendSubmitMail(produkt, datum);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
