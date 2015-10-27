@@ -12,8 +12,8 @@
   String username = (String) request.getAttribute("username");
   String targetPage = (String) request.getAttribute("targetpage");
   if(username==null) username="";
-  Cookie cookie = new Cookie ("username",username);
-  cookie.setMaxAge(365 * 24 * 60 * 60);
+  Cookie cookie = new Cookie ("LoginCookie",username);
+  cookie.setMaxAge(30 * 60); //nach 30 Minuten wird der Cookie gelöscht
   response.addCookie(cookie);
 
 %>

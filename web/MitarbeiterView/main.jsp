@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-  String cookieName = "username";
+  String cookieName = "LoginCookie";
   Cookie cookies [] = request.getCookies ();
   Cookie myCookie = null;
   if (cookies != null)
@@ -24,6 +24,7 @@
 %>
 <html lang="de">
 <head>
+
   <link rel="stylesheet" type="text/css" href="style.css" />
 
 </head>
@@ -44,16 +45,21 @@
 
       <div id="steuerung">
         <div class="navlinks">Willkommen, <%=myCookie.getValue()%> </br> du bist angemeldet als "Admin" <input value="Logout" type="submit"></div>
-        <div class="navlinks"><a href="../test.html" ><b>Home</b></a></div>
-        <div class="navlinks"><a href="kontakt.html"><b>Kontakt</b></a></div>
-        <div class="navlinks"><a href="beispiele.html"><b>Beispiele</b></a></div>
-        <div class="navlinks"><a href="info.html"><b>Infos</b></a></div>
-
+        <form action=<%changeDiv();%> id="form_2">
+        <div class="navlinks"><a type="submit" href=""><b>Buchungen anlegen</b></a></div>
+        </form>
+        <div class="navlinks"><a href="info.html"><b>Pakete anlegen</b></a></div>
+        <div class="navlinks"><a href="beispiele.html"><b>Pakete verwalten</b></a></div>
+        <div class="navlinks"><a href="info.html"><b>Produkte anlegen</b></a></div>
+        <div class="navlinks"><a href="info.html"><b>Produkte verwalten</b></a></div>
+        <div class="navlinks"><a href="info.html"><b>Kategorie anlegen</b></a></div>
+        <div class="navlinks"><a href="info.html"><b>Kategorie verwalten</b></a></div>
+        <div class="navlinks"><a href="info.html"><b>Mitarbeiter anlegen</b></a></div>
+        <div class="navlinks"><a href="info.html"><b>Mitarbeiter verwalten</b></a></div>
       </div>
 
       <div id="inhalt">
-        hier kommt nun der Inhalt Ihrer Website11
-        bla bla
+        <jsp:include page="buchungsVerwaltung.jsp" />
       </div>
 
     </div>
@@ -64,3 +70,8 @@
 
 
 </html>
+<%!
+  private void changeDiv(String jspName) {
+   String divPage = jsp
+  }
+%>
