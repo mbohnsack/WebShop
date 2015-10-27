@@ -23,7 +23,7 @@ public class loginServlet extends HttpServlet {
 
         Boolean login = false;
         DatabaseHelper db = new DatabaseHelper();
-        if(targetPage.equals("general/setCookie.js")){
+        if(targetPage.equals("general/setCookie.jsp")){
             login = db.loginMitarbeiter(user, pwd);
         } else if(targetPage.equals("")){
             login = db.loginKunde(user, pwd);
