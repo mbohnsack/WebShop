@@ -132,4 +132,18 @@ public class DatabaseHelper{
         }
         return rs;
     }
+
+    public void submitBuchung (String buchung){
+        try {
+            int buchungi=Integer.parseInt(buchung);
+            stmt.executeUpdate("UPDATE tbl_buchungsliste SET buch_status='angenommen'");
+            ResultSet rs=stmt.executeQuery("SELECT * FROM tbl_buchungsliste b JOIN tbl_produkk p WHERE b.buch_code='"+buchungi+"' AND b.buch_produkt=p.prod_id");
+            rs.next();
+            String produkt=rs.getString("prod_bezeichn");
+            String datum=rs.getString("buch_abholdatum");
+            SendMailSSL.sendSubmitMail(produkt, datum);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
