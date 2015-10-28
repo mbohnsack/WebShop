@@ -13,15 +13,30 @@
 </head>
 <body>
 <div id="main_container">
-    <div id="header"></div>
-    <div id="main_content">
-        <div id="navigation_top"></div>
-        <div class="crumb_navigation"> Navigation: <span class="current">Startseite</span> </div>
-        <div id="navigation_left" class="navigation_left"></div>
-        <div id="content" class="content"></div>
-        <div id="navigation_right" class="navigation_right"></div>
+    <div id="header">
+        <jsp:include page="header.html" />
     </div>
-    <div id="footer" class="footer"></div>
+    <div id="main_content">
+        <div id="navigation_top">
+            <jsp:include page="navigation_top.html" />
+        </div>
+        <div class="crumb_navigation"> Navigation: <span class="current">Produkte</span> </div>
+        <div class="navigation_left">
+            <jsp:include page="navigation_left.html" />
+        </div>
+
+        <div class="content">
+
+            Testdaten
+
+
+        </div>
+        <div id="navigation_right" class="navigation_right">
+            <jsp:include page="navigation_right.html" />
+        </div>
+        <div id="footer" class="footer">
+            <jsp:include page="footer.html" />
+        </div>
 </div>
 </body>
 </html>
