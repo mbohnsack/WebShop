@@ -52,8 +52,8 @@ else {
   </div>
 
   <div id="rightdiv">
-    <div class="scroll">
-        <table border="1">
+    <div>
+        <table border="1" class="tableRightdiv">
           <tr>
 
             <td>ProduktID</td>
@@ -69,12 +69,14 @@ else {
           </tr>
           <%
             try {
-              DatabaseHelper db = new DatabaseHelper();
-              ResultSet allProducts = db.getAllProducts();
-              ResultSetMetaData rsmd = allProducts.getMetaData();
-              int columnCount = rsmd.getColumnCount();
 
-               while (allProducts.next()){
+                DatabaseHelper db = new DatabaseHelper();
+                ResultSet allProducts = db.getAllProducts();
+
+                ResultSetMetaData rsmd = allProducts.getMetaData();
+                int columnCount = rsmd.getColumnCount();
+
+                while (allProducts.next()){
           %>
             <tr>
                 <%
@@ -82,7 +84,7 @@ else {
                     %>
                 <td><%=allProducts.getString(i)%></td>
             <%}%>
-            <td><form method="post" action="main.jsp"><button name="subject" type="submit" value="<%=allProducts.getString(1)%>">Ändern</button></form>	</td>
+            <td><form method="post" action="produktAendern.jsp"><button name="aendern" type="submit" value="<%=allProducts.getString(1)%>">Ändern</button></form>	</td>
             <tr>
           <%
               }

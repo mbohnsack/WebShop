@@ -1,6 +1,6 @@
 <%@ page import="java.sql.ResultSetMetaData" %>
-<%@ page import="java.sql.ResultSet" %>
 <%@ page import="project.DatabaseHelper" %>
+<%@ page import="java.sql.ResultSet" %>
 <%--
   Created by IntelliJ IDEA.
   User: Chris
@@ -51,21 +51,32 @@ else {
   </div>
 
   <div id="rightdiv">
-    <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post"><div ><h2>Produkt anlegen</h2></div>
+  <%
+
+    int produktId = Integer.parseInt(request.getParameter("aendern"));
+
+
+    DatabaseHelper db = new DatabaseHelper();
+    ResultSet product = db.getProductsById(produktId);
+    product.next();
+    System.out.println(product.getString(1));
+  %>
+    <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post"><div ><h2>Produkt aendern</h2></div>
       <div ><label >Produkt Name</label><input  type="text" name="produktname" /></div>
       <div ><label >Produkt Name2</label><input  type="text" name="produktname2" /></div>
       <div ><label >Produktbeschreibung</label><textarea class="medium" name="produktbeschreibung" cols="20" rows="5" ></textarea></div>
       <div ><label >Technische Daten</label><textarea class="medium" name="details" cols="20" rows="5" ></textarea></div>
-      <div ><label >Kategorie</label><div ><span><select name="kategorie" >
-          <%
-              DatabaseHelper db = new DatabaseHelper();
-              ResultSet allProducts = db.;
-              while (allProducts.next()){
-                %>
-                 <option value="kategotieID">option 1</option></select><i></i></span></div>
-                <%
-              }
-          %>
+
+      <div ><label >Kategorie</label><div ><span><select name="kategorie" value="">
+        <%
+
+          ResultSet allProducts = db.;
+          while (allProducts.next()){
+        %>
+        <option value="kategotieID">option 1</option></select><i></i></span></div>
+        <%
+          }
+        %>
 
       </div>
       <div ><label >Hersteller</label><input  type="text" name="hersteller" /></div>
@@ -73,6 +84,7 @@ else {
       <div ><label >Anzahl möglicher Buchungen</label><input  type="text" name="input1" /></div>
       <div ><label >Bild hochladen</label><label><div >Datei auswählen</div><input type="file"  name="file" /><div>No file selected</div></label></div>
       <div class="submit"><input type="submit" value="Speichern"/></div>
+    </form>
     </form>
 
   </div>
