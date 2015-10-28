@@ -71,6 +71,7 @@ public class DatabaseHelper{
         }
         return rs;
     }
+    //test
 
     public ResultSet getAllProducts(){
         ResultSet rs=null;
