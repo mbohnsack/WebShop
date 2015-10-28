@@ -17,8 +17,6 @@
   Abgabedatum: <input type="date" name="abgabe"><br/>
   <%
 
-    //String tables = "<table><tr><td>hiii</td></tr></table>";
-//out.print(names);
     try{
       project.DatabaseHelper db = new project.DatabaseHelper();
       ResultSet rs= db.getAllProducts();
@@ -26,7 +24,7 @@
       String bezeichnung;
 
   %>
-  <select name="produktwahl">
+  Produkt: <select name="produktwahl">
   <%
     while(rs.next())
     {
@@ -34,7 +32,15 @@
       bezeichnung=rs.getString("prod_bezeichn");
   %>
   <option value= "<%=id  %>" ><%=bezeichnung %></option>
+    <%
+      }
+    %>
   </select>
+
+  <%
+    }
+    catch(Exception e){}
+  %>
 </form>
 </body>
 </html>
