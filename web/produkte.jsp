@@ -3,15 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Hipster Rental Corp.</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
-    <link rel="stylesheet" type="text/css" href="style.css" />
-    <!--[if IE 6]>
-    <link rel="stylesheet" type="text/css" href="iecss.css" />
-    <![endif]-->
-    <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
-    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js" type="text/javascript"></script>
-    <script language="javascript" type="text/javascript" src="index.js"></script>
+    <jsp:include page="head.html" />
 </head>
 <body>
 <div id="main_container">
@@ -29,21 +21,21 @@
 
         <div class="content">
         <%
-
             DatabaseHelper db = new DatabaseHelper();
             ResultSet rs = db.getProductsById(1);
-
         %>
-            <TABLE BORDER="1">
-                <% while(rs.next()){ %>
-                <TR>
-                    <TD> <%= rs.getString(1) %></td>
-                    <TD> <%= rs.getString(2) %></TD>
-                </TR>
-                <% } %>
-            </TABLE>
-            Testdaten
-
+            <div class="prod_box">
+                <div class="top_prod_box"></div>
+                <div class="center_prod_box">
+                    <% while(rs.next()){ %>
+                    <div class="product_title"><%= rs.getString(3) %> <%= rs.getString(7) %></div>
+                    <div class="product_img"><a href="details.html"><img style="width:92px; height: 92px" src="images/p1.jpg" alt="" border="0" /></a></div>
+                    <div class="prod_price"><span class="price"><%= rs.getString(4) %></span></div>
+                    <% } %>
+                </div>
+                <div class="bottom_prod_box"></div>
+                <div class="prod_details_tab"> <a href="#" title="header=[Add to cart] body=[&nbsp;] fade=[on]"><img src="images/cart.gif" alt="" border="0" class="left_bt" /></a> <a href="#" title="header=[Specials] body=[&nbsp;] fade=[on]"><img src="images/favs.gif" alt="" border="0" class="left_bt" /></a> <a href="#" title="header=[Gifts] body=[&nbsp;] fade=[on]"><img src="images/favorites.gif" alt="" border="0" class="left_bt" /></a> <a href="details.html" class="prod_details">details</a> </div>
+            </div>
 
         </div>
         <div id="navigation_right" class="navigation_right">

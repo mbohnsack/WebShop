@@ -7,40 +7,85 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%
+  String cookieName = "LoginCookie";
+  Cookie cookies [] = request.getCookies ();
+  Cookie myCookie = null;
+  if (cookies != null)
+  {
+    for (int i = 0; i < cookies.length; i++)
+    {
+      if (cookies [i].getName().equals (cookieName))
+      {
+        myCookie = cookies[i];
+        break;
+      }
+    }
+  }
+%>
+<html lang="de">
 <head>
-    <title></title>
+
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <link rel="stylesheet" type="text/css" href="metro.css" />
 </head>
 <body>
-<form name="buchungform" method="post" action="../createBuchung">
-  Abholdatum: <input type="date" name="abholung"><br/>
-  Abgabedatum: <input type="date" name="abgabe"><br/>
-  <%
 
-    try{
-      project.DatabaseHelper db = new project.DatabaseHelper();
-      ResultSet rs= db.getAllProducts();
-      String id;
-      String bezeichnung;
+<%if (myCookie == null) {
+%>
+No Cookie found with the name <%=cookieName%>
+<%
+}
+else {
+%>
 
-  %>
-  Produkt: <select name="produktwahl">
-  <%
-    while(rs.next())
-    {
-      id= rs.getString("prod_id");
-      bezeichnung=rs.getString("prod_bezeichn");
-  %>
-  <option value= "<%=id  %>" ><%=bezeichnung %></option>
-    <%
-      }
-    %>
-  </select>
+<div id="seite">
+  <div id="kopfbereich">
+    <div align="center">VerwaltungsApp</div>
+  </div>
 
-  <%
-    }
-    catch(Exception e){}
-  %>
-</form>
+  <div id="steuerung">
+    <jsp:include page="default/navigation.jsp" />
+  </div>
+
+  <div id="rightdiv">
+    <form name="buchungform" method="post" action="../createBuchung">
+      Abholdatum: <input type="date" name="abholung"><br/>
+      Abgabedatum: <input type="date" name="abgabe"><br/>
+      <%
+
+        try{
+          project.DatabaseHelper db = new project.DatabaseHelper();
+          ResultSet rs= db.getAllProducts();
+          String id;
+          String bezeichnung;
+
+      %>
+      Produkte: <br/>
+      <%
+        while(rs.next())
+        {
+          id= rs.getString("prod_id");
+          bezeichnung=rs.getString("prod_bezeichn");
+      %>
+      <input type="checkbox" name="produkte" value<%=id %>/><%=bezeichnung %><br/>
+      <%
+        }
+      %>
+    </select>
+
+      <%
+        }
+        catch(Exception e){}
+      %>
+    </form>
+
+  </div>
+
+</div>
+<%
+  }
+%>
 </body>
 </html>
+

@@ -29,7 +29,7 @@ public class loginServlet extends HttpServlet {
         DatabaseHelper db = new DatabaseHelper();
         if(targetPage.equals("MitarbeiterView/main.jsp")){
             login = db.loginMitarbeiter(user, pwd);
-        } else if(targetPage.equals("")){
+        } else if(targetPage.equals("test.html")){
             login = db.loginKunde(user, pwd);
         }
         if (login == true) {
