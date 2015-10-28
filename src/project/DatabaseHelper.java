@@ -219,4 +219,14 @@ public class DatabaseHelper{
         }
         return preis;
     }
+
+    public ResultSet getProductsByKategorie(String kategorie){
+        ResultSet rs = null;
+        try {
+            rs = stmt.executeQuery("SELECT * FROM tbl_produkt WHERE prod_kategorie = "+ kategorie);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
 }
