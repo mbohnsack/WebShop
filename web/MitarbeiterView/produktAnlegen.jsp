@@ -26,7 +26,7 @@
 <head>
 
   <link rel="stylesheet" type="text/css" href="style.css" />
-
+  <link rel="stylesheet" type="text/css" href="metro.css" />
 </head>
 <body>
 
@@ -48,7 +48,17 @@ else {
   </div>
 
   <div id="rightdiv">
+    <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post"><div ><h2>Produkt anlegen</h2></div>
+      <div ><label >Produkt Name</label><input  type="text" name="input" /></div>
+      <div ><label >Produktbeschreibung</label><textarea class="medium" name="textarea" cols="20" rows="5" ></textarea></div>
+      <div ><label >Kategorie</label><div ><span><select name="select1" >
 
+        <option value="option 1">option 1</option></select><i></i></span></div></div>
+      <div ><label >Hersteller</label><input  type="text" name="input2" /></div>
+      <div ><label >Anzahl möglicher Buchungen</label><input  type="text" name="input1" /></div>
+      <div ><label >Bild hochladen</label><label  ><div >Datei auswählen</div><input type="file"  name="file2" /><div>No file selected</div></label></div>
+      <div class="submit"><input type="submit" value="Speichern"/></div>
+    </form>
 
   </div>
 

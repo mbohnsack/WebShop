@@ -26,6 +26,7 @@
 <head>
 
   <link rel="stylesheet" type="text/css" href="style.css" />
+  <link rel="stylesheet" type="text/css" href="metro.css" />
 
 </head>
 <body>
@@ -48,7 +49,7 @@
       </div>
 
       <div id="rightdiv">
-          Hallo Welt
+          Willkommen in der MitarbeiterApp hier haben Sie die Möglichkeiten ihre Daten anzulegen und zu verwalten.
 
       </div>
 

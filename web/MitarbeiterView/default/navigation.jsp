@@ -23,7 +23,7 @@
   }
 %>
 <div class="naviLabel">
-  Willkommen, <%=myCookie.getValue()%> </br> du bist angemeldet als "Admin"
+  Willkommen, <%=myCookie.getValue()%> </br>
   <a href="../general/logout.jsp"><b>Logout</b></a>
 </div>
 <label class="naviLabel">Buchungen</label>
@@ -33,11 +33,11 @@
 <div class="navlinks"><a href="paketeAnlegen.jsp" ><b>Pakete anlegen</b></a></div>
 <div class="navlinks"><a href="paketeVerwalten.jsp" ><b>Pakete verwalten</b></a></div>
 <label class="naviLabel">Produkte</label>
-<div class="navlinks"><a href="info.html"><b>Produkte anlegen</b></a></div>
-<div class="navlinks"><a href="info.html"><b>Produkte verwalten</b></a></div>
+<div class="navlinks"><a href="produktAnlegen.jsp"><b>Produkte anlegen</b></a></div>
+<div class="navlinks"><a href="produktVerwalten.jsp"><b>Produkte verwalten</b></a></div>
 <label class="naviLabel">Kategorie</label>
-<div class="navlinks"><a href="info.html"><b>Kategorie anlegen</b></a></div>
-<div class="navlinks"><a href="info.html"><b>Kategorien verwalten</b></a></div>
+<div class="navlinks"><a href="KategorieAnlegen.jsp"><b>Kategorie anlegen</b></a></div>
+<div class="navlinks"><a href="kategorieVerwalten.jsp"><b>Kategorien verwalten</b></a></div>
 <label class="naviLabel">Mitarbeiter</label>
-<div class="navlinks"><a href="info.html"><b>Mitarbeiter anlegen</b></a></div>
-<div class="navlinks"><a href="info.html"><b>Mitarbeiter verwalten</b></a></div>
+<div class="navlinks"><a href="mitarbeiterAnlegen.jsp"><b>Mitarbeiter anlegen</b></a></div>
+<div class="navlinks"><a href="mitarbeiterVerwalten.jsp"><b>Mitarbeiter verwalten</b></a></div>
