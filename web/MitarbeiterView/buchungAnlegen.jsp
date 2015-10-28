@@ -11,6 +11,10 @@
     <title></title>
 </head>
 <body>
-
+<form name="buchungform" method="post" action="../createBuchung">
+  Produkt:
+  Abholdatum: <input type="date" name="abholung"><br/>
+  Abgabedatum: <input type="date" name="abgabe"><br/>
+</form>
 </body>
 </html>

@@ -146,4 +146,8 @@ public class DatabaseHelper{
             e.printStackTrace();
         }
     }
+
+    public void createBuchung(){
+
+    }
 }
