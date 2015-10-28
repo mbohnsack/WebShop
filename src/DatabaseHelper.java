@@ -60,10 +60,10 @@ public class DatabaseHelper{
         return rs;
     }
 
-    public ResultSet getAllProducts(){
+    public ResultSet getProductsById(Integer Id){
         ResultSet rs=null;
         try{
-            rs=stmt.executeQuery("SELECT * FROM tbl_produkt");
+            rs=stmt.executeQuery("SELECT * FROM tbl_produkt WHERE prod_id = " + Id);
         }catch(Exception e){
             e.printStackTrace();
         }
