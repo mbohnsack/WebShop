@@ -7,6 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%int anzahl=0;%>
 <%
   String cookieName = "LoginCookie";
   Cookie cookies [] = request.getCookies ();
@@ -50,14 +51,15 @@ else {
 
   <div id="rightdiv">
     <form name="buchungform" method="post" action="../createBuchung">
-      Abholdatum: <input type="date" name="abholung"><br/>
-      Abgabedatum: <input type="date" name="abgabe"><br/>
+      Kundenmail: <input type="text" name="kunde" /><br/>
+      Abholdatum: <input type="date" name="abholung"/><br/>
+      Abgabedatum: <input type="date" name="abgabe" /><br/>
       <%
 
         try{
           project.DatabaseHelper db = new project.DatabaseHelper();
           ResultSet rs= db.getAllProducts();
-          String id;
+          int id;
           String bezeichnung;
 
       %>
@@ -65,10 +67,11 @@ else {
       <%
         while(rs.next())
         {
-          id= rs.getString("prod_id");
+          id= rs.getInt("prod_id");
+          System.out.println(id);
           bezeichnung=rs.getString("prod_bezeichn");
       %>
-      <input type="checkbox" name="produkte" value<%=id %>/><%=bezeichnung %><br/>
+      <input type="checkbox"  name="produkte" value=<%=id %>/><%=bezeichnung %><br/>
       <%
         }
       %>
@@ -78,6 +81,7 @@ else {
         }
         catch(Exception e){}
       %>
+      <input type="submit" name="submit" value="pruefen"/> <!--<input type="submit" value="Buchen"/>-->
     </form>
 
   </div>
