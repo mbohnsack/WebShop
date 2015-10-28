@@ -2,6 +2,7 @@ package project;
 
 import MD5.MD5;
 
+import javax.management.Notification;
 import java.sql.*;
 
 /**
@@ -177,6 +178,45 @@ public class DatabaseHelper{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
 
+    public void updateProduct(Integer id, String kategorie, String hersteller, Double preis, String beschreibung, String details, String bezeichnung, String infBezeichnung, Integer buchungAnzahl){
+        try {
+            stmt.executeQuery("UPDATE tbl_produkt SET prod_kategorie = "+ kategorie +", prod_hersteller = "+ hersteller +", prod_preis = "+ preis +", prod_beschreibung = "+ beschreibung +", prod_details = "+ details +", prod_bezeichn = "+ bezeichnung +", prod_infbezichn = "+ infBezeichnung +", buch_Aanzahl = "+ buchungAnzahl);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addKategorie(String name, String uebergeordnet){
+        try {
+            ResultSet rs = stmt.executeQuery("SELECT kat_name FROM tbl_kategorie WHERE kat_name = "+ name);
+            if(rs != null){
+                stmt.executeQuery("INSERT INTO tbl_kategorie (kat_name, kat_uebergeordnet))" +
+                        "VALUES ("+ name +", "+ uebergeordnet +")");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateKategorie(String name, String uebergeordnet){
+        try {
+            stmt.executeQuery("UPDATE tbl_kategorie SET kat_name = "+ name + ", kat_uebergeordnet = "+ uebergeordnet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public double getPrice(Integer id){
+        Double preis = null;
+        try {
+            ResultSet rs = stmt.executeQuery("SELECT prod_preis FROM tbl_produkt WHERE prod_id = "+ id);
+            rs.next();
+            preis = rs.getDouble("prod_preis");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return preis;
     }
 }
