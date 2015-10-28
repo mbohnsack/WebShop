@@ -1,8 +1,12 @@
-package project; /**
+/**
  * Created by Malte on 21.10.2015.
  */
 
-import javax.servlet.*;
+import project.DatabaseHelper;
+import project.SendMailSSL;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/project.loginServlet")
+@WebServlet("loginServlet")
 public class loginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request,
