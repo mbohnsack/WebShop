@@ -13,7 +13,7 @@
   String targetPage = (String) request.getAttribute("targetpage");
   if(username==null) username="";
   Cookie cookie = new Cookie ("LoginCookie",username);
-  cookie.setMaxAge(30 * 60); //nach 30 Minuten wird der Cookie gelöscht
+  cookie.setMaxAge(120 * 60); //nach 2Stunden wird der Cookie gelöscht
   response.addCookie(cookie);
 
   Cookie logoutCookie = null;
@@ -23,7 +23,7 @@
     logoutCookie = new Cookie("LoginCookieURL", "index.jsp");
   }
 
-  cookie.setMaxAge(30 * 60); //nach 30 Minuten wird der Cookie gelöscht
+  cookie.setMaxAge(120 * 60); //nach Stunden wird der Cookie gelöscht
   response.addCookie(logoutCookie);
 %>
 

@@ -65,6 +65,7 @@ else {
             <td>Produktname</td>
             <td>Beschreibung</td>
             <td>Anzahl der Buchungen</td>
+            <td></td>
           </tr>
           <%
             try {
@@ -81,6 +82,7 @@ else {
                     %>
                 <td><%=allProducts.getString(i)%></td>
             <%}%>
+            <td><form method="post" action="main.jsp"><button name="subject" type="submit" value="<%=allProducts.getString(1)%>">Ändern</button></form>	</td>
             <tr>
           <%
               }
