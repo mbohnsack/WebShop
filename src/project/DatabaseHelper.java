@@ -229,4 +229,26 @@ public class DatabaseHelper{
         }
         return rs;
     }
+
+    public Integer getAnzahlProdukte(){
+        Integer anzahl = null;
+        try {
+            ResultSet rs = stmt.executeQuery("SELECT COUNT(prod_id) FROM tbl_produkt");
+            rs.next();
+            anzahl = rs.getInt("prod_id");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return anzahl;
+    }
+
+    public ResultSet getAllKategories(){
+        ResultSet rs = null;
+        try {
+            rs = stmt.executeQuery("SELECT * FROM tbl_kategorie");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
 }
