@@ -175,17 +175,17 @@ ul.menu li.divider {
     background:url(images/menu_divider.gif) no-repeat center;
 }
 
-a.nav1:link, a.nav1:visited {
+a.nav1, a.nav1:visited {
     display:block; float:left; padding:0px 8px 0px 22px; margin:0 14px 0 14px;height:50px;text-decoration:none; background:url(images/home.png) no-repeat left; color:#676d77;}
-a.nav2:link, a.nav2:visited {
+a.nav2, a.nav2:visited {
     display:block; float:left; padding:0px 8px 0px 22px; margin:0 14px 0 14px;height:50px;text-decoration:none; background:url(images/services.png) no-repeat left; color:#676d77;}
-a.nav3:link, a.nav3:visited {
+a.nav3, a.nav3:visited {
     display:block; float:left; padding:0px 8px 0px 22px; margin:0 14px 0 14px;height:50px;text-decoration:none; background:url(images/favs.png) no-repeat left; color:#676d77;}
-a.nav4:link, a.nav4:visited {
+a.nav4, a.nav4:visited {
     display:block; float:left; padding:0px 8px 0px 22px; margin:0 14px 0 14px;height:50px;text-decoration:none; background:url(images/user_add.png) no-repeat left; color:#676d77;}
-a.nav5:link, a.nav5:visited {
+a.nav5, a.nav5:visited {
     display:block; float:left; padding:0px 8px 0px 22px; margin:0 14px 0 14px;height:50px;text-decoration:none; background:url(images/car.png) no-repeat left; color:#676d77;}
-a.nav6:link, a.nav6:visited {
+a.nav6, a.nav6:visited {
     display:block; float:left; padding:0px 8px 0px 22px; margin:0 14px 0 14px;height:50px;text-decoration:none; background:url(images/contact-new.png) no-repeat left; color:#676d77;}
 
 a.nav1:hover, a.nav2:hover, a.nav3:hover, a.nav4:hover, a.nav5:hover, a.nav6:hover {
