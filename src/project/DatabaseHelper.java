@@ -72,6 +72,16 @@ public class DatabaseHelper{
         return rs;
     }
 
+    public ResultSet getAllProducts(){
+        ResultSet rs=null;
+        try{
+            rs=stmt.executeQuery("SELECT * FROM tbl_produkt");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
     public void createKunde(String name,String passwort,String nname, String vname, String strasse, String hnummer, int plz,String ort, int tel, int mobil, String email){
         try{
             ResultSet rs =stmt.executeQuery( "SELECT MAX(kun_nummer) AS MaxID FROM tbl_kunde;" );
