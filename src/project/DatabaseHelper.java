@@ -77,7 +77,7 @@ public class DatabaseHelper{
     public ResultSet getAllProducts(){
         ResultSet rs=null;
         try{
-            rs=stmt.executeQuery("SELECT * FROM tbl_produkt");
+            rs=stmt.executeQuery("SELECT * FROM tbl_produkt ORDER BY prod_kategorie");
         }catch(Exception e){
             e.printStackTrace();
         }
