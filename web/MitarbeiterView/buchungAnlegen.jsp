@@ -1,3 +1,4 @@
+<%@ page import="java.sql.ResultSet" %>
 <%--
   Created by IntelliJ IDEA.
   User: Chris
@@ -12,9 +13,28 @@
 </head>
 <body>
 <form name="buchungform" method="post" action="../createBuchung">
-  Produkt:
   Abholdatum: <input type="date" name="abholung"><br/>
   Abgabedatum: <input type="date" name="abgabe"><br/>
+  <%
+
+    //String tables = "<table><tr><td>hiii</td></tr></table>";
+//out.print(names);
+    try{
+      project.DatabaseHelper db = new project.DatabaseHelper();
+      ResultSet rs= db.getAllProducts();
+      String id;
+      String bezeichnung;
+
+  %>
+  <select name="produktwahl">
+  <%
+    while(rs.next())
+    {
+      id= rs.getString("prod_id");
+      bezeichnung=rs.getString("prod_bezeichn");
+  %>
+  <option value= "<%=id  %>" ><%=bezeichnung %></option>
+  </select>
 </form>
 </body>
 </html>

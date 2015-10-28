@@ -1,4 +1,4 @@
-package project;
+import project.DatabaseHelper;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,7 +13,7 @@ import java.io.PrintWriter;
  * Created by wesley.rubio.cueva on 22.10.2015.
  */
 
-@WebServlet("/project.mitarbeiterServlet")
+@WebServlet("/mitarbeiterServlet")
 public class mitarbeiterServlet extends HttpServlet{
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {

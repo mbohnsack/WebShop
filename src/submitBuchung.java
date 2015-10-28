@@ -1,4 +1,4 @@
-package project;
+import project.DatabaseHelper;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,7 +9,7 @@ import java.io.IOException;
 /**
  * Created by Malte on 21.10.2015.
  */
-@WebServlet("/project.submitBuchung")
+@WebServlet("/submitBuchung")
 public class submitBuchung {
 
     protected void doPost(HttpServletRequest request,
