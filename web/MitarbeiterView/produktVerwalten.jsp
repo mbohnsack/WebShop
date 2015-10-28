@@ -52,39 +52,48 @@ else {
   </div>
 
   <div id="rightdiv">
-    <table border="1">
-      <tr>
-        <td> </td>
-        <td>Produktname</td>
-        <td>Produktbezeichnung</td>
-        <td>Kategorie</td>
-        <td>Hersteller</td>
-        <td>Anzahl der möglichen Buchungen</td>
-      </tr>
-      <%
+    <div class="scroll">
+        <table border="1">
+          <tr>
 
-        try {
-          DatabaseHelper db = new DatabaseHelper();
-          ResultSet allProducts = db.getAllProducts();
-          ResultSetMetaData rsmd = allProducts.getMetaData();
-          int columnCount = rsmd.getColumnCount();
-          while (allProducts.next()){
-            for (int i = 1; i <= columnCount ; i++){
-              System.out.println(allProducts.getString(i));
+            <td>ProduktID</td>
+            <td>Kategorie</td>
+            <td>Hersteller</td>
+            <td>Preis</td>
+            <td>Beschreibung</td>
+            <td>Details</td>
+            <td>Produktname</td>
+            <td>Beschreibung</td>
+            <td>Anzahl der Buchungen</td>
+            <td></td>
+          </tr>
+          <%
+            try {
+              DatabaseHelper db = new DatabaseHelper();
+              ResultSet allProducts = db.getAllProducts();
+              ResultSetMetaData rsmd = allProducts.getMetaData();
+              int columnCount = rsmd.getColumnCount();
+
+               while (allProducts.next()){
+          %>
+            <tr>
+                <%
+                  for (int i = 1; i <= columnCount ; i++){
+                    %>
+                <td><%=allProducts.getString(i)%></td>
+            <%}%>
+            <td><form method="post" action="main.jsp"><button name="subject" type="submit" value="<%=allProducts.getString(1)%>">Ändern</button></form>	</td>
+            <tr>
+          <%
+              }
+            } catch (Exception e) {
+              e.printStackTrace();
             }
 
-          }
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
+          %>
 
-      %>
-      <tr>
-        <td>wert1</td>
-        <td>wert2</td>
-      </tr>
-    </table>
-
+        </table>
+    </div>
   </div>
 
 </div>

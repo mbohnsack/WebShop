@@ -3,7 +3,6 @@
  */
 
 import project.DatabaseHelper;
-import project.SendMailSSL;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("loginServlet")
+@WebServlet("/loginServlet")
 public class loginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request,
@@ -34,7 +33,6 @@ public class loginServlet extends HttpServlet {
             login = db.loginKunde(user, pwd);
         }
         if (login == true) {
-            SendMailSSL.sendMail();
             request.setAttribute("username", user);
             request.setAttribute("targetpage", targetPage);
             System.out.println("Test");
