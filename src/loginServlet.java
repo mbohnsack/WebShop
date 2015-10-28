@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("loginServlet")
+@WebServlet("/loginServlet")
 public class loginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request,
