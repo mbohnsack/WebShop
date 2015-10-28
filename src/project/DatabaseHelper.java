@@ -1,3 +1,5 @@
+package project;
+
 import MD5.MD5;
 
 import java.sql.*;

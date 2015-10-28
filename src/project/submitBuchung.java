@@ -1,3 +1,5 @@
+package project;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -7,7 +9,7 @@ import java.io.IOException;
 /**
  * Created by Malte on 21.10.2015.
  */
-@WebServlet("/submitBuchung")
+@WebServlet("/project.submitBuchung")
 public class submitBuchung {
 
     protected void doPost(HttpServletRequest request,

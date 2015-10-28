@@ -1,4 +1,4 @@
-/**
+package project; /**
  * Created by Malte on 26.10.2015.
  */
 import javax.mail.*;

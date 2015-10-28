@@ -1,3 +1,5 @@
+package project;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +13,7 @@ import java.io.PrintWriter;
  * Created by wesley.rubio.cueva on 22.10.2015.
  */
 
-@WebServlet("/mitarbeiterServlet")
+@WebServlet("/project.mitarbeiterServlet")
 public class mitarbeiterServlet extends HttpServlet{
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {

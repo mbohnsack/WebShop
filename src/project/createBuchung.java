@@ -1,3 +1,5 @@
+package project;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +12,7 @@ import java.util.Date;
 /**
  * Created by Malte on 28.10.2015.
  */
-@WebServlet("/createBuchung")
+@WebServlet("/project.createBuchung")
 public class createBuchung {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException, ParseException {
@@ -21,7 +23,7 @@ public class createBuchung {
         Date abholung = format.parse(abholungTemp);
         Date abgabe = format.parse(abgabeTemp);
         DatabaseHelper db=new DatabaseHelper();
-        //db.createBuchung();
+        //db.project.createBuchung();
 
     }
 }

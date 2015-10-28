@@ -1,4 +1,4 @@
-<%@ page import="DatabaseHelper" %>
+<%@ page import="project.DatabaseHelper" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.sql.ResultSetMetaData" %>
 
