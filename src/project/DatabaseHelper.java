@@ -173,10 +173,10 @@ public class DatabaseHelper{
             ResultSet rs = stmt.executeQuery("SELECT * FROM tbl_produkt");
             if(rs != null){
                 stmt.executeQuery("INSERT INTO tbl_produkt (prod_id, prod_kategorie, prod_hersteller, prod_preis, prod_beschreibung, prod_details, prod_bezeichn, prod_infbezeichn, buch_anzahl) " +
-                        "VALUES ((SELECT max(prod_id) FROM tbl_produkt) + 1, " + kategorie + ", " + hersteller + ", "+ preis +", " + beschreibung +", "+ details +", "+ bezeichnung +", "+ infBezeichnung +", 0)");
+                        "VALUES ((SELECT max(prod_id) FROM tbl_produkt) + 1, '" + kategorie + "', '" + hersteller + "', "+ preis +", '" + beschreibung +"', '"+ details +"', '"+ bezeichnung +"', '"+ infBezeichnung +"', 0)");
             } else {
                 stmt.executeQuery("INSERT INTO tbl_produkt (prod_id, prod_kategorie, prod_hersteller, prod_preis, prod_beschreibung, prod_details, prod_bezeichn, prod_infbezeichn, buch_anzahl) " +
-                        "VALUES (1, " + kategorie + ", " + hersteller + ", "+ preis +", " + beschreibung +", "+ details +", "+ bezeichnung +", "+ infBezeichnung +", 0)");
+                        "VALUES (1, '" + kategorie + "', '" + hersteller + "', "+ preis +", '" + beschreibung +"', '"+ details +"', '"+ bezeichnung +"', '"+ infBezeichnung +"', 0)");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -185,8 +185,8 @@ public class DatabaseHelper{
 
     public void updateProduct(Integer id, String kategorie, String hersteller, Double preis, String beschreibung, String details, String bezeichnung, String infBezeichnung, Integer buchungAnzahl){
         try {
-            stmt.executeQuery("UPDATE tbl_produkt SET prod_kategorie = "+ kategorie +", prod_hersteller = "+ hersteller +", prod_preis = "+ preis +", prod_beschreibung = "+ beschreibung +", " +
-                    "prod_details = "+ details +", prod_bezeichn = "+ bezeichnung +", prod_infbezichn = "+ infBezeichnung +", buch_Aanzahl = "+ buchungAnzahl + "WHERE prod_id = "+ id);
+            stmt.executeQuery("UPDATE tbl_produkt SET prod_kategorie = '"+ kategorie +"', prod_hersteller = '"+ hersteller +"', prod_preis = "+ preis +", prod_beschreibung = '"+ beschreibung +"', " +
+                    "prod_details = '"+ details +"', prod_bezeichn = '"+ bezeichnung +"', prod_infbezeichn = '"+ infBezeichnung +"', buch_Aanzahl = "+ buchungAnzahl + "WHERE prod_id = "+ id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -194,10 +194,10 @@ public class DatabaseHelper{
 
     public void addKategorie(String name, String uebergeordnet){
         try {
-            ResultSet rs = stmt.executeQuery("SELECT kat_name FROM tbl_kategorie WHERE kat_name = "+ name);
+            ResultSet rs = stmt.executeQuery("SELECT kat_name FROM tbl_kategorie WHERE kat_name = '"+ name +"'");
             if(rs != null){
                 stmt.executeQuery("INSERT INTO tbl_kategorie (kat_name, kat_uebergeordnet))" +
-                        "VALUES ("+ name +", "+ uebergeordnet +")");
+                        "VALUES ('"+ name +"', '"+ uebergeordnet +"')");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -206,7 +206,7 @@ public class DatabaseHelper{
 
     public void updateKategorie(String name, String uebergeordnet){
         try {
-            stmt.executeQuery("UPDATE tbl_kategorie SET kat_name = "+ name + ", kat_uebergeordnet = "+ uebergeordnet + " WHERE kat_name = '"+ name + "' ");
+            stmt.executeQuery("UPDATE tbl_kategorie SET kat_name = '"+ name + "', kat_uebergeordnet = '"+ uebergeordnet + "' WHERE kat_name = '"+ name + "' ");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -227,7 +227,7 @@ public class DatabaseHelper{
     public ResultSet getProductsByKategorie(String kategorie){
         ResultSet rs = null;
         try {
-            rs = stmt.executeQuery("SELECT * FROM tbl_produkt WHERE prod_kategorie = "+ kategorie);
+            rs = stmt.executeQuery("SELECT * FROM tbl_produkt WHERE prod_kategorie = '"+ kategorie +"'");
         } catch (SQLException e) {
             e.printStackTrace();
         }
