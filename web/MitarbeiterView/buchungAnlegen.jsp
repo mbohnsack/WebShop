@@ -68,7 +68,6 @@ else {
         while(rs.next())
         {
           id= rs.getInt("prod_id");
-          System.out.println(id);
           bezeichnung=rs.getString("prod_bezeichn");
       %>
       <input type="checkbox"  name="produkte" value=<%=id %>/><%=bezeichnung %><br/>

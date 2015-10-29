@@ -48,15 +48,23 @@ public class createBuchung extends HttpServlet {
         if(request.getParameter("submit").equals("Buchen")) {
             //db.createBuchung();
         }else{
+            List<String> verfuegbareProdukte=new ArrayList<String>();
             double gesamtpreis=0;
             if(products!=null) {
                 for (int product:products){
-                Double preisTemp = db.getPrice(product);
-                    System.out.println(preisTemp);
+                    Double preisTemp = db.getPrice(product);
                     gesamtpreis+=((abgabe.getTime()-abholung.getTime())/1000/3600/24)*preisTemp;
+                    if(db.produktVerfuegbar(product, abholung, abgabe)){
+                        verfuegbareProdukte.add("Das Produkt " + db.getBezeichnung(product)+" ist verfügbar.");
+                    }else{
+                        verfuegbareProdukte.add("Das Produkt " + db.getBezeichnung(product)+" ist nicht verfügbar.");
+                    }
                 }
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/MitarbeiterView/default/buchungAnlegen");
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/MitarbeiterView/buchungAnlegen");
                 PrintWriter out = response.getWriter();
+                for(int i=0;i<verfuegbareProdukte.size();i++){
+                    out.println("<font color=red>"+verfuegbareProdukte.get(i)+"</font>");
+                }
                 out.println("<font color=red>Der Preis beträgt "+gesamtpreis+"€.</font>");
                 rd.include(request, response);
             }
