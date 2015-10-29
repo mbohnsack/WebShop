@@ -2,10 +2,9 @@ package project;
 
 import MD5.MD5;
 
-import javax.management.Notification;
 import java.sql.*;
-import java.util.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -268,7 +267,9 @@ public class DatabaseHelper{
         return bezeichnung;
     }
 
-    public Boolean produktVerfuegbar(Integer produktid, Date abholung, Date abgabe){
+    public Boolean produktVerfuegbar(Integer produktid, Date abholungTemp, Date abgabeTemp){
+        java.sql.Date abholung = new java.sql.Date(abholungTemp.getTime());
+        java.sql.Date abgabe = new java.sql.Date(abgabeTemp.getTime());
         Boolean verfuegbar = false;
         ResultSet rs = null;
         List<String> codes = new ArrayList<String>();
@@ -280,14 +281,14 @@ public class DatabaseHelper{
                 codes.add(rs.getString("prod_code"));
             }
 
-            rs = stmt.executeQuery("SELECT buch_code FROM tbl_buchungsliste WHERE (buch_abholungsdatum <= "+ abholung + " AND buch_rueckgabedatum >= "+ abholung+ ") OR (buch_abholungsdatum <= "+ abgabe +" AND buch_rueckgabedatum >= "+ abgabe +") OR (buch_abholdatum >= "+ abholung +" AND buch_rueckgabedatum <= "+ abgabe +")");
+            rs = stmt.executeQuery("SELECT buch_code FROM tbl_buchungsliste WHERE (buch_abholdatum <= '"+ abholung + "' AND buch_rueckgabedatum >= '"+ abholung+ "') OR (buch_abholdatum <= '"+ abgabe +"' AND buch_rueckgabedatum >= '"+ abgabe +"') OR (buch_abholdatum >= '"+ abholung +"' AND buch_rueckgabedatum <= '"+ abgabe +"')");
             if(rs != null) {
                 while (rs.next()) {
                     bCodes.add(rs.getInt("buch_code"));
                 }
                 for(String hwCode : codes){
                     for(Integer bcode : bCodes){
-                        rs=stmt.executeQuery("SELECT * FROM tbl_buchungsliste_produkt WHERE prod_id = '"+ hwCode + "' AND bestell_id = "+ bcode);
+                        rs=stmt.executeQuery("SELECT * FROM tbl_buchung_produkt WHERE produkt_code = '"+ hwCode + "' AND bestell_id = "+ bcode);
                         if(rs != null){
                             inbuchung=true;
                         }
