@@ -49,13 +49,13 @@
                     <div class="bottom_prod_box_big"></div>
                 </div>
             </div></div>
-            <div id="navigation_right" class="navigation_right">
+        <div id="navigation_right" class="navigation_right">
             <jsp:include page="navigation_right.html" />
         </div>
-    </div>
         <div id="footer" class="footer">
             <jsp:include page="footer.html" />
         </div>
+    </div>
 </div>
 </body>
 </html>
