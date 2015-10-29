@@ -63,7 +63,7 @@ public class createBuchung extends HttpServlet {
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/MitarbeiterView/buchungAnlegen");
                 PrintWriter out = response.getWriter();
                 for(int i=0;i<verfuegbareProdukte.size();i++){
-                    out.println("<font color=red>"+verfuegbareProdukte.get(i)+"</font>");
+                    out.println("<font color=red>"+verfuegbareProdukte.get(i)+"</font><br/>");
                 }
                 out.println("<font color=red>Der Preis beträgt "+gesamtpreis+"€.</font>");
                 rd.include(request, response);
