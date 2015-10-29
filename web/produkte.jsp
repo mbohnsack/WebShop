@@ -24,7 +24,7 @@
             DatabaseHelper db = new DatabaseHelper();
 
 
-            for (int i = 0; i<6; i++) {
+            for (int i = 0; i<db.getAnzahlProdukte(); i++) {
                 ResultSet rs = db.getProductsById(i+1); %>
             <div class="prod_box">
                 <div class="top_prod_box"></div>
