@@ -51,7 +51,7 @@ else {
   </div>
 
   <div id="rightdiv">
-    <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post"><div ><h2>Produkt anlegen</h2></div>
+    <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post" action="../addProduktServlet"><div ><h2>Produkt anlegen</h2></div>
       <div ><label >Produkt Name</label><input  type="text" name="produktname" /></div>
       <div ><label >Produkt Name2</label><input  type="text" name="produktname2" /></div>
       <div ><label >Produktbeschreibung</label><textarea class="medium" name="produktbeschreibung" cols="20" rows="5" ></textarea></div>
@@ -70,7 +70,6 @@ else {
       </div>
       <div ><label >Hersteller</label><input  type="text" name="hersteller" /></div>
       <div ><label >Preis</label><input  type="text" name="preis" /></div>
-      <div ><label >Anzahl möglicher Buchungen</label><input  type="text" name="input1" /></div>
       <div ><label >Bild hochladen</label><label><div >Datei auswählen</div><input type="file"  name="file" /><div>No file selected</div></label></div>
       <div class="submit"><input type="submit" value="Speichern"/></div>
     </form>
