@@ -87,7 +87,9 @@ else {
             <td><form method="post" action="produktAendern.jsp"><button name="aendern" type="submit" value="<%=allProducts.getString(1)%>">Ändern</button></form>	</td>
             <tr>
           <%
+
               }
+               allProducts.close();
             } catch (Exception e) {
               e.printStackTrace();
             }

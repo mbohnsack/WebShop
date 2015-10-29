@@ -56,17 +56,17 @@ else {
       <div ><label >Produkt Name2</label><input  type="text" name="produktname2" /></div>
       <div ><label >Produktbeschreibung</label><textarea class="medium" name="produktbeschreibung" cols="20" rows="5" ></textarea></div>
       <div ><label >Technische Daten</label><textarea class="medium" name="details" cols="20" rows="5" ></textarea></div>
-      <div ><label >Kategorie</label><div ><span><select name="kategorie" >
+      <div ><label >Kategorie</label><div ><select name="kategorie" >
           <%
-              DatabaseHelper db = new DatabaseHelper();
-              ResultSet allProducts = db.;
-              while (allProducts.next()){
+              DatabaseHelper db2 = new DatabaseHelper();
+               ResultSet allKategories = db2.getAllKategories();
+              while (allKategories.next()){
                 %>
-                 <option value="kategotieID">option 1</option></select><i></i></span></div>
+                   <option value="<%=allKategories.getString(1)%>"><%=allKategories.getString(1)%></option>
                 <%
               }
           %>
-
+      </select>
       </div>
       <div ><label >Hersteller</label><input  type="text" name="hersteller" /></div>
       <div ><label >Preis</label><input  type="text" name="preis" /></div>
