@@ -64,10 +64,10 @@ else {
     <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post" action="../addProduktServlet"><div ><h2>Produkt aendern</h2></div>
       <div ><label >Produkt Name</label><input  type="text" name="produktname" value="<%=product.getString(7)%>"/></div>
       <div ><label >Produkt Name2</label><input  type="text" name="produktname2" value="<%=product.getString(8)%>" /></div>
-      <div ><label >Produktbeschreibung</label><textarea class="medium" name="produktbeschreibung" cols="20" rows="5" value="<%=product.getString(5)%>" ></textarea></div>
-      <div ><label >Technische Daten</label><textarea class="medium" name="details" cols="20" rows="5" value="<%=product.getString(5)%>"></textarea></div>
+      <div ><label >Produktbeschreibung</label><textarea class="medium" name="produktbeschreibung" cols="20" rows="5"  ><%=product.getString(5)%></textarea></div>
+      <div ><label >Technische Daten</label><textarea class="medium" name="details" cols="20" rows="5" ><%=product.getString(6)%></textarea></div>
 
-      <div ><label >Kategorie</label><div ><span><select name="kategorie" value="<%=product.getString(2)%>">
+      <div ><label >Kategorie</label><select name="kategorie" value="<%=product.getString(2)%>">
         <%
           DatabaseHelper db2 = new DatabaseHelper();
           ResultSet allKategories = db2.getAllKategories();
@@ -81,10 +81,10 @@ else {
       </div>
       <div ><label >Hersteller</label><input  type="text" name="hersteller" value="<%=product.getString(3)%>" /></div>
       <div ><label >Preis</label><input  type="text" name="preis" value="<%=product.getString(4)%>"/></div>
-      <div ><label >Anzahl möglicher Buchungen</label><input  type="text" name="input1" value="<%=product.getString(9)%>" /></div>
+      <div ><label >Anzahl möglicher Buchungen</label><input  type="text" name="anzahlMBuchungen" value="<%=product.getString(9)%>" /></div>
       <div ><label >Bild hochladen</label><label><div >Datei auswählen</div><input type="file"  name="file" /><div>No file selected</div></label></div>
-      <div class="submit"><input type="submit" value="Speichern"/></div>
-    </form>
+      <div class="submit"><button type="submit" name=produktid value="<%=produktId%>">Speichern</button></div>
+
     </form>
 
   </div>
