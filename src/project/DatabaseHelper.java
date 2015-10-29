@@ -185,7 +185,8 @@ public class DatabaseHelper{
 
     public void updateProduct(Integer id, String kategorie, String hersteller, Double preis, String beschreibung, String details, String bezeichnung, String infBezeichnung, Integer buchungAnzahl){
         try {
-            stmt.executeQuery("UPDATE tbl_produkt SET prod_kategorie = "+ kategorie +", prod_hersteller = "+ hersteller +", prod_preis = "+ preis +", prod_beschreibung = "+ beschreibung +", prod_details = "+ details +", prod_bezeichn = "+ bezeichnung +", prod_infbezichn = "+ infBezeichnung +", buch_Aanzahl = "+ buchungAnzahl);
+            stmt.executeQuery("UPDATE tbl_produkt SET prod_kategorie = "+ kategorie +", prod_hersteller = "+ hersteller +", prod_preis = "+ preis +", prod_beschreibung = "+ beschreibung +", " +
+                    "prod_details = "+ details +", prod_bezeichn = "+ bezeichnung +", prod_infbezichn = "+ infBezeichnung +", buch_Aanzahl = "+ buchungAnzahl + "WHERE prod_id = "+ id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -205,7 +206,7 @@ public class DatabaseHelper{
 
     public void updateKategorie(String name, String uebergeordnet){
         try {
-            stmt.executeQuery("UPDATE tbl_kategorie SET kat_name = "+ name + ", kat_uebergeordnet = "+ uebergeordnet);
+            stmt.executeQuery("UPDATE tbl_kategorie SET kat_name = "+ name + ", kat_uebergeordnet = "+ uebergeordnet + " WHERE kat_name = '"+ name + "' ");
         } catch (SQLException e) {
             e.printStackTrace();
         }
