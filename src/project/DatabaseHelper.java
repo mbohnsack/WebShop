@@ -233,9 +233,9 @@ public class DatabaseHelper{
     public Integer getAnzahlProdukte(){
         Integer anzahl = null;
         try {
-            ResultSet rs = stmt.executeQuery("SELECT COUNT(prod_id) FROM tbl_produkt");
+            ResultSet rs = stmt.executeQuery("SELECT COUNT(prod_id) AS id FROM tbl_produkt");
             rs.next();
-            anzahl = rs.getInt("prod_id");
+            anzahl = rs.getInt("id");
         } catch (SQLException e) {
             e.printStackTrace();
         }
