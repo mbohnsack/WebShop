@@ -282,7 +282,7 @@ public class DatabaseHelper{
                 codes.add(rs.getString("prod_code"));
             }
 
-            rs = stmt.executeQuery("SELECT buch_code FROM tbl_buchungsliste WHERE (buch_abholdatum <= "+ abholung + " AND buch_rueckgabedatum >= "+ abholung+ ") OR (buch_abholdatum <= "+ abgabe +" AND buch_rueckgabedatum >= "+ abgabe +") OR (buch_abholdatum >= "+ abholung +" AND buch_rueckgabedatum <= "+ abgabe +")");
+            rs = stmt.executeQuery("SELECT buch_code FROM tbl_buchungsliste WHERE (buch_abholdatum <= '"+ abholung + "' AND buch_rueckgabedatum >= '"+ abholung+ "') OR (buch_abholdatum <= '"+ abgabe +"' AND buch_rueckgabedatum >= '"+ abgabe +"') OR (buch_abholdatum >= '"+ abholung +"' AND buch_rueckgabedatum <= '"+ abgabe +"')");
             if(rs != null) {
                 while (rs.next()) {
                     bCodes.add(rs.getInt("buch_code"));
