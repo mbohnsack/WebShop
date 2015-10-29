@@ -22,9 +22,9 @@
         <div id="navigation_right" class="navigation_right">
             <jsp:include page="navigation_right.html" />
         </div>
-    </div>
-    <div id="footer" class="footer">
-        <jsp:include page="footer.html" />
+        <div id="footer" class="footer">
+            <jsp:include page="footer.html" />
+        </div>
     </div>
 </div>
 </body>
