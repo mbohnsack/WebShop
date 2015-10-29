@@ -268,7 +268,9 @@ public class DatabaseHelper{
         return bezeichnung;
     }
 
-    public Boolean produktVerfuegbar(Integer produktid, Date abholung, Date abgabe){
+    public Boolean produktVerfuegbar(Integer produktid, Date abholungTemp, Date abgabeTemp){
+        java.sql.Date abholung = new java.sql.Date(abholungTemp.getTime());
+        java.sql.Date abgabe = new java.sql.Date(abgabeTemp.getTime());
         Boolean verfuegbar = false;
         ResultSet rs = null;
         List<String> codes = new ArrayList<String>();
