@@ -61,27 +61,27 @@ else {
     product.next();
     System.out.println(product.getString(1));
   %>
-    <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post"><div ><h2>Produkt aendern</h2></div>
-      <div ><label >Produkt Name</label><input  type="text" name="produktname" /></div>
-      <div ><label >Produkt Name2</label><input  type="text" name="produktname2" /></div>
-      <div ><label >Produktbeschreibung</label><textarea class="medium" name="produktbeschreibung" cols="20" rows="5" ></textarea></div>
-      <div ><label >Technische Daten</label><textarea class="medium" name="details" cols="20" rows="5" ></textarea></div>
+    <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post" action="../addProduktServlet"><div ><h2>Produkt aendern</h2></div>
+      <div ><label >Produkt Name</label><input  type="text" name="produktname" value="<%=product.getString(7)%>"/></div>
+      <div ><label >Produkt Name2</label><input  type="text" name="produktname2" value="<%=product.getString(8)%>" /></div>
+      <div ><label >Produktbeschreibung</label><textarea class="medium" name="produktbeschreibung" cols="20" rows="5" value="<%=product.getString(5)%>" ></textarea></div>
+      <div ><label >Technische Daten</label><textarea class="medium" name="details" cols="20" rows="5" value="<%=product.getString(5)%>"></textarea></div>
 
-      <div ><label >Kategorie</label><div ><span><select name="kategorie" value="">
+      <div ><label >Kategorie</label><div ><span><select name="kategorie" value="<%=product.getString(2)%>">
         <%
-
-          ResultSet allProducts = db.;
-          while (allProducts.next()){
+          DatabaseHelper db2 = new DatabaseHelper();
+          ResultSet allKategories = db2.getAllKategories();
+          while (allKategories.next()){
         %>
-        <option value="kategotieID">option 1</option></select><i></i></span></div>
+        <option value="<%=allKategories.getString(1)%>"><%=allKategories.getString(1)%></option>
         <%
           }
         %>
-
+      </select>
       </div>
-      <div ><label >Hersteller</label><input  type="text" name="hersteller" /></div>
-      <div ><label >Preis</label><input  type="text" name="preis" /></div>
-      <div ><label >Anzahl möglicher Buchungen</label><input  type="text" name="input1" /></div>
+      <div ><label >Hersteller</label><input  type="text" name="hersteller" value="<%=product.getString(3)%>" /></div>
+      <div ><label >Preis</label><input  type="text" name="preis" value="<%=product.getString(4)%>"/></div>
+      <div ><label >Anzahl möglicher Buchungen</label><input  type="text" name="input1" value="<%=product.getString(9)%>" /></div>
       <div ><label >Bild hochladen</label><label><div >Datei auswählen</div><input type="file"  name="file" /><div>No file selected</div></label></div>
       <div class="submit"><input type="submit" value="Speichern"/></div>
     </form>
