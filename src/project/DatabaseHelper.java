@@ -289,7 +289,7 @@ public class DatabaseHelper{
                 }
                 for(String hwCode : codes){
                     for(Integer bcode : bCodes){
-                        rs=stmt.executeQuery("SELECT * FROM tbl_buchung_produkt WHERE prod_code = '"+ hwCode + "' AND bestell_id = "+ bcode);
+                        rs=stmt.executeQuery("SELECT * FROM tbl_buchung_produkt WHERE produkt_code = '"+ hwCode + "' AND bestell_id = "+ bcode);
                         if(rs != null){
                             inbuchung=true;
                         }
