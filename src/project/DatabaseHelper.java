@@ -4,6 +4,8 @@ import MD5.MD5;
 
 import javax.management.Notification;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Malte on 14.10.2015.
@@ -250,5 +252,56 @@ public class DatabaseHelper{
             e.printStackTrace();
         }
         return rs;
+    }
+
+    public String getBezeichnung(Integer produktid){
+        String bezeichnung = null;
+        try {
+            ResultSet rs = stmt.executeQuery("SELECT prod_bezeichn FROM tbl_produkt WHERE prod_id = " + produktid);
+            rs.next();
+            bezeichnung = rs.getString("prod_bezeichn");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bezeichnung;
+    }
+
+    public Boolean produktVerfuegbar(Integer produktid, Date abholung, Date abgabe){
+        Boolean verfuegbar = false;
+        ResultSet rs = null;
+        List<String> codes = new ArrayList<String>();
+        List<Integer> bCodes = new ArrayList<Integer>();
+        Boolean inbuchung = false;
+        try {
+            rs = stmt.executeQuery("SELECT prod_code FROM tbl_lagerliste WHERE prod_id =" + produktid);
+            while(rs.next()){
+                codes.add(rs.getString("prod_code"));
+            }
+
+            rs = stmt.executeQuery("SELECT buch_code FROM tbl_buchungsliste WHERE (buch_abholungsdatum <= "+ abholung + " AND buch_rueckgabedatum >= "+ abholung+ ") OR (buch_abholungsdatum <= "+ abgabe +" AND buch_rueckgabedatum >= "+ abgabe +") OR (buch_abholdatum >= "+ abholung +" AND buch_rueckgabedatum <= "+ abgabe +")");
+            if(rs != null) {
+                while (rs.next()) {
+                    bCodes.add(rs.getInt("buch_code"));
+                }
+                for(String hwCode : codes){
+                    for(Integer bcode : bCodes){
+                        rs=stmt.executeQuery("SELECT * FROM tbl_buchungsliste_produkt WHERE prod_id = '"+ hwCode + "' AND bestell_id = "+ bcode);
+                        if(rs != null){
+                            inbuchung=true;
+                        }
+                    }
+                    if(!inbuchung){
+                        verfuegbar=true;
+                        break;
+                    }
+                }
+            } else{
+                verfuegbar=true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return verfuegbar;
     }
 }
