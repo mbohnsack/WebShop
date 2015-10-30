@@ -46,7 +46,7 @@ public class DatabaseHelper{
         Boolean frei=false;
         try {
             ResultSet rs=stmt.executeQuery("SELECT * FROM tbl_mitarbeiter WHERE UPPER(mit_benutzer)=UPPER('" + name + "');");
-            if (rs==null){
+            if (!rs.isBeforeFirst()){
                 frei=true;
             }
         }catch(Exception e){
@@ -101,7 +101,7 @@ public class DatabaseHelper{
         Boolean frei=false;
         try {
             ResultSet rs=stmt.executeQuery("SELECT * FROM tbl_kunde WHERE kun_benutzer='" + name + "';");
-            if (rs==null){
+            if (!rs.isBeforeFirst()){
                 frei=true;
             }
         }catch(Exception e){

@@ -22,7 +22,7 @@ public class mitarbeiterServlet extends HttpServlet{
         String passwort = request.getParameter("passwort");
 
         if(db.mitarbeiterFrei(name)){
-            db.createMitarbeiter(name, passwort);
+            //db.createMitarbeiter(name, passwort);
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/mitarbeitererstellen.html"); //Das html-Dokument muss noch erstellt werden.
             PrintWriter out= response.getWriter();
             out.println("<font color=green>The process was succesfull.</font>");
