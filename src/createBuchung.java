@@ -48,7 +48,8 @@ public class createBuchung extends HttpServlet {
             e.printStackTrace();
         }
         if(request.getParameter("submit").equals("buchen")) {
-            Boolean success=db.createBuchung(mail, abholung, abgabe, products);
+            Boolean success = null;
+            //success=db.createBuchung(mail, abholung, abgabe, products);
             if(success){
                 SendMailSSL.sendBuchungMail(mail);
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/MitarbeiterView/buchungAnlegen");

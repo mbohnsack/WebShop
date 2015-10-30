@@ -245,6 +245,18 @@ public class DatabaseHelper{
         return anzahl;
     }
 
+    public Integer getAnzahlProdukteInKategorie(String category){
+        Integer anzahl = null;
+        try {
+            ResultSet rs = stmt.executeQuery("SELECT COUNT(prod_id) AS id FROM tbl_produkt WHERE prod_kategorie = '"+ category +"'");
+            rs.next();
+            anzahl = rs.getInt("id");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return anzahl;
+    }
+
     public ResultSet getAllKategories(){
         ResultSet rs = null;
         try {
@@ -253,6 +265,16 @@ public class DatabaseHelper{
             e.printStackTrace();
         }
         return rs;
+    }
+
+    public ResultSet getKategorie(String category){
+        ResultSet cat = null;
+        try {
+            cat = stmt.executeQuery("SELECT * FROM tbl_kategorie WHERE prod_kategorie = " + category);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cat;
     }
 
     public String getBezeichnung(Integer produktid){
