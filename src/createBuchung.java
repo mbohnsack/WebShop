@@ -1,4 +1,5 @@
 import project.DatabaseHelper;
+import project.SendMailSSL;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -34,6 +35,7 @@ public class createBuchung extends HttpServlet {
         String abholungTemp = request.getParameter("abholung");
         String abgabeTemp = request.getParameter("abgabe");
         Date abholung = null;
+        String mail=request.getParameter("kunde");
         try {
             abholung = format.parse(abholungTemp);
         } catch (ParseException e) {
@@ -45,8 +47,21 @@ public class createBuchung extends HttpServlet {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if(request.getParameter("submit").equals("Buchen")) {
-            //db.createBuchung();
+        if(request.getParameter("submit").equals("buchen")) {
+            Boolean success=db.createBuchung(mail, abholung, abgabe, products);
+            if(success){
+                SendMailSSL.sendBuchungMail(mail);
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/MitarbeiterView/buchungAnlegen");
+                PrintWriter out = response.getWriter();
+                out.println("<font color=red>Buchung erfolgreich.</font>");
+                rd.include(request, response);
+            }else{
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/MitarbeiterView/buchungAnlegen");
+                PrintWriter out = response.getWriter();
+                out.println("<font color=red>Buchung konnte nicht erstellt werden. Prüfen sie, ob der Kunde existiert und die Produkte vefügbar sind.</font>");
+                rd.include(request, response);
+            }
+
         }else{
             List<String> verfuegbareProdukte=new ArrayList<String>();
             double gesamtpreis=0;
