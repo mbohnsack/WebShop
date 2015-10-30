@@ -26,9 +26,9 @@ public class DatabaseHelper{
         }
     }
 
-    public void createMitarbeiter(String name, String passwort){
+    public void createMitarbeiter(String name, String passwort, String typ){
         try {
-            stmt.executeUpdate("INSERT INTO tbl_mitarbeiter (mit_benutzer,mit_passwort,mit_typ) VALUES ('" + name + "','" + MD5.getMD5(passwort) + "','buero');");
+            stmt.executeUpdate("INSERT INTO tbl_mitarbeiter (mit_benutzer,mit_passwort,mit_typ) VALUES ('" + name + "','" + MD5.getMD5(passwort) + "','"+typ+"');");
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -226,7 +226,7 @@ public class DatabaseHelper{
     public ResultSet getProductsByKategorie(String kategorie){
         ResultSet rs = null;
         try {
-            rs = stmt.executeQuery("SELECT * FROM tbl_produkt WHERE prod_kategorie = '"+ kategorie +"'");
+            rs = stmt.executeQuery("SELECT * FROM tbl_produkt WHERE prod_kategorie = '" + kategorie + "'");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -303,7 +303,7 @@ public class DatabaseHelper{
                 codes.add(rs.getString("prod_code"));
             }
 
-            rs = stmt.executeQuery("SELECT buch_code FROM tbl_buchungsliste WHERE (buch_abholdatum <= '"+ abholung + "' AND buch_rueckgabedatum >= '"+ abholung+ "') OR (buch_abholdatum <= '"+ abgabe +"' AND buch_rueckgabedatum >= '"+ abgabe +"') OR (buch_abholdatum >= '"+ abholung +"' AND buch_rueckgabedatum <= '"+ abgabe +"')");
+            rs = stmt.executeQuery("SELECT buch_code FROM tbl_buchungsliste WHERE (buch_abholdatum <= '" + abholung + "' AND buch_rueckgabedatum >= '" + abholung + "') OR (buch_abholdatum <= '" + abgabe + "' AND buch_rueckgabedatum >= '" + abgabe + "') OR (buch_abholdatum >= '" + abholung + "' AND buch_rueckgabedatum <= '" + abgabe + "')");
             if(rs != null) {
                 while (rs.next()) {
                     bCodes.add(rs.getInt("buch_code"));
@@ -328,5 +328,35 @@ public class DatabaseHelper{
         }
 
         return verfuegbar;
+    }
+
+    public ResultSet getMitarbeiter(){
+        ResultSet rs=null;
+        try {
+            rs=stmt.executeQuery("SELECT  * from tbl_mitarbeiter WHERE mit_typ='mitarbeiter'");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+    public ResultSet getAdmin(){
+        ResultSet rs=null;
+        try {
+            rs=stmt.executeQuery("SELECT  * from tbl_mitarbeiter WHERE mit_typ='admin'");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+    public ResultSet getAllMitarbeiter(){
+        ResultSet rs=null;
+        try {
+            rs=stmt.executeQuery("SELECT  * from tbl_mitarbeiter");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rs;
     }
 }
