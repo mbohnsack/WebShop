@@ -195,7 +195,7 @@ public class DatabaseHelper{
         try {
             ResultSet rs = stmt.executeQuery("SELECT kat_name FROM tbl_kategorie WHERE kat_name = '"+ name +"'");
             if(rs != null){
-                stmt.executeQuery("INSERT INTO tbl_kategorie (kat_name, kat_uebergeordnet))" +
+                stmt.executeQuery("INSERT INTO tbl_kategorie (kat_name, kat_uebergeordnet)" +
                         "VALUES ('"+ name +"', '"+ uebergeordnet +"')");
             }
         } catch (SQLException e) {
