@@ -359,4 +359,33 @@ public class DatabaseHelper{
         }
         return rs;
     }
+
+    public ResultSet getKundenDaten(Integer kundenNR){
+        ResultSet rs=null;
+        try{
+            rs=stmt.executeQuery("SELECT * FROM tbl_kunde WHERE kun_nummer = " + kundenNR);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+    public void updateKunde(Integer nummer, String login,String nname, String vname, String strasse, String hnummer, int plz,String ort, int tel, int mobil, String email, String passwort){
+        try{
+            stmt.executeUpdate("UPDATE tbl_kunde SET(kun_nummer, kun_benutzer, kun_name, kun_vorname, kun_strasse, kun_hausnummer, kun_plz, kun_ort, kun_telefon, kun_mobil, kun_email,kun_passwort) WHERE kun_nummer = nummer " +
+                    "VALUES ("+nummer+",'"+login+"','"+nname+"','"+passwort+"','"+vname+"','"+strasse+"','"+hnummer+"',"+plz+",'"+ort+"',"+tel+","+mobil+",'"+email+"');");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void updateKundenDaten(Integer kundenNR, String nname, String vname){
+        try{
+            stmt.executeUpdate("UPDATE tbl_kunde SET kun_name = '"+nname+"', kun_vorname = '"+vname+"' WHERE kun_nummer = '"+kundenNR+"' ");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
 }
