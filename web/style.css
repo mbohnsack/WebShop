@@ -240,10 +240,12 @@ ul.left_menu{
     margin:0px;
     list-style:none;
 }
+
 ul.left_menu li{
     margin:0px;
     list-style:none;
 }
+
 ul.left_menu li.odd button{
     border:none;width:196px;height:25px;display:block;background:url(images/checked.png) no-repeat left #dad0d0; background-position:5px 5px;border-bottom:1px #FFFFFF solid;
     text-decoration:none;color:#504b4b;padding:0 0 0 30px; line-height:25px; text-align:left;

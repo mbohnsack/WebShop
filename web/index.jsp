@@ -17,7 +17,7 @@
             <jsp:include page="navigation_left.html" />
         </div>
         <div id="content" class="content">
-            <jsp:include page="content.html" />
+            <jsp:include page="content.jsp" />
         </div>
         <div id="navigation_right" class="navigation_right">
             <jsp:include page="navigation_right.html" />
