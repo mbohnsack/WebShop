@@ -334,6 +334,19 @@ a.join{
     font-weight:bold;
     background:url(images/bar_bg.gif) no-repeat center;
 }
+.center_title_bar_customMF{
+    width:520px;
+    height:99px;
+    float:left;
+    padding:0 0 0 40px;
+    margin:0 0 0 12px;
+    _margin:0 0 0 6px;
+    line-height:33px;
+    font-size:12px;
+    color:#847676;
+    font-weight:bold;
+
+}
 
 /*----------------------right content--------------*/
 .navigation_right{
@@ -494,12 +507,12 @@ span.blue{
 }
 /*---------------contact_form------------------*/
 .contact_form{
-    width:355px;
+    width:520px;
     float:left;
     padding:0px 0 0 75px;
 }
 .form_row{
-    width:335px;
+    width:345px;
     clear:both;
     padding:10px 0 10px 0;
     _padding:5px 0 5px 0;
@@ -510,6 +523,22 @@ label.contact{
     float:left;
     font-size:12px;
     text-align:right;
+    padding:4px 5px 0 0;
+    color: #333333;
+}
+label.contact_customMF{
+    width:75px;
+    float:left;
+    font-size:12px;
+    text-align:right;
+    padding:4px 5px 0 4px;
+    color: #333333;
+}
+label.contactCustomText{
+    width:335px;
+    float:left;
+    font-size:12px;
+    text-align:center;
     padding:4px 5px 0 0;
     color: #333333;
 }
