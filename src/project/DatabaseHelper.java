@@ -1,7 +1,12 @@
 package project;
 
 import MD5.MD5;
+import org.postgresql.largeobject.LargeObject;
+import org.postgresql.largeobject.LargeObjectManager;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -460,5 +465,37 @@ public class DatabaseHelper{
         }
     }
 
+    public void saveFile(File bild, int prodid) throws SQLException, IOException {
+        c.setAutoCommit(false);
+
+// Get the Large Object Manager to perform operations with
+        LargeObjectManager lobj = ((org.postgresql.PGConnection)c).getLargeObjectAPI();
+
+//create a new large object
+        int oid = lobj.create(LargeObjectManager.READ | LargeObjectManager.WRITE);
+
+//open the large object for write
+        LargeObject obj = lobj.open(oid, LargeObjectManager.WRITE);
+
+// Now open the file
+        FileInputStream fis = new FileInputStream(bild);
+
+// copy the data from the file to the large object
+        byte buf[] = new byte[2048];
+        int s, tl = 0;
+        while ((s = fis.read(buf, 0, 2048)) > 0)
+        {
+            obj.write(buf, 0, s);
+            tl += s;
+        }
+
+// Close the large object
+        obj.close();
+
+//Now insert the row into imagesLO
+       stmt.executeUpdate("INSERT INTO tbl_bild(bilder,prod_id)VALUES ("+oid+","+prodid+")");
+        fis.close();
+        c.setAutoCommit(true);
+    }
 
 }
