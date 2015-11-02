@@ -34,6 +34,22 @@ public class DatabaseHelper{
         }
     }
 
+    public String getMitarbeiterRolle(String name){
+        String rolle=null;
+        try {
+            ResultSet rs=stmt.executeQuery("SELECT  mit_typ FROM  tbl_mitarbeiter WHERE  mit_benutzer='"+name+"'");
+            if(!rs.isBeforeFirst()){
+
+            }else{
+                rs.next();
+                rolle=rs.getString("mit_typ");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rolle;
+    }
+
     public void deleteMitarbeiter(String name){
         try {
             stmt.executeUpdate("DELETE FROM tbl_mitarbeiter WHERE mit_benutzer='"+name+"';");
@@ -211,8 +227,8 @@ public class DatabaseHelper{
 
     public void updateProduct(Integer id, String kategorie, String hersteller, Double preis, String beschreibung, String details, String bezeichnung, String infBezeichnung, Integer buchungAnzahl){
         try {
-            stmt.executeQuery("UPDATE tbl_produkt SET prod_kategorie = '"+ kategorie +"', prod_hersteller = '"+ hersteller +"', prod_preis = "+ preis +", prod_beschreibung = '"+ beschreibung +"', " +
-                    "prod_details = '"+ details +"', prod_bezeichn = '"+ bezeichnung +"', prod_infbezeichn = '"+ infBezeichnung +"', buch_Anzahl = "+ buchungAnzahl + "WHERE prod_id = "+ id);
+            stmt.executeQuery("UPDATE tbl_produkt SET prod_kategorie = '" + kategorie + "', prod_hersteller = '" + hersteller + "', prod_preis = " + preis + ", prod_beschreibung = '" + beschreibung + "', " +
+                    "prod_details = '" + details + "', prod_bezeichn = '" + bezeichnung + "', prod_infbezeichn = '" + infBezeichnung + "', buch_Anzahl = " + buchungAnzahl + "WHERE prod_id = " + id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -297,7 +313,7 @@ public class DatabaseHelper{
     public ResultSet getKategorie(String category){
         ResultSet cat = null;
         try {
-            cat = stmt.executeQuery("SELECT * FROM tbl_kategorie WHERE kat_name = '" + category +"'");
+            cat = stmt.executeQuery("SELECT * FROM tbl_kategorie WHERE kat_name = '" + category + "'");
         } catch (SQLException e) {
             e.printStackTrace();
         }
