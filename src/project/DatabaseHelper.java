@@ -424,4 +424,25 @@ public class DatabaseHelper{
         }
         return rs;
     }
+
+    public ResultSet getKundenDaten(Integer kundenNR){
+        ResultSet rs=null;
+        try{
+            rs=stmt.executeQuery("SELECT * FROM tbl_kunde WHERE kun_nummer = " + kundenNR);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+    public void updateKundenDaten(Integer kundenNR, String nname, String vname, String strasse, String ort, String email, String hausn, int plz, int tele, int mobil, String passwort, String login){
+        try{
+            stmt.executeUpdate("UPDATE tbl_kunde " +
+                    "SET kun_name = '"+nname+"', kun_vorname = '"+vname+"', kun_strasse = '"+strasse+"', kun_ort = '"+ort+"', kun_email = '"+email+"', kun_hausnummer = '"+hausn+"', kun_plz = '"+plz+"', kun_telefon = '"+tele+"', kun_mobil = '"+mobil+"', kun_passwort = '"+ MD5.getMD5(passwort)+"', kun_benutzer = '"+login+"' WHERE kun_nummer = '"+kundenNR+"' ");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
 }
