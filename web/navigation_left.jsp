@@ -16,7 +16,7 @@
 
             while(rs.next()){
         %>
-        <li class="odd"><form style="margin-bottom: 0" method="post" action="categories.jsp"><button name="category" type="submit" value="<%= rs.getString(1)%>"><%= rs.getString(1)%></button></form></li>
+        <li class="odd"><form id="category" style="margin-bottom: 0" method="post" action="categories.jsp"><button style="cursor:pointer;" name="category" type="submit" value="<%= rs.getString(1)%>"><%= rs.getString(1)%></button></form></li>
        <!-- <li class="even"><form style="margin-bottom: 0" method="post" action="categories.jsp"><button name="category" type="submit" value="Lautsprecher">Lautsprecher</button></form></li>
         <li class="odd"><form style="margin-bottom: 0" method="post" action="categories.jsp"><button name="category" type="submit" value="Verstärker">Verst&auml;rker</button></form></li>
         <li class="even"><form style="margin-bottom: 0"  method="post" action="categories.jsp"><button name="category" type="submit" value="DJ-Equipment">DJ-Equipment</button></form></li>
