@@ -444,5 +444,19 @@ public class DatabaseHelper{
         }
     }
 
+    public Integer getAnzahlBuchungById(Integer produktid){
+        Integer anzahl = null;
+        ResultSet rs = null;
+
+        try {
+            rs = stmt.executeQuery("SELECT buch_anzahl FROM tbl_produkt WHERE prod_id = "+ produktid);
+            rs.next();
+            anzahl = rs.getInt("buch_anzahl");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return anzahl;
+    }
 
 }
