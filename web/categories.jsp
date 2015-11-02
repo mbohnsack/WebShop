@@ -18,21 +18,21 @@
     <jsp:include page="header.html" />
   </div>
   <div id="main_content">
+    <%
+      DatabaseHelper db = new DatabaseHelper();
+    String produktCat = request.getParameter("category");
+    int anzahl = db.getAnzahlProdukteInKategorie(produktCat);
+    ResultSet rs = db.getProductsByKategorie(produktCat);
+      %>
     <div id="navigation_top">
       <jsp:include page="navigation_top.html" />
     </div>
-    <div class="crumb_navigation"> Navigation: <span class="current">Startseite</span> </div>
+    <div class="crumb_navigation"> Navigation: <span class="current">Kategorie / <%= produktCat%></span> </div>
     <div class="navigation_left">
-      <jsp:include page="navigation_left.html" />
+      <jsp:include page="navigation_left.jsp" />
     </div>
     <div id="content" class="content">
-
       <%
-      DatabaseHelper db = new DatabaseHelper();
-      String produktCat = request.getParameter("category");
-        int anzahl = db.getAnzahlProdukteInKategorie(produktCat);
-        ResultSet rs = db.getProductsByKategorie(produktCat);
-
            for (int i = 0; i<anzahl; i++) {
            while(rs.next()){
       %>
@@ -47,8 +47,6 @@
         <div class="prod_details_tab"> <a href="#" title="header=[Add to cart] body=[&nbsp;] fade=[on]"><img src="images/cart.gif" alt="" border="0" class="left_bt" /></a> </div>
       </div>
       <% } }%>
-
-
     </div>
     <div id="navigation_right" class="navigation_right">
       <jsp:include page="navigation_right.html" />

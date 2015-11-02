@@ -14,7 +14,7 @@
         </div>
         <div class="crumb_navigation"> Navigation: <span class="current">Kontakt</span> </div>
         <div class="navigation_left">
-            <jsp:include page="navigation_left.html" />
+            <jsp:include page="navigation_left.jsp" />
         </div>
         <div class="content">
 

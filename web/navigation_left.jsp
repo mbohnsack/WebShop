@@ -1,3 +1,5 @@
+<%@ page import="project.DatabaseHelper" %>
+<%@ page import="java.sql.ResultSet" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,8 +10,14 @@
 
     <div class="title_box">Kategorien</div>
     <ul class="left_menu">
-        <li class="odd"><form style="margin-bottom: 0" method="post" action="categories.jsp"><button name="category" type="submit" value="Musikanlagen">Musikanlagen</button></form></li>
-        <li class="even"><form style="margin-bottom: 0" method="post" action="categories.jsp"><button name="category" type="submit" value="Lautsprecher">Lautsprecher</button></form></li>
+        <%
+        DatabaseHelper db = new DatabaseHelper();
+        ResultSet rs = db.getAllKategories();
+
+            while(rs.next()){
+        %>
+        <li class="odd"><form style="margin-bottom: 0" method="post" action="categories.jsp"><button name="category" type="submit" value="<%= rs.getString(1)%>"><%= rs.getString(1)%></button></form></li>
+       <!-- <li class="even"><form style="margin-bottom: 0" method="post" action="categories.jsp"><button name="category" type="submit" value="Lautsprecher">Lautsprecher</button></form></li>
         <li class="odd"><form style="margin-bottom: 0" method="post" action="categories.jsp"><button name="category" type="submit" value="Verstärker">Verst&auml;rker</button></form></li>
         <li class="even"><form style="margin-bottom: 0"  method="post" action="categories.jsp"><button name="category" type="submit" value="DJ-Equipment">DJ-Equipment</button></form></li>
         <li class="odd"><form style="margin-bottom: 0" method="post" action="categories.jsp"><button name="category" type="submit" value="Mischpulte">Mischpulte</button></form></li>
@@ -19,6 +27,7 @@
         <li class="odd"><form style="margin-bottom: 0" method="post" action="categories.jsp"><button name="category" type="submit" value="Nebelmaschinen">Nebelmaschinen</button></form></li>
         <li class="even"><form style="margin-bottom: 0" method="post" action="categories.jsp"><button name="category" type="submit" value="Beamer">Beamer</button></form></li>
         <li class="odd"><form style="margin-bottom: 0" method="post" action="categories.jsp"><button name="category" type="submit" value="Zubehör">Zubeh&ouml;r</button></form></li>
+   --> <% } %>
     </ul>
     <div class="title_box">Paket</div>
     <div class="border_box">
