@@ -1,7 +1,12 @@
 package project;
 
 import MD5.MD5;
+import org.postgresql.largeobject.LargeObject;
+import org.postgresql.largeobject.LargeObjectManager;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -210,19 +215,27 @@ public class DatabaseHelper{
         return verfuegbar;
     }
 
-    public void addProduct(String kategorie, String hersteller, Double preis, String beschreibung, String details, String bezeichnung, String infBezeichnung){
+    public Integer addProduct(String kategorie, String hersteller, Double preis, String beschreibung, String details, String bezeichnung, String infBezeichnung){
+        Integer id = null;
         try {
             ResultSet rs = stmt.executeQuery("SELECT * FROM tbl_produkt");
-            if(rs != null){
-                stmt.executeQuery("INSERT INTO tbl_produkt (prod_id, prod_kategorie, prod_hersteller, prod_preis, prod_beschreibung, prod_details, prod_bezeichn, prod_infbezeichn, buch_anzahl) " +
-                        "VALUES ((SELECT max(prod_id) FROM tbl_produkt) + 1, '" + kategorie + "', '" + hersteller + "', "+ preis +", '" + beschreibung +"', '"+ details +"', '"+ bezeichnung +"', '"+ infBezeichnung +"', 0)");
+            if(rs.isBeforeFirst()){
+                stmt.executeUpdate("INSERT INTO tbl_produkt (prod_id, prod_kategorie, prod_hersteller, prod_preis, prod_beschreibung, prod_details, prod_bezeichn, prod_infbezeichn, buch_anzahl) " +
+                        "VALUES ((SELECT max(prod_id) FROM tbl_produkt) + 1, '" + kategorie + "', '" + hersteller + "', " + preis + ", '" + beschreibung + "', '" + details + "', '" + bezeichnung + "', '" + infBezeichnung + "', 0)");
+                rs = stmt.executeQuery("SELECT max(prod_id) AS id FROM tbl_produkt");
+                rs.next();
+                id = rs.getInt("id");
             } else {
-                stmt.executeQuery("INSERT INTO tbl_produkt (prod_id, prod_kategorie, prod_hersteller, prod_preis, prod_beschreibung, prod_details, prod_bezeichn, prod_infbezeichn, buch_anzahl) " +
-                        "VALUES (1, '" + kategorie + "', '" + hersteller + "', "+ preis +", '" + beschreibung +"', '"+ details +"', '"+ bezeichnung +"', '"+ infBezeichnung +"', 0)");
+                stmt.executeUpdate("INSERT INTO tbl_produkt (prod_id, prod_kategorie, prod_hersteller, prod_preis, prod_beschreibung, prod_details, prod_bezeichn, prod_infbezeichn, buch_anzahl) " +
+                        "VALUES (1, '" + kategorie + "', '" + hersteller + "', " + preis + ", '" + beschreibung + "', '" + details + "', '" + bezeichnung + "', '" + infBezeichnung + "', 0)");
+                rs = stmt.executeQuery("SELECT max(prod_id) AS id FROM tbl_produkt");
+                rs.next();
+                id = rs.getInt("id");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return id;
     }
 
     public void updateProduct(Integer id, String kategorie, String hersteller, Double preis, String beschreibung, String details, String bezeichnung, String infBezeichnung, Integer buchungAnzahl){
@@ -441,7 +454,7 @@ public class DatabaseHelper{
         return rs;
     }
 
-    public ResultSet getKundenDatenByNr(Integer kundenNR){
+    public ResultSet getKundenDaten(Integer kundenNR){
         ResultSet rs=null;
         try{
             rs=stmt.executeQuery("SELECT * FROM tbl_kunde WHERE kun_nummer = " + kundenNR);
@@ -450,7 +463,6 @@ public class DatabaseHelper{
         }
         return rs;
     }
-
     public ResultSet getKundenDatenByLogin(String login){
         ResultSet rs=null;
         try{
@@ -460,17 +472,14 @@ public class DatabaseHelper{
         }
         return rs;
     }
-
-
-
     public void updateKundenDaten(Integer kundenNR, String nname, String vname, String strasse, String ort, String email, String hausn, int plz, int tele, int mobil, String passwort, String login){
         try{
             stmt.executeUpdate("UPDATE tbl_kunde " +
                     "SET kun_name = '"+nname+"', kun_vorname = '"+vname+"', kun_strasse = '"+strasse+"', kun_ort = '"+ort+"', kun_email = '"+email+"', kun_hausnummer = '"+hausn+"', kun_plz = '"+plz+"', kun_telefon = '"+tele+"', kun_mobil = '"+mobil+"', kun_passwort = '"+ MD5.getMD5(passwort)+"', kun_benutzer = '"+login+"' WHERE kun_nummer = '"+kundenNR+"' ");
         }catch(Exception e){
             e.printStackTrace();
-        }
-    }
+}
+}
 
     public Integer getAnzahlBuchungById(Integer produktid){
         Integer anzahl = null;
@@ -500,6 +509,42 @@ public class DatabaseHelper{
         }
 
         return uebergeordnet;
+    }
+    public void saveFile(File bild, int prodid) throws SQLException, IOException {
+        c.setAutoCommit(false);
+
+// Get the Large Object Manager to perform operations with
+        LargeObjectManager lobj = ((org.postgresql.PGConnection)c).getLargeObjectAPI();
+
+//create a new large object
+        int oid = lobj.create(LargeObjectManager.READ | LargeObjectManager.WRITE);
+
+//open the large object for write
+        LargeObject obj = lobj.open(oid, LargeObjectManager.WRITE);
+
+// Now open the file
+        FileInputStream fis = new FileInputStream(bild);
+
+// copy the data from the file to the large object
+        byte buf[] = new byte[2048];
+        int s, tl = 0;
+        while ((s = fis.read(buf, 0, 2048)) > 0)
+        {
+            obj.write(buf, 0, s);
+            tl += s;
+        }
+
+// Close the large object
+        obj.close();
+
+//Now insert the row into imagesLO
+       PreparedStatement ps=c.prepareStatement("INSERT INTO tbl_bild VALUES (?,?)");
+        ps.setInt(1,prodid);
+        ps.setInt(2,oid);
+        ps.executeUpdate();
+        ps.close();
+        fis.close();
+        c.setAutoCommit(true);
     }
 
 }

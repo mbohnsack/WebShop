@@ -22,7 +22,7 @@
      while(rs.next()){
   %>
   <div id="header">
-    <jsp:include page="header.html" />
+    <jsp:include page="header.jsp" />
   </div>
   <div id="main_content">
     <div id="navigation_top">
@@ -35,7 +35,7 @@
     <div class="content">
       <div class="center_content">
 
-        <div class="center_title_bar"><%= rs.getString(3) %> <%= rs.getString(7) %></div>
+        <div class="center_title_bar"><%= rs.getString(3) %> <%= rs.getString(7) %> (ID: <%= rs.getString(1) %>)</div>
         <div class="prod_box_big">
           <div class="top_prod_box_big"></div>
           <div class="center_prod_box_big">
@@ -57,10 +57,10 @@
 <% } %>
     </div>
       <div id="navigation_right" class="navigation_right">
-        <jsp:include page="navigation_right.html" />
+        <jsp:include page="navigation_right.jsp" />
       </div>
       <div id="footer" class="footer">
-        <jsp:include page="footer.html" />
+        <jsp:include page="footer.jsp" />
       </div>
     </div>
   </div>
