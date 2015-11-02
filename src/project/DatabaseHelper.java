@@ -163,8 +163,35 @@ public class DatabaseHelper{
         }
     }
 
-    public void createBuchung(){
+    public Boolean createBuchung(String kundenmail, Date abholdatum, Date abgabedatum, List<Integer> produktids){
+        Boolean verfuegbar = false;
+        ResultSet rs = null;
+        List<Integer> hwcodes = new ArrayList<Integer>();
+        try {
+            rs = stmt.executeQuery("SELECT kun_email FROM tbl_kunde WHERE kun_email = '"+ kundenmail +"'");
+            if(!rs.next()) {
+                return false;
+            } else {
+                for(Integer produkt : produktids){
+                    if(produktVerfuegbar(produkt, abholdatum, abgabedatum)){
+                        rs = stmt.executeQuery("SELECT prod_code FROM tbl_lagerliste WHERE prod_id = "+ produkt);
+                        if(rs.next()){
+                            hwcodes.add(rs.getInt("prod_code"));
+                        } else{
+                            return false;
+                        }
+                    } else{
+                        return false;
+                    }
+                }
+                verfuegbar=true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
+
+        return verfuegbar;
     }
 
     public void addProduct(String kategorie, String hersteller, Double preis, String beschreibung, String details, String bezeichnung, String infBezeichnung){
@@ -270,7 +297,7 @@ public class DatabaseHelper{
     public ResultSet getKategorie(String category){
         ResultSet cat = null;
         try {
-            cat = stmt.executeQuery("SELECT * FROM tbl_kategorie WHERE prod_kategorie = " + category);
+            cat = stmt.executeQuery("SELECT * FROM tbl_kategorie WHERE prod_kategorie = '" + category +"'");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -328,6 +355,44 @@ public class DatabaseHelper{
         }
 
         return verfuegbar;
+    }
+
+    public Integer getHWCode (Integer produktid, Date abholung, Date abgabe){
+        List<String> codes = new ArrayList<String>();
+        List<Integer> bCodes = new ArrayList<Integer>();
+        ResultSet rs = null;
+        Boolean inbuchung = false;
+        Boolean verfuegbar = false;
+        try {
+            rs = stmt.executeQuery("SELECT prod_code FROM tbl_lagerliste WHERE prod_id =" + produktid);
+            while(rs.next()){
+                codes.add(rs.getString("prod_code"));
+            }
+
+            rs = stmt.executeQuery("SELECT buch_code FROM tbl_buchungsliste WHERE (buch_abholdatum <= '" + abholung + "' AND buch_rueckgabedatum >= '" + abholung + "') OR (buch_abholdatum <= '" + abgabe + "' AND buch_rueckgabedatum >= '" + abgabe + "') OR (buch_abholdatum >= '" + abholung + "' AND buch_rueckgabedatum <= '" + abgabe + "')");
+            if(rs != null) {
+                while (rs.next()) {
+                    bCodes.add(rs.getInt("buch_code"));
+                }
+                for(String hwCode : codes){
+                    for(Integer bcode : bCodes){
+                        rs=stmt.executeQuery("SELECT * FROM tbl_buchung_produkt WHERE produkt_code = '"+ hwCode + "' AND bestell_id = "+ bcode);
+                        if(!rs.isBeforeFirst()){
+                            inbuchung=true;
+                        }
+                    }
+                    if(!inbuchung){
+                        verfuegbar=true;
+                        break;
+                    }
+                }
+            } else{
+                verfuegbar=true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return produktid;
     }
 
     public ResultSet getMitarbeiter(){
