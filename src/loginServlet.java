@@ -29,13 +29,13 @@ public class loginServlet extends HttpServlet {
         DatabaseHelper db = new DatabaseHelper();
         if(targetPage.equals("MitarbeiterView/main.jsp")){
             login = db.loginMitarbeiter(user, pwd);
-        } else if(targetPage.equals("test.html")){
+        } else if(targetPage.equals("index.jsp")){
             login = db.loginKunde(user, pwd);
         }
         if (login == true) {
             request.setAttribute("username", user);
             request.setAttribute("targetpage", targetPage);
-            System.out.println("Test");
+            System.out.println("user:"+user+" target:"+targetPage+" login:"+login);
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/general/setCookie.jsp");
             System.out.println("Test II");
             rd.forward(request,response);

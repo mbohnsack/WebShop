@@ -24,12 +24,13 @@
         <div class="prod_box_big">
           <div class="top_prod_box_big"></div>
           <div class="center_prod_box_big">
-            <form name="loginForm" method="post" action="loginServlet">
+
+            <form name="loginForm" method="post" action="../loginServlet">
               Username: <input type="text" name="username"/> <br/>
               Password: <input type="password" name="password"/> <br/>
-              <input type="hidden" name="targetpage" value="test.html"/> <br/>
-              <input type="hidden" name="sourcepage" value="/test.html"/> <br/>
               <input type="submit" value="Login" />
+              <input type="hidden" name="targetpage" value="index.jsp"/> <br/>
+              <input type="hidden" name="sourcepage" value="/loginKunde.jsp"/> <br/>
             </form>
 
           </div>
