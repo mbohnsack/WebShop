@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -25,18 +26,16 @@ public class addProduktServlet extends HttpServlet {
     private final int MAX_REQUEST_SIZE   = 1024 * 1024 * 50; // 50MB
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
-
-        String produktname = request.getParameter("produktname");
-        String produktname2 = request.getParameter("produktname2");
-        String produktbeschreibung = request.getParameter("produktbeschreibung");
-        String details = request.getParameter("details");
-        String kategorie = request.getParameter("kategorie");
-        String hersteller = request.getParameter("hersteller");
-        double preis =  Double.parseDouble(request.getParameter("preis"));
-        String file = request.getParameter("file");
+        File storeFile=null;
+        String produktname = null;
+        String produktname2 = null;
+        String produktbeschreibung = null;
+        String details = null;
+        String kategorie = null;
+        String hersteller = null;
+        double preis=0.0;
 
         DatabaseHelper db = new DatabaseHelper();
-        int prodid=db.addProduct(kategorie, hersteller, preis, produktbeschreibung, details, produktname, produktname2);
         if (ServletFileUpload.isMultipartContent(request)) {
             DiskFileItemFactory factory = new DiskFileItemFactory();
             factory.setSizeThreshold(THRESHOLD_SIZE);
@@ -64,16 +63,48 @@ public class addProduktServlet extends HttpServlet {
                 if (!item.isFormField()) {
                     String fileName = new File(item.getName()).getName();
                     String filePath = uploadPath + File.separator + fileName;
-                    File storeFile = new File(filePath);
+                    storeFile = new File(filePath);
 
                     // saves the file on disk
                     try {
                         item.write(storeFile);
-                        db.saveFile(storeFile,prodid);
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                }else{
+                    String name=item.getName();
+                    switch(name){
+                        case "produktname":
+                            produktname=item.getString();
+                            break;
+                        case "produktname2":
+                            produktname2=item.getString();
+                            break;
+                        case "produktbeschreibung":
+                            produktbeschreibung=item.getString();
+                            break;
+                        case "details":
+                            details=item.getString();
+                            break;
+                        case "kategorie":
+                            kategorie=item.getString();
+                            break;
+                        case "hersteller":
+                            hersteller=item.getString();
+                            break;
+                        case "preis":
+                            preis=Double.parseDouble(item.getString());
+                            break;
+                    }
                 }
+
+            }
+            try {
+                int prodid=db.addProduct(kategorie, hersteller, preis, produktbeschreibung, details, produktname, produktname2);
+                db.saveFile(storeFile,prodid);
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
 

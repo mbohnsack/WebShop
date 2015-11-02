@@ -51,7 +51,7 @@ else {
   </div>
 
   <div id="rightdiv">
-    <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post" action="../addProduktServlet"><div ><h2>Produkt anlegen</h2></div>
+    <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post" enctype="multipart/form-data" action="../addProduktServlet"><div ><h2>Produkt anlegen</h2></div>
       <div ><label >Produkt Name</label><input  type="text" name="produktname" /></div>
       <div ><label >Produkt Name2</label><input  type="text" name="produktname2" /></div>
       <div ><label >Produktbeschreibung</label><textarea class="medium" name="produktbeschreibung" cols="20" rows="5" ></textarea></div>
