@@ -39,7 +39,7 @@
       <div class="prod_box">
         <div class="top_prod_box"></div>
         <div class="center_prod_box">
-          <form id="details" action="details.jsp" mathod="post"><button style="margin:0; background:none; border:0; cursor:pointer;" name="details" type="submit" value="<%= rs.getString(1) %>"><div class="product_title"><%= rs.getString(3) %> <%= rs.getString(7) %></div></button></form>
+          <form id="details" action="details.jsp" method="post" style="height:42px;"><button style="margin:0; background:none; border:0; cursor:pointer;" name="details" type="submit" value="<%= rs.getString(1) %>"><div class="product_title"><%= rs.getString(3) %> <%= rs.getString(7) %></div></button></form>
           <div class="product_img"><a href="details.jsp"><img style="width:92px; height: 92px" src="images/p1.jpg" alt="" border="0" /></a></div>
           <div class="prod_price"><span class="price"><%= rs.getString(4) %> €</span></div>
         </div>

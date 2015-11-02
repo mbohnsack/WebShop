@@ -35,7 +35,7 @@
     <div class="content">
       <div class="center_content">
 
-        <div class="center_title_bar"><%= rs.getString(3) %> <%= rs.getString(7) %> (<%= rs.getString(1) %>)</div>
+        <div class="center_title_bar"><%= rs.getString(3) %> <%= rs.getString(7) %> (ID: <%= rs.getString(1) %>)</div>
         <div class="prod_box_big">
           <div class="top_prod_box_big"></div>
           <div class="center_prod_box_big">
