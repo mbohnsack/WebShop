@@ -80,6 +80,7 @@
             </div>
         </div>
     </div>
+
     <div id="navigation_right" class="navigation_right">
         <jsp:include page="navigation_right.jsp"/>
     </div>

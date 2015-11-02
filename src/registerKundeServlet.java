@@ -17,7 +17,6 @@ public class registerKundeServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
-
         String benutzername = request.getParameter("benutzername");
         String nname = request.getParameter("nname");
         String vname = request.getParameter("vname");
