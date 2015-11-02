@@ -441,7 +441,7 @@ public class DatabaseHelper{
         return rs;
     }
 
-    public ResultSet getKundenDaten(Integer kundenNR){
+    public ResultSet getKundenDatenByNr(Integer kundenNR){
         ResultSet rs=null;
         try{
             rs=stmt.executeQuery("SELECT * FROM tbl_kunde WHERE kun_nummer = " + kundenNR);
@@ -450,6 +450,18 @@ public class DatabaseHelper{
         }
         return rs;
     }
+
+    public ResultSet getKundenDatenByLogin(String login){
+        ResultSet rs=null;
+        try{
+            rs=stmt.executeQuery("SELECT * FROM tbl_kunde WHERE kun_benutzer = '" + login +"'");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+
 
     public void updateKundenDaten(Integer kundenNR, String nname, String vname, String strasse, String ort, String email, String hausn, int plz, int tele, int mobil, String passwort, String login){
         try{

@@ -16,15 +16,10 @@ public class updateKundeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
-        DatabaseHelper db = new DatabaseHelper();
-        ResultSet kundenDaten = db.getKundenDaten(1); //Feld mit den alten Kundendaten einlesen
-
-        Integer kun_nummer = 1; // muss ausm cookie kommen
-
         String passwort; // Übergibt je nachdem das neue oder alte PW
         String benutzer=""; //aktueller Benutzer, falls das Login geändert wird
+        Integer kun_nummer = 0;
 
-        String login = request.getParameter("login");
         String vorname = request.getParameter("vorname");
         String name = request.getParameter("name");
         String email = request.getParameter("email");
@@ -38,9 +33,15 @@ public class updateKundeServlet extends HttpServlet {
         String pwNeuBest = request.getParameter("pwNeuBest");
         String pwAlt = request.getParameter("pw");
 
+        DatabaseHelper db = new DatabaseHelper();
+
+        String login = request.getParameter("login");
+        ResultSet kundenDaten = db.getKundenDatenByLogin(login); //Feld mit den alten Kundendaten einlesen
+
         // wenn keine Eingabe erfolgt werden die alten Daten übernommen
         try{
             while(kundenDaten.next()) {
+                kun_nummer = Integer.parseInt(kundenDaten.getString(1));
                 if (login.contentEquals(""))login = kundenDaten.getString(2);
                 //wenn das login geändert wird altes login für die pw abfrage nutzen
                 if (!login.contentEquals(""))benutzer = kundenDaten.getString(2);

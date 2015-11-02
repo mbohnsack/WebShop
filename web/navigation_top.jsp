@@ -13,12 +13,43 @@
     <li class="divider"></li>
     <li><a href="contact.jsp" id="kontakt" class="nav6">Kontakt</a></li>
     <li class="divider"></li>
-    <li class="divider" style="margin-left: 210px"></li>
     <li><a href="register.jsp" id="registrieren" class="nav4">Registrieren</a></li>
     <li class="divider"></li>
-    <li><a href="loginKunde.jsp" id="anmelden" class="nav4">Anmelden</a></li>
-    <li class="divider"></li>
-    <li><a href="kundeBearbeiten.jsp" id="konto" class="nav4">Daten &auml;ndern</a></li>
+    <%
+        // den loginname des angemeldeten Nutzers auslesen
+        Boolean loginState = false;
+        String user = "";
+
+        String cookieName = "LoginCookie";
+        Cookie cookies [] = request.getCookies ();
+        Cookie myCookie = null;
+        if (cookies != null)
+        {
+            for (int i = 0; i < cookies.length; i++)
+            {
+                if (cookies [i].getName().equals (cookieName))
+                {
+                    myCookie = cookies[i];
+                    user = myCookie.getValue() + " abmelden";
+                    loginState = true;
+                    break;
+                }
+            }
+        }
+        else{
+            loginState = false;
+
+        }
+    %>
+    <% if(loginState){%>
+        <li><a href="../general/logout.jsp" id="abmelden" class="nav4"><%= user%></a></li>
+        <li class="divider"></li>
+        <li><a href="kundeBearbeiten.jsp" id="konto" class="nav4">Daten &auml;ndern</a></li>
+    <%}else{%>
+        <li><a href="loginKunde.jsp" id="anmelden" class="nav4">anmelden</a></li>
+    <%}%>
+
+
 </ul>
 <div class="right_menu_corner"></div>
 </body>

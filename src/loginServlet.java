@@ -36,9 +36,11 @@ public class loginServlet extends HttpServlet {
             request.setAttribute("username", user);
             request.setAttribute("targetpage", targetPage);
             System.out.println("user:"+user+" target:"+targetPage+" login:"+login);
+
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/general/setCookie.jsp");
             System.out.println("Test II");
             rd.forward(request,response);
+
         } else {
             RequestDispatcher rd = getServletContext().getRequestDispatcher(sourcePage);
             PrintWriter out = response.getWriter();
