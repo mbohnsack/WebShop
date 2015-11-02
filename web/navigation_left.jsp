@@ -13,21 +13,14 @@
         <%
         DatabaseHelper db = new DatabaseHelper();
         ResultSet rs = db.getAllKategories();
-
             while(rs.next()){
+                DatabaseHelper db2 = new DatabaseHelper();
+                int anzahl = db2.getAnzahlProdukteInKategorie(rs.getString(1));
+                if (anzahl > 0) {
         %>
         <li class="odd"><form id="category" style="margin-bottom: 0" method="post" action="categories.jsp"><button style="cursor:pointer;" name="category" type="submit" value="<%= rs.getString(1)%>"><%= rs.getString(1)%></button></form></li>
        <!-- <li class="even"><form style="margin-bottom: 0" method="post" action="categories.jsp"><button name="category" type="submit" value="Lautsprecher">Lautsprecher</button></form></li>
-        <li class="odd"><form style="margin-bottom: 0" method="post" action="categories.jsp"><button name="category" type="submit" value="Verstärker">Verst&auml;rker</button></form></li>
-        <li class="even"><form style="margin-bottom: 0"  method="post" action="categories.jsp"><button name="category" type="submit" value="DJ-Equipment">DJ-Equipment</button></form></li>
-        <li class="odd"><form style="margin-bottom: 0" method="post" action="categories.jsp"><button name="category" type="submit" value="Mischpulte">Mischpulte</button></form></li>
-        <li class="even"><form style="margin-bottom: 0" method="post" action="categories.jsp"><button name="category" type="submit" value="CD-Player">CD-Player</button></form></li>
-        <li class="odd"><form style="margin-bottom: 0" method="post" action="categories.jsp"><button name="category" type="submit" value="Mikrofone">Mikrofone</button></form></li>
-        <li class="even"><form style="margin-bottom: 0" method="post" action="categories.jsp"><button name="category" type="submit" value="Lichteffekte">Lichteffekte</button></form></li>
-        <li class="odd"><form style="margin-bottom: 0" method="post" action="categories.jsp"><button name="category" type="submit" value="Nebelmaschinen">Nebelmaschinen</button></form></li>
-        <li class="even"><form style="margin-bottom: 0" method="post" action="categories.jsp"><button name="category" type="submit" value="Beamer">Beamer</button></form></li>
-        <li class="odd"><form style="margin-bottom: 0" method="post" action="categories.jsp"><button name="category" type="submit" value="Zubehör">Zubeh&ouml;r</button></form></li>
-   --> <% } %>
+   --> <% } } %>
     </ul>
     <div class="title_box">Paket</div>
     <div class="border_box">
