@@ -20,7 +20,7 @@
   if(targetPage.equals("MitarbeiterView/main.jsp")){
     logoutCookie = new Cookie ("LoginCookieURL","../MitarbeiterView/loginKunde.jsp");
   }else if(targetPage.equals("index.jsp")) {
-    logoutCookie = new Cookie("LoginCookieURL", "index.jsp");
+    logoutCookie = new Cookie("LoginCookieURL", "../index.jsp");
   }
 
 

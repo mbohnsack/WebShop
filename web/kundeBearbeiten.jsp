@@ -21,8 +21,32 @@
         </div>
 
         <%
+            // den loginname des angemeldeten Nutzers auslesen
+            String cookieName = "LoginCookie";
+            Cookie cookies [] = request.getCookies ();
+            Cookie myCookie = null;
+            if (cookies != null)
+            {
+                for (int i = 0; i < cookies.length; i++)
+                {
+                    if (cookies [i].getName().equals (cookieName))
+                    {
+                        myCookie = cookies[i];
+                        break;
+                    }
+                }
+            }
+            String user = myCookie.getValue();
+
+            // hier wird der username in die kundenummer gewandelt (funktioniert erstmal)
             DatabaseHelper db = new DatabaseHelper();
-            ResultSet kundenDaten = db.getKundenDaten(1);
+            ResultSet zwischenSet = db.getKundenDatenByLogin(user);
+            int kdnr = 0;
+            while(zwischenSet.next()){
+                kdnr = Integer.parseInt(zwischenSet.getString(1));
+                System.out.println(kdnr);
+            }
+            ResultSet kundenDaten = db.getKundenDatenByNr(kdnr);
         %>
 
         <div class="content">

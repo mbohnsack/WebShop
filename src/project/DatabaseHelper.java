@@ -1,12 +1,7 @@
 package project;
 
 import MD5.MD5;
-import org.postgresql.largeobject.LargeObject;
-import org.postgresql.largeobject.LargeObjectManager;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -465,6 +460,35 @@ public class DatabaseHelper{
         }
     }
 
+    public Integer getAnzahlBuchungById(Integer produktid){
+        Integer anzahl = null;
+        ResultSet rs = null;
+
+        try {
+            rs = stmt.executeQuery("SELECT buch_anzahl FROM tbl_produkt WHERE prod_id = "+ produktid);
+            rs.next();
+            anzahl = rs.getInt("buch_anzahl");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return anzahl;
+    }
+
+    public String getUebergeordneteKategorie(String kname) {
+        String uebergeordnet = null;
+        ResultSet rs = null;
+
+        try {
+            rs = stmt.executeQuery("SELECT kat_uebergeordnet FROM tbl_kategorie WHERE kat_name = '"+ kname + "'");
+            rs.next();
+            uebergeordnet = rs.getString("kat_uebergeordnet");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return uebergeordnet;
+    }
     public void saveFile(File bild, int prodid) throws SQLException, IOException {
         c.setAutoCommit(false);
 
