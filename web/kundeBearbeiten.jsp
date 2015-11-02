@@ -13,7 +13,7 @@
     </div>
     <div id="main_content">
         <div id="navigation_top">
-            <jsp:include page="navigation_top.html" />
+            <jsp:include page="navigation_top.jsp" />
         </div>
         <div class="crumb_navigation"> Navigation: <span class="current">Daten ändern</span> </div>
          <div class="navigation_left">
