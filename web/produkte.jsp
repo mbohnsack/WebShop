@@ -12,7 +12,7 @@
     </div>
     <div id="main_content">
         <div id="navigation_top">
-            <jsp:include page="navigation_top.html" />
+            <jsp:include page="navigation_top.jsp" />
         </div>
         <div class="crumb_navigation"> Navigation: <span class="current">Produkte</span> </div>
         <div class="navigation_left">
@@ -36,7 +36,7 @@
                     <% } %>
                 </div>
                 <div class="bottom_prod_box"></div>
-                <div class="prod_details_tab"> <a href="#" title="header=[Add to cart] body=[&nbsp;] fade=[on]"><img src="images/cart.gif" alt="" border="0" class="left_bt" /></a></div>
+                <div class="prod_details_tab"><form id="cart" action="cart.jsp" mathod="post"><button name="addtocart" type="submit" value="add"><img src="images/cart.gif" alt="" border="0" class="left_bt" /></button></form></div>
             </div>
             <% } %>
 
@@ -47,7 +47,7 @@
         <div id="footer" class="footer">
             <jsp:include page="footer.html" />
         </div>
-</div>
     </div>
+</div>
 </body>
 </html>

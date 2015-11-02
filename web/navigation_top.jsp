@@ -13,10 +13,12 @@
     <li class="divider"></li>
     <li><a href="contact.jsp" id="kontakt" class="nav6">Kontakt</a></li>
     <li class="divider"></li>
-    <li class="divider" style="margin-left: 410px"></li>
-    <li><a href="test.html" id="konto" class="nav4">Mein Konto</a></li>
-    <li class="divider"></li>
+    <li class="divider" style="margin-left: 210px"></li>
     <li><a href="register.jsp" id="registrieren" class="nav4">Registrieren</a></li>
+    <li class="divider"></li>
+    <li><a href="loginKunde.jsp" id="anmelden" class="nav4">Anmelden</a></li>
+    <li class="divider"></li>
+    <li><a href="kundeBearbeiten.jsp" id="konto" class="nav4">Daten &auml;ndern</a></li>
 </ul>
 <div class="right_menu_corner"></div>
 </body>

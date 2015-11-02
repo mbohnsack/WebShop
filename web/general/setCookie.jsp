@@ -18,10 +18,12 @@
 
   Cookie logoutCookie = null;
   if(targetPage.equals("MitarbeiterView/main.jsp")){
-    logoutCookie = new Cookie ("LoginCookieURL","../MitarbeiterView/login.jsp");
+    logoutCookie = new Cookie ("LoginCookieURL","../MitarbeiterView/loginKunde.jsp");
   }else if(targetPage.equals("index.jsp")) {
     logoutCookie = new Cookie("LoginCookieURL", "index.jsp");
   }
+
+
 
   cookie.setMaxAge(120 * 60); //nach Stunden wird der Cookie gelöscht
   response.addCookie(logoutCookie);

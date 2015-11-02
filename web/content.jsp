@@ -5,7 +5,7 @@
     <title></title>
 </head>
 <body>
-<div class="center_title_bar">Am häufigsten gebuchte Produkte</div>
+<div class="center_title_bar">Am h&auml;ufigsten gebuchte Produkte</div>
 <div class="prod_box">
     <div class="top_prod_box"></div>
     <div class="center_prod_box">
