@@ -1,7 +1,12 @@
 package project;
 
 import MD5.MD5;
+import org.postgresql.largeobject.LargeObject;
+import org.postgresql.largeobject.LargeObjectManager;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -213,7 +218,7 @@ public class DatabaseHelper{
     public void addProduct(String kategorie, String hersteller, Double preis, String beschreibung, String details, String bezeichnung, String infBezeichnung){
         try {
             ResultSet rs = stmt.executeQuery("SELECT * FROM tbl_produkt");
-            if(rs != null){
+            if(!rs.isBeforeFirst()){
                 stmt.executeQuery("INSERT INTO tbl_produkt (prod_id, prod_kategorie, prod_hersteller, prod_preis, prod_beschreibung, prod_details, prod_bezeichn, prod_infbezeichn, buch_anzahl) " +
                         "VALUES ((SELECT max(prod_id) FROM tbl_produkt) + 1, '" + kategorie + "', '" + hersteller + "', "+ preis +", '" + beschreibung +"', '"+ details +"', '"+ bezeichnung +"', '"+ infBezeichnung +"', 0)");
             } else {
