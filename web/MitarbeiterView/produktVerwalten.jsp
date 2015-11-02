@@ -9,7 +9,9 @@
   Time: 11:16
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page  language="java" %>
+<%@page contentType="text/html"%>
+<%@page pageEncoding="UTF-8"%>
 <%
   String cookieName = "LoginCookie";
   Cookie cookies [] = request.getCookies ();
@@ -28,7 +30,7 @@
 %>
 <html lang="de">
 <head>
-
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="style.css" />
   <link rel="stylesheet" type="text/css" href="metro.css" />
 </head>

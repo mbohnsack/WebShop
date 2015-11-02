@@ -297,7 +297,7 @@ public class DatabaseHelper{
     public ResultSet getKategorie(String category){
         ResultSet cat = null;
         try {
-            cat = stmt.executeQuery("SELECT * FROM tbl_kategorie WHERE prod_kategorie = '" + category +"'");
+            cat = stmt.executeQuery("SELECT * FROM tbl_kategorie WHERE kat_name = '" + category +"'");
         } catch (SQLException e) {
             e.printStackTrace();
         }
