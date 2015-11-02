@@ -215,19 +215,27 @@ public class DatabaseHelper{
         return verfuegbar;
     }
 
-    public void addProduct(String kategorie, String hersteller, Double preis, String beschreibung, String details, String bezeichnung, String infBezeichnung){
+    public Integer addProduct(String kategorie, String hersteller, Double preis, String beschreibung, String details, String bezeichnung, String infBezeichnung){
+        Integer id = null;
         try {
             ResultSet rs = stmt.executeQuery("SELECT * FROM tbl_produkt");
             if(!rs.isBeforeFirst()){
-                stmt.executeQuery("INSERT INTO tbl_produkt (prod_id, prod_kategorie, prod_hersteller, prod_preis, prod_beschreibung, prod_details, prod_bezeichn, prod_infbezeichn, buch_anzahl) " +
-                        "VALUES ((SELECT max(prod_id) FROM tbl_produkt) + 1, '" + kategorie + "', '" + hersteller + "', "+ preis +", '" + beschreibung +"', '"+ details +"', '"+ bezeichnung +"', '"+ infBezeichnung +"', 0)");
+                stmt.executeUpdate("INSERT INTO tbl_produkt (prod_id, prod_kategorie, prod_hersteller, prod_preis, prod_beschreibung, prod_details, prod_bezeichn, prod_infbezeichn, buch_anzahl) " +
+                        "VALUES ((SELECT max(prod_id) FROM tbl_produkt) + 1, '" + kategorie + "', '" + hersteller + "', " + preis + ", '" + beschreibung + "', '" + details + "', '" + bezeichnung + "', '" + infBezeichnung + "', 0)");
+                rs = stmt.executeQuery("SELECT max(prod_id) AS id FROM tbl_produkt");
+                rs.next();
+                id = rs.getInt("id");
             } else {
                 stmt.executeQuery("INSERT INTO tbl_produkt (prod_id, prod_kategorie, prod_hersteller, prod_preis, prod_beschreibung, prod_details, prod_bezeichn, prod_infbezeichn, buch_anzahl) " +
                         "VALUES (1, '" + kategorie + "', '" + hersteller + "', "+ preis +", '" + beschreibung +"', '"+ details +"', '"+ bezeichnung +"', '"+ infBezeichnung +"', 0)");
+                rs = stmt.executeQuery("SELECT max(prod_id) AS id FROM tbl_produkt");
+                rs.next();
+                id = rs.getInt("id");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return id;
     }
 
     public void updateProduct(Integer id, String kategorie, String hersteller, Double preis, String beschreibung, String details, String bezeichnung, String infBezeichnung, Integer buchungAnzahl){
