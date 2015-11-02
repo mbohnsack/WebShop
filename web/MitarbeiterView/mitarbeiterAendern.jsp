@@ -57,19 +57,19 @@ else {
 
 
       DatabaseHelper db = new DatabaseHelper();
-      ResultSet mitarbeiter = db.getMitarbeiter(username);
-      mitarbeiter.next();
+      String mitarbeiterRolle = db.getMitarbeiterRolle(username);
+
 
     %>
-    <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post" action="../updateKategorieServlet"><div ><h2>Mitarbeitern ändern</h2></div>
-      <div ><label >Username</label><input readonly type="text" name="kategorieName" value="<%=mitarbeiter.getString(2)%>" /></div>
-      <div ><label >Übergeordnete Kategorie</label><select name="ueberKategorie" selected="<%=mitarbeiter.getString(1)%>">
+    <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post" action="../updateMitarbeiterServlet"><div ><h2>Mitarbeitern ändern</h2></div>
+      <div ><label >Username</label><input readonly type="text" name="username" value="<%=username%>" /></div>
+      <div ><label >Rolle</label><select name="rolle" selected="<%=mitarbeiterRolle%>">
         <option value="Mitarbeiter">Mitarbeiter</option>
-        <option value="Administrator"Administrator></option>
+        <option value="Administrator">Administrator</option>
 
       </select>
       </div>
-      <div class="submit"><button type="submit">">Speichern</button></div>
+      <div class="submit"><button type="submit">Speichern</button></div>
 
     </form>
 

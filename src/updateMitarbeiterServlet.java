@@ -12,10 +12,12 @@ import java.io.IOException;
 public class updateMitarbeiterServlet extends HttpServlet{
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
-        String mitarbeiterUsername = request.getParameter("loeschen");
+        String mitarbeiterUsername = request.getParameter("username");
+        String rolle = request.getParameter("rolle");
+
 
         DatabaseHelper db = new DatabaseHelper();
-        db.deleteMitarbeiter(mitarbeiterUsername);
+        db.updateMirarbeiter(mitarbeiterUsername);
 
         String url = "/MitarbeiterView/mitarbeiterVerwalten.jsp";
         response.sendRedirect(url);
