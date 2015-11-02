@@ -475,4 +475,19 @@ public class DatabaseHelper{
         return anzahl;
     }
 
+    public String getUebergeordneteKategorie(String kname) {
+        String uebergeordnet = null;
+        ResultSet rs = null;
+
+        try {
+            rs = stmt.executeQuery("SELECT kat_uebergeordnet FROM tbl_kategorie WHERE kat_name = '"+ kname + "'");
+            rs.next();
+            uebergeordnet = rs.getString("kat_uebergeordnet");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return uebergeordnet;
+    }
+
 }
