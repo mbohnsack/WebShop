@@ -17,7 +17,7 @@ public class updateMitarbeiterServlet extends HttpServlet{
 
 
         DatabaseHelper db = new DatabaseHelper();
-        db.updateMirarbeiter(mitarbeiterUsername);
+        //db.updateMirarbeiter(mitarbeiterUsername);
 
         String url = "/MitarbeiterView/mitarbeiterVerwalten.jsp";
         response.sendRedirect(url);
