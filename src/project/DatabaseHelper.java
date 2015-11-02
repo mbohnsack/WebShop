@@ -219,15 +219,15 @@ public class DatabaseHelper{
         Integer id = null;
         try {
             ResultSet rs = stmt.executeQuery("SELECT * FROM tbl_produkt");
-            if(!rs.isBeforeFirst()){
+            if(rs.isBeforeFirst()){
                 stmt.executeUpdate("INSERT INTO tbl_produkt (prod_id, prod_kategorie, prod_hersteller, prod_preis, prod_beschreibung, prod_details, prod_bezeichn, prod_infbezeichn, buch_anzahl) " +
                         "VALUES ((SELECT max(prod_id) FROM tbl_produkt) + 1, '" + kategorie + "', '" + hersteller + "', " + preis + ", '" + beschreibung + "', '" + details + "', '" + bezeichnung + "', '" + infBezeichnung + "', 0)");
                 rs = stmt.executeQuery("SELECT max(prod_id) AS id FROM tbl_produkt");
                 rs.next();
                 id = rs.getInt("id");
             } else {
-                stmt.executeQuery("INSERT INTO tbl_produkt (prod_id, prod_kategorie, prod_hersteller, prod_preis, prod_beschreibung, prod_details, prod_bezeichn, prod_infbezeichn, buch_anzahl) " +
-                        "VALUES (1, '" + kategorie + "', '" + hersteller + "', "+ preis +", '" + beschreibung +"', '"+ details +"', '"+ bezeichnung +"', '"+ infBezeichnung +"', 0)");
+                stmt.executeUpdate("INSERT INTO tbl_produkt (prod_id, prod_kategorie, prod_hersteller, prod_preis, prod_beschreibung, prod_details, prod_bezeichn, prod_infbezeichn, buch_anzahl) " +
+                        "VALUES (1, '" + kategorie + "', '" + hersteller + "', " + preis + ", '" + beschreibung + "', '" + details + "', '" + bezeichnung + "', '" + infBezeichnung + "', 0)");
                 rs = stmt.executeQuery("SELECT max(prod_id) AS id FROM tbl_produkt");
                 rs.next();
                 id = rs.getInt("id");
@@ -538,7 +538,11 @@ public class DatabaseHelper{
         obj.close();
 
 //Now insert the row into imagesLO
-       stmt.executeUpdate("INSERT INTO tbl_bild(bilder,prod_id)VALUES ("+oid+","+prodid+")");
+       PreparedStatement ps=c.prepareStatement("INSERT INTO tbl_bild VALUES (?,?)");
+        ps.setInt(1,prodid);
+        ps.setInt(2,oid);
+        ps.executeUpdate();
+        ps.close();
         fis.close();
         c.setAutoCommit(true);
     }
