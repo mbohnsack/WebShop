@@ -1,5 +1,6 @@
 <%@page import="project.DatabaseHelper" %>
-<%@page import="java.sql.ResultSet" %>
+<%@page import="project.loginCookie" %>
+<%@ page import="java.sql.ResultSet" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -22,21 +23,13 @@
 
         <%
             // den loginname des angemeldeten Nutzers auslesen
-            String cookieName = "LoginCookie";
-            Cookie cookies [] = request.getCookies ();
-            Cookie myCookie = null;
-            if (cookies != null)
-            {
-                for (int i = 0; i < cookies.length; i++)
-                {
-                    if (cookies [i].getName().equals (cookieName))
-                    {
-                        myCookie = cookies[i];
-                        break;
-                    }
+            String user ="";
+            loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
+            if (loginDaten!=null) {
+                if(loginDaten.getRolle()=="Kunde"){
+                    user = loginDaten.getUsername();
                 }
             }
-            String user = myCookie.getValue();
 
             // hier wird der username in die kundenummer gewandelt (funktioniert erstmal)
             DatabaseHelper db = new DatabaseHelper();

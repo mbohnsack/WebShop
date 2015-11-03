@@ -23,7 +23,11 @@
         <div class="prod_price"><span class="price"><%= rs.getString(4) %> €</span></div>
     </div>
     <div class="bottom_prod_box"></div>
-    <div class="prod_details_tab"><form id="cart" action="cart.jsp" method="post"><button name="addtocart" type="submit" value="add"><img src="images/cart.gif" alt="" border="0" class="left_bt" /></button></form></div>
+    <div class="prod_details_tab">
+        <form id="cart" action="addToCartServlet" method="post">
+            <input type="hidden" name="produktID" value="<%= rs.getString(1)%>"/>
+            <input type="hidden" name="sourcepage" value="produkte.jsp"/>
+            <button name="addtocart" type="submit" value="add"><img src="images/cart.gif" alt="" border="0" class="left_bt" /></button></form></div>
 </div>
 <% db2.disconnectDatabase();}db.disconnectDatabase(); %>
 </body>

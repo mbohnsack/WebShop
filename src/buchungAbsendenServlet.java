@@ -1,13 +1,14 @@
 import project.DatabaseHelper;
+import project.cart;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,11 +21,7 @@ public class buchungAbsendenServlet
                           HttpServletResponse response) throws ServletException, IOException {
         DatabaseHelper db = new DatabaseHelper();
 
-
-
         String kundenmail = request.getParameter("email");
-
-        
 
         String abholDatumString = request.getParameter("abholdatum");
         String abgabeDatumString = request.getParameter("abgabedatum");
@@ -43,8 +40,11 @@ public class buchungAbsendenServlet
 
         Date abholdatum = new Date(abholDatumInMs);
         Date abgabedatum = new Date(abgabeDatumInMs);
-        List<Integer> produktids = new ArrayList<Integer>();
-        produktids.add(1);
+
+        cart shoppingCart;
+        HttpSession session = request.getSession();
+        shoppingCart = (cart) session.getAttribute("cart");
+        List<Integer> produktids = shoppingCart.getCartItems();
 
         Boolean suxxess = db.createBuchung(kundenmail, abholdatum, abgabedatum, produktids);
         System.out.println("erfolg:" + suxxess);

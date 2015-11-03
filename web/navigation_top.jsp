@@ -1,3 +1,4 @@
+<%@ page import="project.loginCookie" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,44 +12,31 @@
     <li class="divider"></li>
     <li><a href="produkte.jsp" id="produkte" class="nav2">Produkte</a></li>
     <li class="divider"></li>
-    <li><a href="contact.jsp" id="kontakt" class="nav6">Kontakt</a></li>
+    <li><a href="contact.jsp" id="kontakt" class="nav3">Kontakt</a></li>
     <li class="divider"></li>
     <li><a href="register.jsp" id="registrieren" class="nav4">Registrieren</a></li>
     <li class="divider"></li>
     <%
-        // den loginname des angemeldeten Nutzers auslesen
+        // den loginname des angemeldeten Nutzers auslesen und wenn jemand angemeldet ist die buttons einblenden
         Boolean loginState = false;
-        String user = "";
+        String user ="";
 
-        String cookieName = "LoginCookie";
-        Cookie cookies [] = request.getCookies ();
-        Cookie myCookie = null;
-        if (cookies != null)
-        {
-            for (int i = 0; i < cookies.length; i++)
-            {
-                if (cookies [i].getName().equals (cookieName))
-                {
-                    myCookie = cookies[i];
-                    user = myCookie.getValue() + " abmelden";
-                    loginState = true;
-                    break;
-                }
+        loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
+        if (loginDaten!=null) {
+            if(loginDaten.getRolle()=="Kunde"){
+                loginState = true;
+                user = loginDaten.getUsername();
             }
-        }
-        else{
+        } else{
             loginState = false;
-
         }
-    %>
-    <% if(loginState){%>
-        <li><a href="../general/logout.jsp" id="abmelden" class="nav4"><%= user%></a></li>
-        <li class="divider"></li>
-        <li><a href="kundeBearbeiten.jsp" id="konto" class="nav4">Daten &auml;ndern</a></li>
-    <%}else{%>
-        <li><a href="loginKunde.jsp" id="anmelden" class="nav4">anmelden</a></li>
-    <%}%>
-
+        if(loginState){%>
+            <li><a href="../general/logout.jsp" id="abmelden" class="nav5"><%= user%> abmelden</a></li>
+            <li class="divider"></li>
+            <li><a href="kundeBearbeiten.jsp" id="konto" class="nav6">Daten &auml;ndern</a></li>
+        <%}else{%>
+            <li><a href="loginKunde.jsp" id="anmelden" class="nav5">anmelden</a></li>
+        <%}%>
 
 </ul>
 <div class="right_menu_corner"></div>

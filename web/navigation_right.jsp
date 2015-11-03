@@ -1,4 +1,7 @@
-<%@ page import="java.util.ArrayList" %>
+<%@ page import="project.DatabaseHelper" %>
+<%@ page import="project.cart" %>
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.sql.SQLException" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -12,29 +15,50 @@
 <body>
 
 <div class="shopping_cart">
-    <div class="cart_title">Warenkorb</div>
+    <div class="cart_title">Warenkorb</div><br/>
 
-        <%/*
-            List bestellListe = (List)request.getAttribute("bestellListe");
+    <%
+        double gesamtPreis = 0;
 
-            for(int i=1; i<bestellListe.size();i++){
-
+        cart shoppingCart;
+        session = request.getSession();
+        shoppingCart = (cart) session.getAttribute("cart");
+        if (shoppingCart == null) {
+            shoppingCart = new cart();
+            session.setAttribute("cart", shoppingCart);
         }
+        List<Integer> produktids = shoppingCart.getCartItems();
+
+        DatabaseHelper db = new DatabaseHelper();
+
+        for (Integer produkt : produktids) {
+            ResultSet produktDaten = db.getProductsById(produkt.intValue());
+            try {
+                while (produktDaten.next()) {
+    %><span><p><%= produktDaten.getString("prod_bezeichn")%>
+     | <%= produktDaten.getString("prod_preis")%>&euro;</p></span><%
+
+                gesamtPreis = gesamtPreis + Double.parseDouble(produktDaten.getString("prod_preis"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    db.disconnectDatabase();
+%>
 
 
+    <br/>
+    <span class="border_cart"></span> Gesamt: <span class="price"><%= gesamtPreis%>&euro;</span>
+    <form name="buchen" method="post" action="buchungAbsenden.jsp">
+        <button>Jetzt buchen</button>
+    </form>
 
-        */%>
-
-        <span class="border_cart"></span> Gesamt: <span class="price">350$</span>
-
-        <form name="buchen" method="post" action="buchungAbsenden.jsp">
-            <button>Jetzt buchen</button>
-        </form>
+    <form name="leeren" method="post" action="cartLeerenServlet">
+        <button>Korb leeren</button>
+    </form>
 
 
-    <div class="cart_icon"><a href="#" title="header=[Checkout] body=[&nbsp;] fade=[on]"><img src="images/shoppingcart.png" alt="" width="48" height="48" border="0" /></a></div>
 </div>
-
-
 </body>
 </html>

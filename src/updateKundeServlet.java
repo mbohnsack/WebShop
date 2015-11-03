@@ -17,7 +17,7 @@ public class updateKundeServlet extends HttpServlet {
                           HttpServletResponse response) throws ServletException, IOException {
 
         String passwort; // Übergibt je nachdem das neue oder alte PW
-        String benutzer=""; //aktueller Benutzer, falls das Login geändert wird
+        String benutzer = ""; //aktueller Benutzer, falls das Login geändert wird
         Integer kun_nummer = 0;
 
         String vorname = request.getParameter("vorname");
@@ -39,12 +39,12 @@ public class updateKundeServlet extends HttpServlet {
         ResultSet kundenDaten = db.getKundenDatenByLogin(login); //Feld mit den alten Kundendaten einlesen
 
         // wenn keine Eingabe erfolgt werden die alten Daten übernommen
-        try{
-            while(kundenDaten.next()) {
+        try {
+            while (kundenDaten.next()) {
                 kun_nummer = Integer.parseInt(kundenDaten.getString(1));
-                if (login.contentEquals(""))login = kundenDaten.getString(2);
-                //wenn das login geändert wird altes login für die pw abfrage nutzen
-                if (!login.contentEquals(""))benutzer = kundenDaten.getString(2);
+                if (login.contentEquals("")) login = kundenDaten.getString(2);
+                //wenn das login geändert wird - altes login für die pw abfrage nutzen
+                if (!login.contentEquals("")) benutzer = kundenDaten.getString(2);
                 if (name.contentEquals("")) name = kundenDaten.getString(4);
                 if (vorname.contentEquals("")) vorname = kundenDaten.getString(5);
                 if (strasse.contentEquals("")) strasse = kundenDaten.getString(6);
@@ -55,7 +55,7 @@ public class updateKundeServlet extends HttpServlet {
                 if (tele.contentEquals("")) tele = kundenDaten.getString(10);
                 if (mobil.contentEquals("")) mobil = kundenDaten.getString(11);
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -66,19 +66,17 @@ public class updateKundeServlet extends HttpServlet {
 
 
         // wenn kein neues PW eingegeben wurde oder die PW nicht übereinstimmen fehler bzw altes pw
-        if (!pwNeu.contentEquals("") && pwNeu.contentEquals(pwNeuBest)){
+        if (!pwNeu.contentEquals("") && pwNeu.contentEquals(pwNeuBest)) {
             passwort = pwNeu;
-        }
-        else{
+        } else {
             passwort = pwAlt;
         }
 
         // nur bei eingabe des gültigen PW werden die Daten in die DB geschrieben
-        if (db.loginKunde(benutzer, pwAlt)){
+        if (db.loginKunde(benutzer, pwAlt)) {
             db.updateKundenDaten(kun_nummer, name, vorname, strasse, ort, email, hausn, plz_int, tele_int, mobil_int, passwort, login);
             //Daten erfolgreich übernommen
-        }
-        else{
+        } else {
             // PW stimmte nicht -> redirect Daten wurden nicht übernommen
         }
 
