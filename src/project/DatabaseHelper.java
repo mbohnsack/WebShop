@@ -194,18 +194,28 @@ public class DatabaseHelper{
 
     public Boolean createBuchung(String kundenmail, Date abholdatum, Date abgabedatum, List<Integer> produktids){
         Boolean verfuegbar = false;
+        Integer kundenId = null;
+        Integer buchcode = null;
         ResultSet rs = null;
-        List<Integer> hwcodes = new ArrayList<Integer>();
+        ResultSet rs2 = null;
+        List<String> hwcodes = new ArrayList<String>();
         try {
-            rs = stmt.executeQuery("SELECT kun_email FROM tbl_kunde WHERE kun_email = '"+ kundenmail +"'");
+            rs = stmt.executeQuery("SELECT kun_nummer FROM tbl_kunde WHERE kun_email = '"+ kundenmail +"'");
+            rs2 = stmt.executeQuery("SELECT max(buch_code)+1 FROM tbl_buchungsliste");
+            rs2.next();
+            buchcode = rs.getInt("buch_code");
             if(!rs.next()) {
+                kundenId = rs.getInt("kun_nummer");
                 return false;
             } else {
                 for(Integer produkt : produktids){
                     if(produktVerfuegbar(produkt, abholdatum, abgabedatum)){
                         rs = stmt.executeQuery("SELECT prod_code FROM tbl_lagerliste WHERE prod_id = "+ produkt);
                         if(rs.next()){
-                            hwcodes.add(rs.getInt("prod_code"));
+                            String prodcode = rs.getString("prod_code");
+                            hwcodes.add(prodcode);
+                            stmt.executeUpdate("INSERT INTO tbl_buchung_produkt (bestell_id, produkt_code)" +
+                                    " VALUES ("+ buchcode +", '"+ prodcode +"')");
                         } else{
                             return false;
                         }
@@ -214,6 +224,8 @@ public class DatabaseHelper{
                     }
                 }
                 verfuegbar=true;
+                stmt.executeUpdate("INSERT INTO tbl_buchungsliste (kun_id, buch_abholdatum, buch_rueckgabedatum, buch_code, buch_status)" +
+                        " VALUES ("+ kundenId +", "+ abholdatum +", "+ abgabedatum +", "+ buchcode +", 'ausstehend'");
             }
         } catch (SQLException e) {
             e.printStackTrace();
