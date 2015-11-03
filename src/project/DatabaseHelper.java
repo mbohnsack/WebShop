@@ -462,7 +462,7 @@ public class DatabaseHelper{
         return rs;
     }
 
-    public ResultSet getKundenDaten(Integer kundenNR){
+    public ResultSet getKundenDatenByNr(Integer kundenNR){
         ResultSet rs=null;
         try{
             rs=stmt.executeQuery("SELECT * FROM tbl_kunde WHERE kun_nummer = " + kundenNR);

@@ -34,9 +34,13 @@
                     <% } %>
                 </div>
                 <div class="bottom_prod_box"></div>
-                <div class="prod_details_tab"><form id="cart" action="cart.jsp" mathod="post"><button name="addtocart" type="submit" value="add"><img src="images/cart.gif" alt="" border="0" class="left_bt" /></button></form></div>
+                <div class="prod_details_tab">
+
+                    <form id="cart" action="shoppingCartServlet" mathod="post">
+                        <input type="hidden" name="produktID" value="<%= i+1%>"/>
+                        <button name="addtocart" type="submit" value="add"><img src="images/cart.gif" alt="" border="0" class="left_bt" /></button></form></div>
             </div>
-            <% } %>
+            <% } db.disconnectDatabase();%>
 
         </div>
         <div id="navigation_right" class="navigation_right">

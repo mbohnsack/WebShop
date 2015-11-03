@@ -46,7 +46,7 @@
         <div class="bottom_prod_box"></div>
         <div class="prod_details_tab"> <a href="#" title="header=[Add to cart] body=[&nbsp;] fade=[on]"><img src="images/cart.gif" alt="" border="0" class="left_bt" /></a> </div>
       </div>
-      <% } }%>
+      <% } db.disconnectDatabase();}%>
     </div>
     <div id="navigation_right" class="navigation_right">
       <jsp:include page="navigation_right.jsp" />

@@ -54,7 +54,7 @@
           <div class="bottom_prod_box_big"></div>
         </div>
         </div>
-<% } %>
+<% } db.disconnectDatabase();%>
     </div>
       <div id="navigation_right" class="navigation_right">
         <jsp:include page="navigation_right.jsp" />

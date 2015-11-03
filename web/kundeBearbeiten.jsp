@@ -112,11 +112,13 @@
                                 <label class="contact_customMF"><strong>Passwort Alt</strong></label>
                                 <input type="password" name="pw" />
                             </div>
-                            <% } %>
+                            <% }
+
+                            %>
 
                             <div class="form_row">
                                 <input type="submit" value="Ok" /> </div>
-                        </>
+                        </form>
                     </div>
                     <div class="bottom_prod_box_big"></div>
                 </div>
