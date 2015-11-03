@@ -1,3 +1,4 @@
+<%@ page import="project.loginCookie" %>
 <%--
   Created by IntelliJ IDEA.
   User: Chris
@@ -7,25 +8,18 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-  //Cookie abrufen um auf die LoginURL zuzugreifen
-  String cookieName = "LoginCookieURL";
-  Cookie cookies [] = request.getCookies ();
-  Cookie myCookie = null;
-  if (cookies != null)
-  {
-    for (int i = 0; i < cookies.length; i++)
-    {
-      if (cookies [i].getName().equals (cookieName))
-      {
-        myCookie = cookies[i];
-        break;
-      }
-    }
-  }
-  String targetPage = myCookie.getValue();
-
   //Cookie mit den Anmeldedaten auslesen und löschen
-  cookieName = "LoginCookie";
+  loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
+  String targetPage = loginDaten.getTargetpage();
+
+  //session beenden
+  session.removeAttribute("loginCookie");
+  session.invalidate();
+
+  //cookie abrufen
+  Cookie cookies [] = request.getCookies ();
+  String cookieName = "loginCookie";
+  Cookie myCookie = null;
   if (cookies != null)
   {
     for (int i = 0; i < cookies.length; i++)

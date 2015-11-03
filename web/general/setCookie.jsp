@@ -22,11 +22,15 @@
   loginCookie loginCookie = new loginCookie(username,targetPage,sourcepage);
 
   session.setAttribute("loginCookie",loginCookie);
-  response.sendRedirect(targetPage);
 
   Cookie cookie = new Cookie("loginCookie","Hallo");
   cookie.setMaxAge(120 * 60); //nach 2Stunden wird der Cookie gelöscht
   response.addCookie(cookie);
+
+
+  response.sendRedirect(targetPage);
+
+
 
 %>
 

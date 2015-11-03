@@ -11,7 +11,7 @@
 <%
   loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
 
-  String cookieName = "LoginCookie";
+  String cookieName = "loginCookie";
   Cookie cookies [] = request.getCookies ();
   Cookie myCookie = null;
   if (cookies != null)
