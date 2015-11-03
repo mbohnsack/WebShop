@@ -30,5 +30,6 @@ public class updateProduktServlet extends HttpServlet {
 
         String url = "/MitarbeiterView/produktVerwalten.jsp";
         response.sendRedirect( url );
+        db.disconnectDatabase();
     }
 }

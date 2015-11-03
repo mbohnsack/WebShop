@@ -32,5 +32,6 @@ public class createMitarbeiter extends HttpServlet {
             out.println("<font color=red>Mitarbeiter konnte nict erstellt werden, da der Name bereits vergeben ist..</font>");
             rd.include(request, response);
         }
+        db.disconnectDatabase();
     }
 }

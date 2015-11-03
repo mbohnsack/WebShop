@@ -34,5 +34,6 @@ public class mitarbeiterServlet extends HttpServlet{
             rd.include(request, response);
 
         }
+        db.disconnectDatabase();
     }
 }

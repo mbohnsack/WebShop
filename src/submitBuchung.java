@@ -23,6 +23,7 @@ public class submitBuchung {
                     db.submitBuchung(buchung);
                 }
         }
+        db.disconnectDatabase();
     }
 
 }
