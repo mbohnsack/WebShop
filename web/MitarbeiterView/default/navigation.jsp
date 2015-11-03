@@ -1,3 +1,4 @@
+<%@ page import="project.loginCookie" %>
 <%--
   Created by IntelliJ IDEA.
   User: Chris
@@ -6,7 +7,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <%
+  loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
+
   String cookieName = "LoginCookie";
   Cookie cookies [] = request.getCookies ();
   Cookie myCookie = null;
@@ -22,8 +26,10 @@
     }
   }
 %>
+
 <div class="naviLabel">
-  Willkommen, <%=myCookie.getValue()%> </br>
+  Willkommen, <%=loginDaten.getUsername()%> </br>
+  Sie sind angemeldt als: "<%=loginDaten.getRolle()%>"</br>
   <a href="../general/logout.jsp"><b>Logout</b></a>
 </div>
 <label class="naviLabel">Buchungen</label>
@@ -38,6 +44,9 @@
 <label class="naviLabel">Kategorie</label>
 <div class="navlinks"><a href="KategorieAnlegen.jsp"><b>Kategorie anlegen</b></a></div>
 <div class="navlinks"><a href="kategorieVerwalten.jsp"><b>Kategorien verwalten</b></a></div>
-<label class="naviLabel">Mitarbeiter</label>
-<div class="navlinks"><a href="mitarbeiterAnlegen.jsp"><b>Mitarbeiter anlegen</b></a></div>
-<div class="navlinks"><a href="mitarbeiterVerwalten.jsp"><b>Mitarbeiter verwalten</b></a></div>
+<% if(loginDaten.getRolle().equals("admin"))
+  {%>
+    <label class="naviLabel">Mitarbeiter</label>
+    <div class="navlinks"><a href="mitarbeiterAnlegen.jsp"><b>Mitarbeiter anlegen</b></a></div>
+    <div class="navlinks"><a href="mitarbeiterVerwalten.jsp"><b>Mitarbeiter verwalten</b></a></div>
+<%}%>

@@ -7,6 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+  loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
+
   String cookieName = "LoginCookie";
   Cookie cookies [] = request.getCookies ();
   Cookie myCookie = null;

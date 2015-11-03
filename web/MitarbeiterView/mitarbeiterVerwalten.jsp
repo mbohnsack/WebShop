@@ -1,6 +1,7 @@
 <%@ page import="project.DatabaseHelper" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.sql.ResultSetMetaData" %>
+<%@ page import="project.loginCookie" %>
 
 <%--
   Created by IntelliJ IDEA.
@@ -13,6 +14,8 @@
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
 <%
+  loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
+
   String cookieName = "LoginCookie";
   Cookie cookies [] = request.getCookies ();
   Cookie myCookie = null;

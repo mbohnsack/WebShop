@@ -1,3 +1,4 @@
+<%@ page import="project.loginCookie" %>
 <%--
   Created by IntelliJ IDEA.
   User: Chris
@@ -8,6 +9,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%int anzahl=0;%>
 <%
+  loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
+
   String cookieName = "LoginCookie";
   Cookie cookies [] = request.getCookies ();
   Cookie myCookie = null;

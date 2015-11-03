@@ -1,3 +1,4 @@
+<%@ page import="project.loginCookie" %>
 <%--
   Created by IntelliJ IDEA.
   User: Chris
@@ -5,8 +6,11 @@
   Time: 11:16
   To change this template use File | Settings | File Templates.
 --%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+  loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
+
   String cookieName = "LoginCookie";
   Cookie cookies [] = request.getCookies ();
   Cookie myCookie = null;
@@ -33,7 +37,7 @@
 
   <%if (myCookie == null) {
     %>
-    No Cookie found with the name <%=cookieName%>
+    Bitte loggen Sie sich ein!
     <%
   }
   else {

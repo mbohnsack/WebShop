@@ -1,6 +1,7 @@
 <%@ page import="java.sql.ResultSetMetaData" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="project.DatabaseHelper" %>
+<%@ page import="project.loginCookie" %>
 <%--
   Created by IntelliJ IDEA.
   User: Chris
@@ -10,6 +11,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+  loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
+
   String cookieName = "LoginCookie";
   Cookie cookies [] = request.getCookies ();
   Cookie myCookie = null;
@@ -58,7 +61,7 @@ else {
             DatabaseHelper db2 = new DatabaseHelper();
             ResultSet allKategories = db2.getAllKategories();
             %>
-          <option value=""</option>
+          <option value=""></option>
           <%
             while (allKategories.next()){
           %>

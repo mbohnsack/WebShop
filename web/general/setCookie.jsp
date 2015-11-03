@@ -1,4 +1,4 @@
-
+<%@ page import="project.loginCookie" %>
 <%--
   Created by IntelliJ IDEA.
   User: Chris
@@ -11,31 +11,23 @@
 <%
   String username = (String) request.getAttribute("username");
   String targetPage = (String) request.getAttribute("targetpage");
-  if(username==null) username="";
-  Cookie cookie = new Cookie ("LoginCookie",username);
+  String  sourcepage = null;
+
+  if(targetPage.equals("MitarbeiterView/main.jsp")){
+    sourcepage = "../MitarbeiterView/login.jsp";
+  }else if(targetPage.equals("index.jsp")) {
+    sourcepage = "../index.jsp";
+  }
+
+  loginCookie loginCookie = new loginCookie(username,targetPage,sourcepage);
+
+  session.setAttribute("loginCookie",loginCookie);
+  response.sendRedirect(targetPage);
+
+  Cookie cookie = new Cookie("loginCookie","Hallo");
   cookie.setMaxAge(120 * 60); //nach 2Stunden wird der Cookie gelöscht
   response.addCookie(cookie);
 
-  Cookie logoutCookie = null;
-  if(targetPage.equals("MitarbeiterView/main.jsp")){
-    logoutCookie = new Cookie ("LoginCookieURL","../MitarbeiterView/loginKunde.jsp");
-  }else if(targetPage.equals("index.jsp")) {
-    logoutCookie = new Cookie("LoginCookieURL", "../index.jsp");
-  }
-
-
-
-  cookie.setMaxAge(120 * 60); //nach Stunden wird der Cookie gelöscht
-  response.addCookie(logoutCookie);
 %>
 
-<html>
-<head>
-  <meta http-equiv="refresh" content="0; URL=<%=targetPage %>">
-  <title>Cookie Saved</title>
-</head>
-<body>
-
-</body>
-</html>
 

@@ -1,6 +1,7 @@
 <%@ page import="java.sql.ResultSetMetaData" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="project.DatabaseHelper" %>
+<%@ page import="project.loginCookie" %>
 <%--
   Created by IntelliJ IDEA.
   User: Chris
@@ -9,7 +10,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
+<<%
+  loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
+
   String cookieName = "LoginCookie";
   Cookie cookies [] = request.getCookies ();
   Cookie myCookie = null;
