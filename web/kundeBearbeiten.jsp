@@ -112,7 +112,7 @@
                                 <label class="contact_customMF"><strong>Passwort Alt</strong></label>
                                 <input type="password" name="pw" />
                             </div>
-                            <% }
+                            <% } db.disconnectDatabase();
 
                             %>
 

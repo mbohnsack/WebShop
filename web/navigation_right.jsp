@@ -27,7 +27,7 @@
 
         <span class="border_cart"></span> Gesamt: <span class="price">350$</span>
 
-        <form name="buchen" method="post" action="buchungAbsendenservelet">
+        <form name="buchen" method="post" action="buchungAbsenden.jsp">
             <button>Jetzt buchen</button>
         </form>
 
