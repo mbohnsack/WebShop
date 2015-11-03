@@ -27,9 +27,11 @@
 
         <span class="border_cart"></span> Gesamt: <span class="price">350$</span>
 
+        <form name="buchen" method="post" action="buchungAbsendenservelet">
+            <button>Jetzt buchen</button>
+        </form>
 
 
-        <button>Jetzt buchen</button></div>
     <div class="cart_icon"><a href="#" title="header=[Checkout] body=[&nbsp;] fade=[on]"><img src="images/shoppingcart.png" alt="" width="48" height="48" border="0" /></a></div>
 </div>
 
