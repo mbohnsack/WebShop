@@ -41,7 +41,7 @@ public class DatabaseHelper{
 
     public void updateMitarbeiter(String typ, String benutzerName){
         try {
-            stmt.executeQuery("UPDATE tbl_mitarbeiter SET mit_typ = "+ typ +" WHERE mit_benutzer = "+ benutzerName);
+            stmt.executeQuery("UPDATE tbl_mitarbeiter SET mit_typ = '"+ typ +"' WHERE mit_benutzer = '"+ benutzerName+"'");
         } catch (SQLException e) {
             e.printStackTrace();
         }

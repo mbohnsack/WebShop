@@ -64,8 +64,8 @@ else {
     <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post" action="../updateMitarbeiterServlet"><div ><h2>Mitarbeitern ändern</h2></div>
       <div ><label >Username</label><input readonly type="text" name="username" value="<%=username%>" /></div>
       <div ><label >Rolle</label><select name="rolle" selected="<%=mitarbeiterRolle%>">
-        <option value="Mitarbeiter">Mitarbeiter</option>
-        <option value="Administrator">Administrator</option>
+        <option value="mitarbeiter">Mitarbeiter</option>
+        <option value="admin">Administrator</option>
 
       </select>
       </div>
