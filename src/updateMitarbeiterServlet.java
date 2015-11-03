@@ -1,6 +1,7 @@
 import project.DatabaseHelper;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,6 +10,7 @@ import java.io.IOException;
 /**
  * Created by Chris on 02.11.2015.
  */
+@WebServlet("/updateMitarbeiterServlet")
 public class updateMitarbeiterServlet extends HttpServlet{
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
@@ -17,7 +19,7 @@ public class updateMitarbeiterServlet extends HttpServlet{
 
 
         DatabaseHelper db = new DatabaseHelper();
-        //db.updateMirarbeiter(mitarbeiterUsername);
+        db.updateMitarbeiter(rolle,mitarbeiterUsername);
 
         String url = "/MitarbeiterView/mitarbeiterVerwalten.jsp";
         response.sendRedirect(url);
