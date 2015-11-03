@@ -10,7 +10,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<<%
+<%
   loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
 
   String cookieName = "loginCookie";
@@ -76,6 +76,7 @@ else {
       <div ><label >Preis</label><input  type="text" name="preis" /></div>
       <div ><label >Bild hochladen</label><label><div >Datei auswählen</div><input type="file"  name="file" /><div>No file selected</div></label></div>
       <div class="submit"><input type="submit" value="Speichern"/></div>
+    </div>
     </form>
 
   </div>
