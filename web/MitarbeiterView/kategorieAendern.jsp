@@ -59,6 +59,7 @@ else {
       DatabaseHelper db = new DatabaseHelper();
       ResultSet kategorie = db.getKategorie(kategorieName);
       kategorie.next();
+      db.disconnectDatabase();
 
     %>
     <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post" action="../updateKategorieServlet"><div ><h2>Produkt aendern</h2></div>
@@ -68,6 +69,7 @@ else {
         <%
           DatabaseHelper db2 = new DatabaseHelper();
           ResultSet allKategories = db2.getAllKategories();
+          db2.disconnectDatabase();
           while (allKategories.next()){
             if(allKategories.getString(1).equals(kategorie.getString(2))){
         %>

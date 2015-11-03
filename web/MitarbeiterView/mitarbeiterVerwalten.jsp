@@ -68,6 +68,7 @@ else {
 
             DatabaseHelper db = new DatabaseHelper();
             ResultSet allMitarbeiter = db.getAllMitarbeiter();
+            db.disconnectDatabase();
             while (allMitarbeiter.next()){
         %>
         <tr>

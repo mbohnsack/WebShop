@@ -65,7 +65,7 @@ else {
 
             DatabaseHelper db = new DatabaseHelper();
             ResultSet allKategories = db.getAllKategories();
-
+            db.disconnectDatabase();
             ResultSetMetaData rsmd = allKategories.getMetaData();
             int columnCount = rsmd.getColumnCount();
 

@@ -59,6 +59,7 @@ else {
         try{
           project.DatabaseHelper db = new project.DatabaseHelper();
           ResultSet rs= db.getAllProducts();
+          db.disconnectDatabase();
           int id;
           String bezeichnung;
 

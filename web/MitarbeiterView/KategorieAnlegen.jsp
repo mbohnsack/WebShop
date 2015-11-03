@@ -57,6 +57,7 @@ else {
           <%
             DatabaseHelper db2 = new DatabaseHelper();
             ResultSet allKategories = db2.getAllKategories();
+            db2.disconnectDatabase();
             %>
           <option value=""</option>
           <%

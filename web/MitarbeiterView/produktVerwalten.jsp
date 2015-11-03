@@ -74,7 +74,7 @@ else {
 
                 DatabaseHelper db = new DatabaseHelper();
                 ResultSet allProducts = db.getAllProducts();
-
+                db.disconnectDatabase();
                 ResultSetMetaData rsmd = allProducts.getMetaData();
                 int columnCount = rsmd.getColumnCount();
 
