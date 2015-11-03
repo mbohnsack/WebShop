@@ -62,7 +62,8 @@ else {
       <div ><label >Kategorie</label><div ><select name="kategorie" >
           <%
               DatabaseHelper db2 = new DatabaseHelper();
-               ResultSet allKategories = db2.getAllKategories();
+              ResultSet allKategories = db2.getAllKategories();
+
               while (allKategories.next()){
                 %>
                    <option value="<%=allKategories.getString(1)%>"><%=allKategories.getString(1)%></option>
@@ -81,6 +82,7 @@ else {
 
 </div>
 <%
+    db2.disconnectDatabase();
   }
 %>
 </body>

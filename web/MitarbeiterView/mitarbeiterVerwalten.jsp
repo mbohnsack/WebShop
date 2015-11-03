@@ -67,9 +67,8 @@ else {
           <td></td>
         </tr>
         <%
+          DatabaseHelper db = new DatabaseHelper();
           try {
-
-            DatabaseHelper db = new DatabaseHelper();
             ResultSet allMitarbeiter = db.getAllMitarbeiter();
             while (allMitarbeiter.next()){
         %>
@@ -95,6 +94,7 @@ else {
 
 </div>
 <%
+    db.disconnectDatabase();
   }
 %>
 </body>

@@ -555,4 +555,13 @@ public class DatabaseHelper{
         c.setAutoCommit(true);
     }
 
+    public void disconnectDatabase(){
+        try {
+            stmt.close();
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

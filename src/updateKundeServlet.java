@@ -84,6 +84,6 @@ public class updateKundeServlet extends HttpServlet {
 
         String url = "/kundeBearbeiten.jsp";
         response.sendRedirect(url);
-
+        db.disconnectDatabase();
     }
 }

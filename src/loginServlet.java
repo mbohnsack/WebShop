@@ -47,5 +47,6 @@ public class loginServlet extends HttpServlet {
             out.println("<font color=red>Either user name or password is wrong.</font>");
             rd.include(request, response);
         }
+        db.disconnectDatabase();
     }
 }

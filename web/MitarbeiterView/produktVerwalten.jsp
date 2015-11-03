@@ -73,11 +73,9 @@ else {
             <td></td>
           </tr>
           <%
+            DatabaseHelper db = new DatabaseHelper();
             try {
-
-                DatabaseHelper db = new DatabaseHelper();
                 ResultSet allProducts = db.getAllProducts();
-
                 ResultSetMetaData rsmd = allProducts.getMetaData();
                 int columnCount = rsmd.getColumnCount();
 
@@ -107,6 +105,7 @@ else {
 
 </div>
 <%
+    db.disconnectDatabase();
   }
 %>
 </body>

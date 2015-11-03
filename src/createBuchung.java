@@ -85,5 +85,6 @@ public class createBuchung extends HttpServlet {
                 rd.include(request, response);
             }
         }
+        db.disconnectDatabase();
     }
 }

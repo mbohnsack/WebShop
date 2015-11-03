@@ -23,5 +23,6 @@ public class updateKategorieServlet extends HttpServlet {
 
         String url = "/MitarbeiterView/kategorieVerwalten.jsp";
         response.sendRedirect( url );
+        db.disconnectDatabase();
     }
 }

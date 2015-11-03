@@ -62,7 +62,6 @@ else {
       DatabaseHelper db = new DatabaseHelper();
       String mitarbeiterRolle = db.getMitarbeiterRolle(username);
 
-
     %>
     <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post" action="../updateMitarbeiterServlet"><div ><h2>Mitarbeitern ändern</h2></div>
       <div ><label >Username</label><input readonly type="text" name="username" value="<%=username%>" /></div>
@@ -80,6 +79,7 @@ else {
 
 </div>
 <%
+    db.disconnectDatabase();
   }
 %>
 </body>

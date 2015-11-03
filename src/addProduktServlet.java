@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -31,7 +30,7 @@ public class addProduktServlet extends HttpServlet {
         String produktname2 = null;
         String produktbeschreibung = null;
         String details = null;
-        String kategorie = null;
+        String kategorie = "Mischpulte";
         String hersteller = null;
         double preis=0.0;
 
@@ -49,16 +48,15 @@ public class addProduktServlet extends HttpServlet {
             if (!uploadDir.exists()) {
                 uploadDir.mkdir();
             }
-            List formItems = null;
+            List<FileItem> formItems = null;
             try {
                 formItems = upload.parseRequest(request);
             } catch (FileUploadException e) {
                 e.printStackTrace();
             }
-            Iterator iter = formItems.iterator();
 
-            while (iter.hasNext()) {
-                FileItem item = (FileItem) iter.next();
+
+            for (FileItem item: formItems) {
                 // processes only fields that are not form fields
                 if (!item.isFormField()) {
                     String fileName = new File(item.getName()).getName();
@@ -73,29 +71,31 @@ public class addProduktServlet extends HttpServlet {
                         e.printStackTrace();
                     }
                 }else{
-                    String name=item.getName();
-                    switch(name){
-                        case "produktname":
-                            produktname=item.getString();
-                            break;
-                        case "produktname2":
-                            produktname2=item.getString();
-                            break;
-                        case "produktbeschreibung":
-                            produktbeschreibung=item.getString();
-                            break;
-                        case "details":
-                            details=item.getString();
-                            break;
-                        case "kategorie":
-                            kategorie=item.getString();
-                            break;
-                        case "hersteller":
-                            hersteller=item.getString();
-                            break;
-                        case "preis":
-                            preis=Double.parseDouble(item.getString());
-                            break;
+                    String name=item.getFieldName();
+                    if(name!=null) {
+                        switch (name) {
+                            case "produktname":
+                                produktname = item.getString();
+                                break;
+                            case "produktname2":
+                                produktname2 = item.getString();
+                                break;
+                            case "produktbeschreibung":
+                                produktbeschreibung = item.getString();
+                                break;
+                            case "details":
+                                details = item.getString();
+                                break;
+                            case "kategorie":
+                                kategorie = item.getString();
+                                break;
+                            case "hersteller":
+                                hersteller = item.getString();
+                                break;
+                            case "preis":
+                                preis = Double.parseDouble(item.getString());
+                                break;
+                        }
                     }
                 }
 
@@ -110,5 +110,6 @@ public class addProduktServlet extends HttpServlet {
 
         String url = "/MitarbeiterView/produktVerwalten.jsp";
         response.sendRedirect( url );
+        db.disconnectDatabase();
     }
 }

@@ -100,6 +100,8 @@ else {
 
 </div>
 <%
+    db.disconnectDatabase();
+    db2.disconnectDatabase();
   }
 %>
 </body>

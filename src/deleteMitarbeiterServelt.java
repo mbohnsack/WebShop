@@ -21,5 +21,6 @@ public class deleteMitarbeiterServelt extends HttpServlet {
 
         String url = "/MitarbeiterView/mitarbeiterVerwalten.jsp";
         response.sendRedirect( url );
+        db.disconnectDatabase();
     }
 }
