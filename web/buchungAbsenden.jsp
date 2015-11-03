@@ -45,46 +45,9 @@
                 <input type="date" value="TT.MM.JJJJ" name="abgabe" />
               </div>
 
-              <%
-                DatabaseHelper db = new DatabaseHelper();
-                String kundenmail="";
-
-                String cookieName = "LoginCookie";
-                Cookie cookies [] = request.getCookies ();
-                Cookie myCookie = null;
-                if (cookies != null)
-                {
-                  for (int i = 0; i < cookies.length; i++)
-                  {
-                    if (cookies [i].getName().equals (cookieName))
-                    {
-                      myCookie = cookies[i];
-                      break;
-                    }
-                  }
-                }
-                String user = myCookie.getValue();
-
-                if(myCookie!=null){
-                  ResultSet kundenMailabfragen = db.getKundenDatenByLogin(user);
-                  try{
-                    while(kundenMailabfragen.next()){
-                      kundenmail = kundenMailabfragen.getString(12);
-                      System.out.println(kundenmail);
-                    }
-
-                  }catch(SQLException e){
-
-                  }
-                }else{
-                  kundenmail = "Bitte email eingeben";
-                }
-                db.disconnectDatabase();
-              %>
-
               <div class="form_row">
                 <label class="contact_customMF"><strong>email</strong></label>
-                <input type="text" name="email" placeholder="<%= kundenmail%>" />
+                <input type="text" name="email" placeholder="Bitte email eingeben" />
               </div>
 
 
