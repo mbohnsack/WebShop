@@ -55,11 +55,9 @@ else {
       Abholdatum: <input type="date" name="abholung"/><br/>
       Abgabedatum: <input type="date" name="abgabe" /><br/>
       <%
-
+        project.DatabaseHelper db = new project.DatabaseHelper();
         try{
-          project.DatabaseHelper db = new project.DatabaseHelper();
           ResultSet rs= db.getAllProducts();
-          db.disconnectDatabase();
           int id;
           String bezeichnung;
 
@@ -88,6 +86,7 @@ else {
 
 </div>
 <%
+    db.disconnectDatabase();
   }
 %>
 </body>

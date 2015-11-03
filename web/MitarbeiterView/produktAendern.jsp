@@ -58,7 +58,6 @@ else {
 
     DatabaseHelper db = new DatabaseHelper();
     ResultSet product = db.getProductsById(produktId);
-    db.disconnectDatabase();
     product.next();
     System.out.println(product.getString(1));
   %>
@@ -72,7 +71,6 @@ else {
         <%
           DatabaseHelper db2 = new DatabaseHelper();
           ResultSet allKategories = db2.getAllKategories();
-          db2.disconnectDatabase();
           while (allKategories.next()){
             if(allKategories.getString(1).equals(product.getString(2))){
         %>
@@ -99,6 +97,8 @@ else {
 
 </div>
 <%
+    db.disconnectDatabase();
+    db2.disconnectDatabase();
   }
 %>
 </body>
