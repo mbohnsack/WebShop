@@ -72,7 +72,6 @@ public class addProduktServlet extends HttpServlet {
                     }
                 }else{
                     String name=item.getFieldName();
-                    System.out.println(name);
                     if(name!=null) {
                         switch (name) {
                             case "produktname":
