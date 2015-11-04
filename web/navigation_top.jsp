@@ -29,7 +29,7 @@
             loginState = false;
         }
         if(loginState){%>
-            <li><a href="../general/logout.jsp" id="abmelden" class="nav5"><%= user%> abmelden</a></li>
+            <li><a href="general/logout.jsp" id="abmelden" class="nav5"><%= user%> abmelden</a></li>
             <li class="divider"></li>
             <li><a href="kundeBearbeiten.jsp" id="konto" class="nav6">Daten &auml;ndern</a></li>
         <%}else{%>
