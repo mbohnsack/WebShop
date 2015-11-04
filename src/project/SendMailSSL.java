@@ -1,9 +1,11 @@
 package project; /**
  * Created by Malte on 26.10.2015.
  */
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.util.List;
 import java.util.Properties;
 public class SendMailSSL {
     public static void sendMail() {
@@ -114,8 +116,16 @@ public class SendMailSSL {
         };
 
         Session session = Session.getDefaultInstance(props,auth);
+        DatabaseHelper db=new DatabaseHelper();
+        List<String> produkte=db.getGebuchteProdukte(buchung);
+        List<Double> preise=db.getGebuchteProduktePreis(buchung);
+        int anzahl=db.getBuchungsZahlByMail(mail);
+        String gebuchteProdukte="";
+        db.disconnectDatabase();
 
-
+        for(String produkt:produkte){
+            gebuchteProdukte+="\n"+produkt;
+        }
         try {
 
             Message message = new MimeMessage(session);
@@ -125,6 +135,8 @@ public class SendMailSSL {
             message.setSubject("Bestellung erfasst");
             message.setText("Sehr geeherter Kunde,"
                     + "\n\n Ihre Bestellung wurde in unser System aufgenommen." +
+                    "\n Folgende Produkte wurden bestellt:" + gebuchteProdukte +
+                    "\n Der Preis beträgt: "+"€"+
                     "\n Ein Mitarbeiter wird sich schnellstmöglich um Ihre Bestellung kümmern.)" +
                     "\n Sie erhalten eine weitere Mail, sobald die Bestellung verbindlich angenommen wurde." +
                     "\n\n Mit freundlichen Grüßen" +
