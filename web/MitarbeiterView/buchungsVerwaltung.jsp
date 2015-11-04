@@ -1,4 +1,7 @@
 <%@ page import="project.loginCookie" %>
+<%@ page import="project.DatabaseHelper" %>
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.sql.ResultSetMetaData" %>
 <%--
   Created by IntelliJ IDEA.
   User: Chris
@@ -51,7 +54,51 @@ else {
   </div>
 
   <div id="rightdiv">
+    <div>
+      <table border="1" class="tableRightdiv">
+        <tr>
+          <td>Kategorie Name</td>
+          <td>Übergeordnete Kategorie</td>
+          <td>Bild</td>
+          <td></td>
+        </tr>
+        <%
+          DatabaseHelper db = new DatabaseHelper();
+          try {
 
+            ResultSet austehendeBuchungen = db.getBuchungen();
+            ResultSetMetaData rsmd = austehendeBuchungen.getMetaData();
+            int columnCount = rsmd.getColumnCount();
+
+            while (austehendeBuchungen.next()){
+        %>
+        <tr>
+            <%
+                  for (int i = 1; i <= columnCount ; i++){
+                    %>
+          <td><%=austehendeBuchungen.getString(i)%></td>
+            <%}%>
+          <td>
+            <form method="post" action="../updateBuchungStatusServlet">
+              <input type="hidden" name="buchungsID" value="<%=austehendeBuchungen.getString(1)%>"\>
+              <button name="aendern" type="submit" value="angenommen">Annehmen</button>
+              <button name="aendern" type="submit" value="abgelehnt">Ablehnen</button>
+            </form>
+          </td>
+        <tr>
+            <%
+
+              }
+               austehendeBuchungen.close();
+               db.disconnectDatabase();
+            } catch (Exception e) {
+              e.printStackTrace();
+            }
+
+          %>
+
+      </table>
+    </div>
 
   </div>
 

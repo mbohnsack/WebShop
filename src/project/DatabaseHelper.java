@@ -224,7 +224,7 @@ public class DatabaseHelper{
                             String prodcode = rs.getString("prod_code");
                             hwcodes.add(prodcode);
                             stmt.executeUpdate("INSERT INTO tbl_buchung_produkt (bestell_id, produkt_code)" +
-                                    " VALUES ("+ buchcode +", '"+ prodcode +"')");
+                                    " VALUES (" + buchcode + ", '" + prodcode + "')");
                         } else{
                             return -1;
                         }
@@ -254,6 +254,55 @@ public class DatabaseHelper{
         }
 
         return rs;
+    }
+
+    public Boolean updateBuchungsstatus(Integer buchungsId, String status){
+        Boolean erfolgreich = false;
+
+        try {
+            stmt.executeUpdate("UPDATE tbl_buchungsliste SET buch_status = '"+ status +"' WHERE buch_code = "+ buchungsId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return erfolgreich;
+    }
+
+    public Integer getBuchungsdauerById(Integer id){
+        Integer tage = null;
+        Date abholung = null;
+        Date rueckgabe = null;
+        ResultSet rs = null;
+
+        try {
+            rs = stmt.executeQuery("SELECT * FROM tbl_buchungsliste WHERE buch_code = "+ id);
+            rs.next();
+            abholung = rs.getDate("buch_abholdatum");
+            rueckgabe = rs.getDate("buch_rueckgabedatum");
+            tage = (int)((rueckgabe.getTime() - abholung.getTime())/1000/3600/24);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return tage;
+    }
+
+    public String getZeitraum(Integer buchungId){
+        String zeitraum = null;
+        Date abholung = null;
+        Date rueckgabe = null;
+        ResultSet rs = null;
+        try {
+            rs = stmt.executeQuery("SELECT * FROM tbl_buchungsliste WHERE buch_code = "+ buchungId);
+            rs.next();
+            abholung = rs.getDate("buch_abholdatum");
+            rueckgabe = rs.getDate("buch_rueckgabedatum");
+            zeitraum = abholung.toString() + " - " + rueckgabe.toString();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return zeitraum;
     }
 
     public Integer addProduct(String kategorie, String hersteller, Double preis, String beschreibung, String details, String bezeichnung, String infBezeichnung){
@@ -668,6 +717,54 @@ public class DatabaseHelper{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<String> getGebuchteProdukte(int buchung){
+        List<String> produkte =new ArrayList<String>();
+        ResultSet rs=null;
+        ResultSet rsa=null;
+        try {
+            rs=stmt.executeQuery("SELECT  * FROM tbl_buchungsliste_produkt WHERE bestell_id=" + buchung);
+            while(rs.next()) {
+                rsa=stmt.executeQuery("SELECT * FROM tbl_produkt WHERE prod_id=(SELECT prod_id FROM tbl_lagerliste WHERE prod_code="+rs.getString("produkt_code")+") ");
+                produkte.add(rsa.getString("prod_bezeichn"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return produkte;
+    }
+
+    public List<Double> getGebuchteProduktePreis(int buchung){
+        List<Double> preise =new ArrayList<Double>();
+        ResultSet rs=null;
+        ResultSet rsa=null;
+        try {
+            rs=stmt.executeQuery("SELECT  * FROM tbl_buchungsliste_produkt WHERE bestell_id="+buchung);
+            while(rs.next()) {
+                rsa=stmt.executeQuery("SELECT * FROM tbl_produkt WHERE prod_id=(SELECT prod_id FROM tbl_lagerliste WHERE prod_code="+rs.getString("produkt_code")+") ");
+                preise.add(rsa.getDouble("prod_preis"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return preise;
+    }
+
+    public int getBuchungsZahlByMail(String mail){
+        int anzahl=0;
+        ResultSet rs=null;
+        try {
+            rs=stmt.executeQuery("SELECT COUNT(kun_id) AS anzahl FROM tbl_buchungsliste WHERE kun_id=(SELECT kun_nummer FROM tbl_kunde WHERE kun_mail='"+mail+"')");
+            anzahl=rs.getInt("anzahl");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return anzahl;
     }
 
 }
