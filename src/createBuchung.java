@@ -48,10 +48,10 @@ public class createBuchung extends HttpServlet {
             e.printStackTrace();
         }
         if(request.getParameter("submit").equals("buchen")) {
-            Boolean success = null;
-            //success=db.createBuchung(mail, abholung, abgabe, products);
-            if(success){
-                SendMailSSL.sendBuchungMail(mail);
+            Integer success = null;
+            success=db.createBuchung(mail, abholung, abgabe, products);
+            if(success>0){
+                SendMailSSL.sendBuchungMail(mail,success);
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/MitarbeiterView/buchungAnlegen");
                 PrintWriter out = response.getWriter();
                 out.println("<font color=red>Buchung erfolgreich.</font>");
