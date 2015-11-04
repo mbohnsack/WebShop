@@ -248,16 +248,28 @@ public class DatabaseHelper{
         return rs;
     }
 
-    public Boolean updateBuchungsstatus(Integer buchungsId){
+    public Boolean updateBuchungsstatus(Integer buchungsId, String status){
         Boolean erfolgreich = false;
 
         try {
-            stmt.executeUpdate("UPDATE tbl_buchungsliste SET buch_status = 'angenommen' WHERE buch_code = "+ buchungsId);
+            stmt.executeUpdate("UPDATE tbl_buchungsliste SET buch_status = '"+ status +"' WHERE buch_code = "+ buchungsId);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return erfolgreich;
+    }
+
+    public Integer getBuchungsdauerById(Integer id){
+        Integer tage = null;
+
+        try {
+            stmt.executeQuery("");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return tage;
     }
 
     public Integer addProduct(String kategorie, String hersteller, Double preis, String beschreibung, String details, String bezeichnung, String infBezeichnung){
