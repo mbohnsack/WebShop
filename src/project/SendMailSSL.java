@@ -96,7 +96,7 @@ public class SendMailSSL {
         }
     }
 
-    public static void sendBuchungMail(String mail){
+    public static void sendBuchungMail(String mail,int buchung){
         final String username = "hipsterrentalcorp@gmail.com";
         final String password = "YXCVBNM;";
 
