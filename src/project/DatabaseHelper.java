@@ -193,7 +193,7 @@ public class DatabaseHelper{
         }
     }
 
-    public Boolean createBuchung(String kundenmail, Date abholdatum, Date abgabedatum, List<Integer> produktids){
+    public Integer createBuchung(String kundenmail, Date abholdatum, Date abgabedatum, List<Integer> produktids){
         Boolean verfuegbar = false;
         Integer kundenId = null;
         Integer buchcode = null;
@@ -207,7 +207,7 @@ public class DatabaseHelper{
             buchcode = rs.getInt("buch_code");
             if(!rs.next()) {
                 kundenId = rs.getInt("kun_nummer");
-                return false;
+                return -1;
             } else {
                 for(Integer produkt : produktids){
                     if(produktVerfuegbar(produkt, abholdatum, abgabedatum)){
@@ -218,10 +218,10 @@ public class DatabaseHelper{
                             stmt.executeUpdate("INSERT INTO tbl_buchung_produkt (bestell_id, produkt_code)" +
                                     " VALUES ("+ buchcode +", '"+ prodcode +"')");
                         } else{
-                            return false;
+                            return -1;
                         }
                     } else{
-                        return false;
+                        return -1;
                     }
                 }
                 verfuegbar=true;
@@ -233,8 +233,10 @@ public class DatabaseHelper{
         }
 
 
-        return verfuegbar;
+        return buchcode;
     }
+
+
 
     public Integer addProduct(String kategorie, String hersteller, Double preis, String beschreibung, String details, String bezeichnung, String infBezeichnung){
         Integer id = null;
