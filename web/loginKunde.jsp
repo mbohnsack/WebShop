@@ -32,6 +32,7 @@
               <input type="hidden" name="targetpage" value="index.jsp"/> <br/>
               <input type="hidden" name="sourcepage" value="/loginKunde.jsp"/> <br/>
             </form>
+            <div style="color: red">${message}</div>
 
           </div>
           <div class="bottom_prod_box_big"></div>

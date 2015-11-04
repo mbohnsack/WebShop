@@ -29,12 +29,13 @@ public class registerKundeServlet extends HttpServlet {
         String ort = request.getParameter("ort");
         int telefon = Integer.parseInt(request.getParameter("telefon"));
         int mobil = Integer.parseInt(request.getParameter("mobil"));
+        String orga = request.getParameter("orga");
         String passwort = request.getParameter("passwort");
         String passwortwd = request.getParameter("passwortwd");
 
         DatabaseHelper db = new DatabaseHelper();
 
-        db.createKunde(benutzername, passwort, nname, vname, strasse, hausnr, plz, ort, telefon, mobil, email);
+        db.createKunde(benutzername, passwort, nname, vname, strasse, hausnr, plz, ort, telefon, mobil, email, orga);
        /*
         if(!db.KundeFrei(benutzername)) {
             //JOptionPane.showMessageDialog(null, "Benutzername bereits vergeben!");

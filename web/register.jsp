@@ -65,6 +65,10 @@
                                 <input type="text" class="contact_input" name="mobil" placeholder="0987654321"/>
                             </div>
                             <div class="form_row">
+                                <label class="contact"><strong>Firma/Organisation</strong></label>
+                                <input type="text" class="contact_input" name="orga" placeholder="XY"/>
+                            </div>
+                            <div class="form_row">
                                 <label class="contact"><strong>Passwort</strong></label>
                                 <input type="password" class="contact_input" name="passwort"/>
                             </div>

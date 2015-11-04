@@ -42,10 +42,19 @@ public class loginServlet extends HttpServlet {
             rd.forward(request, response);
 
         } else {
-            RequestDispatcher rd = getServletContext().getRequestDispatcher(sourcePage);
-            PrintWriter out = response.getWriter();
-            out.println("<font color=red>Either user name or password is wrong.</font>");
-            rd.include(request, response);
+            if (sourcePage.contentEquals("/loginKunde.jsp")){
+                //textausgabe im formular
+                request.setAttribute("message", "Passwort und Login stimmten nicht überein.");
+                request.getRequestDispatcher("/loginKunde.jsp").forward(request, response);
+
+            }else{
+                RequestDispatcher rd = getServletContext().getRequestDispatcher(sourcePage);
+                PrintWriter out = response.getWriter();
+                out.println("<font color=red>Either user name or password is wrong.</font>");
+                rd.include(request, response);
+            }
+
+
         }
         db.disconnectDatabase();
     }
