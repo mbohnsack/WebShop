@@ -248,6 +248,18 @@ public class DatabaseHelper{
         return rs;
     }
 
+    public Boolean updateBuchungsstatus(Integer buchungsId){
+        Boolean erfolgreich = false;
+
+        try {
+            stmt.executeUpdate("UPDATE tbl_buchungsliste SET buch_status = 'angenommen' WHERE buch_code = "+ buchungsId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return erfolgreich;
+    }
+
     public Integer addProduct(String kategorie, String hersteller, Double preis, String beschreibung, String details, String bezeichnung, String infBezeichnung){
         Integer id = null;
         try {
