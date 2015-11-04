@@ -262,9 +262,16 @@ public class DatabaseHelper{
 
     public Integer getBuchungsdauerById(Integer id){
         Integer tage = null;
+        Date abholung = null;
+        Date rueckgabe = null;
+        ResultSet rs = null;
 
         try {
-            stmt.executeQuery("");
+            rs = stmt.executeQuery("SELECT * FROM tbl_buchungsliste WHERE buch_code = "+ id);
+            rs.next();
+            abholung = rs.getDate("buch_abholdatum");
+            rueckgabe = rs.getDate("buch_rueckgabedatum");
+            tage = (int)((rueckgabe.getTime() - abholung.getTime())/1000/3600/24);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -691,7 +698,7 @@ public class DatabaseHelper{
         ResultSet rs=null;
         ResultSet rsa=null;
         try {
-            rs=stmt.executeQuery("SELECT  * FROM tbl_buchungsliste_produkt WHERE bestell_id="+buchung);
+            rs=stmt.executeQuery("SELECT  * FROM tbl_buchungsliste_produkt WHERE bestell_id=" + buchung);
             while(rs.next()) {
                 rsa=stmt.executeQuery("SELECT * FROM tbl_produkt WHERE prod_id=(SELECT prod_id FROM tbl_lagerliste WHERE prod_code="+rs.getString("produkt_code")+") ");
                 produkte.add(rsa.getString("prod_bezeichn"));
