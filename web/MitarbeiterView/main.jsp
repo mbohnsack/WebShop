@@ -36,7 +36,7 @@
 <body>
 
   <%if (myCookie == null) {
-    %>
+    System.out.println(myCookie); %>
     Bitte loggen Sie sich ein!
     <%
   }

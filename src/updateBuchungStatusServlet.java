@@ -8,20 +8,22 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by Chris on 02.11.2015.
+ * Created by Chris on 04.11.2015.
  */
-@WebServlet("/updateMitarbeiterServlet")
-public class updateMitarbeiterServlet extends HttpServlet{
+@WebServlet("/updateBuchungStatusServlet")
+public class updateBuchungStatusServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
-        String mitarbeiterUsername = request.getParameter("username");
-        String rolle = request.getParameter("rolle");
 
+        String neuStatus = request.getParameter("aendern");
+        int buchungsID = Integer.parseInt(request.getParameter("buchungsID"));
 
         DatabaseHelper db = new DatabaseHelper();
-        db.updateMitarbeiter(rolle,mitarbeiterUsername);
+        db.updateBuchungsstatus(buchungsID,neuStatus);
         db.disconnectDatabase();
-        String url = "/MitarbeiterView/mitarbeiterVerwalten.jsp";
+
+
+        String url = "/MitarbeiterView/buchungenVerwalten.jsp";
         response.sendRedirect(url);
 
     }
