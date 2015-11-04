@@ -236,7 +236,17 @@ public class DatabaseHelper{
         return buchcode;
     }
 
+    public ResultSet getBuchungen(){
+        ResultSet rs = null;
 
+        try {
+            rs = stmt.executeQuery("SELECT * FROM tbl_buchungsliste WHERE buch_status = 'ausstehend'");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return rs;
+    }
 
     public Integer addProduct(String kategorie, String hersteller, Double preis, String beschreibung, String details, String bezeichnung, String infBezeichnung){
         Integer id = null;
