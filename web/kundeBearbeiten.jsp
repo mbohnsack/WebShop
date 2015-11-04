@@ -17,7 +17,7 @@
             <jsp:include page="navigation_top.jsp" />
         </div>
         <div class="crumb_navigation"> Navigation: <span class="current">Daten ändern</span> </div>
-         <div class="navigation_left">
+        <div class="navigation_left">
             <jsp:include page="navigation_left.jsp" />
         </div>
 
@@ -46,13 +46,15 @@
             <div class="center_content">
                 <div class="center_title_bar">Eigene Daten ändern</div>
                 <div class="center_title_bar_customMF">Die aktuellen Daten werden in den Feldern angezeigt und nur bei Überschreiben geändert. Geben Sie Ihr aktuelles Passwort ein und klicken Sie OK, um die Änderungen zu übernehmen.</div>
-
+                <div class="center_title_bar" style="color: red">${message}</div>
                 <div class="prod_box_big">
                     <div class="top_prod_box_big"></div>
                     <div class="center_prod_box_big">
 
                         <form name="updateForm" method="post" action="updateKundeServlet">
                             <% while(kundenDaten.next()){ %>
+
+                            <div class="form_row"><label><strong>Pflichtangaben</strong></label></div>
                             <div class="form_row">
                                 <label class="contact_customMF"><strong>Login</strong></label>
                                 <input type="text" name="login" placeholder="<%= kundenDaten.getString(2) %>" />
@@ -67,8 +69,10 @@
                             </div>
                             <div class="form_row">
                                 <label class="contact_customMF"><strong>email</strong></label>
-                                <input type="text" name="email" placeholder="<%= kundenDaten.getString(12) %>" />
+                                <input type="email" name="email" placeholder="<%= kundenDaten.getString(12) %>" />
                             </div>
+
+                            <div class="form_row"><label><strong>Optionale Angaben</strong></label></div>
                             <div class="form_row">
                                 <label class="contact_customMF"><strong>Strasse</strong></label>
                                 <input type="text" name="strasse" placeholder="<%= kundenDaten.getString(6) %>" />
@@ -87,12 +91,20 @@
                             </div>
                             <div class="form_row">
                                 <label class="contact_customMF"><strong>Telefon</strong></label>
-                                <input type="text" name="tele" placeholder="<%= kundenDaten.getString(10) %>" />
+                                <input type="tele" name="tele" placeholder="<%= kundenDaten.getString(10) %>" />
                             </div>
                             <div class="form_row">
                                 <label class="contact_customMF"><strong>Mobil</strong></label>
-                                <input type="text" name="mobil" placeholder="<%= kundenDaten.getString(11) %>" />
+                                <input type="tele" name="mobil" placeholder="<%= kundenDaten.getString(11) %>" />
                             </div>
+
+                            <div class="form_row">
+                                <label class="contact_customMF"><strong>Firma/Organisation</strong></label>
+                                <input type="text" name="orga" placeholder="<%= kundenDaten.getString(13) %>" />
+                            </div>
+
+
+
                             <div class="form_row">
                                 <label class="contact_customMF"><strong>Passwort Neu</strong></label>
                                 <input type="password" name="pwNeu"  />
@@ -101,18 +113,23 @@
                                 <label class="contact_customMF"><strong>Passwort Neu bestätigen</strong></label>
                                 <input type="password" name="pwNeuBest"  />
                             </div>
+
+
+                            <div class="form_row"><label><strong>Passwortabfrage</strong></label></div>
+
                             <div class="form_row">
                                 <label class="contact_customMF"><strong>Passwort Alt</strong></label>
-                                <input type="password" name="pw" />
+                                <input type="password" name="pw" required/>
                             </div>
                             <% } db.disconnectDatabase();
 
                             %>
 
                             <div class="form_row">
-                                <input type="submit" value="Ok" /> </div>
+                                <input type="submit" value="Daten übernehmen" /> </div>
                         </form>
                     </div>
+
                     <div class="bottom_prod_box_big"></div>
                 </div>
             </div>
@@ -123,7 +140,7 @@
         <div id="footer" class="footer">
             <jsp:include page="footer.jsp" />
         </div>
-        </div>
+    </div>
 </div>
 </body>
 </html>

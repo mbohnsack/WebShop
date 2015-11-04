@@ -19,27 +19,34 @@
         <div class="content">
             <div class="center_content">
                 <div class="center_title_bar">Registrieren</div>
+                <div class="center_title_bar" style="color: red">${message}</div>
                 <div class="prod_box_big">
                     <div class="top_prod_box_big"></div>
                     <div class="center_prod_box_big">
                     <div class="contact_form">
                         <form name="registerForm" method="post" action="registerKundeServlet">
+
+
+                            // Pflichtfelder
                             <div class="form_row">
                                 <label class="contact"><strong>Benutzername</strong></label>
-                                <input type="text" class="contact_input" name="benutzername" placeholder="MaxM62"/>
+                                <input type="text" class="contact_input" name="benutzername" placeholder="MaxM62" required/>
                             </div>
                             <div class="form_row">
                                 <label class="contact"><strong>Nachname</strong></label>
-                                <input type="text" class="contact_input" name="nname" placeholder="Mustermann"/>
+                                <input type="text" class="contact_input" name="nname" placeholder="Mustermann" required/>
                             </div>
                             <div class="form_row">
                                 <label class="contact"><strong>Vorname</strong></label>
-                                <input type="text" class="contact_input" name="vname" placeholder="Max"/>
+                                <input type="text" class="contact_input" name="vname" placeholder="Max" required/>
                             </div>
                             <div class="form_row">
                                 <label class="contact"><strong>Email</strong></label>
-                                <input type="text" class="contact_input" name="email" placeholder="max.mustermann@gmx.com"/>
+                                <input type="email" class="contact_input" name="email" placeholder="max.mustermann@gmx.com" required/>
                             </div>
+
+
+                            //optionale felder
                             <div class="form_row">
                                 <label class="contact"><strong>Strasse</strong></label>
                                 <input type="text" class="contact_input" name="strasse" placeholder="Musterstrasse"/>
@@ -58,19 +65,26 @@
                             </div>
                             <div class="form_row">
                                 <label class="contact"><strong>Telefon</strong></label>
-                                <input type="text" class="contact_input" name="telefon" placeholder="0123456789"/>
+                                <input type="text" class="contact_input" name="telefon"/>
                             </div>
                             <div class="form_row">
                                 <label class="contact"><strong>Mobil</strong></label>
-                                <input type="text" class="contact_input" name="mobil" placeholder="0987654321"/>
+                                <input type="text" class="contact_input" name="mobil"/>
                             </div>
                             <div class="form_row">
+                                <label class="contact"><strong>Firma/Organisation</strong></label>
+                                <input type="text" class="contact_input" name="orga" placeholder="XY"/>
+                            </div>
+
+
+                            //passwort
+                            <div class="form_row">
                                 <label class="contact"><strong>Passwort</strong></label>
-                                <input type="password" class="contact_input" name="passwort"/>
+                                <input type="password" class="contact_input" name="passwort" required/>
                             </div>
                             <div class="form_row">
                                 <label class="contact"><strong>Passwort wiederholen</strong></label>
-                                <input type="password" class="contact_input" name="passwortwd"/>
+                                <input type="password" class="contact_input" name="passwortBest" required/>
                             </div>
                             <div class="form_row"><input type="submit" value="Registrieren"/></div>
                         </form>
