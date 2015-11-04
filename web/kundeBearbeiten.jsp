@@ -112,6 +112,13 @@
                             <div class="form_row">
                                 <input type="submit" value="Ok" /> </div>
                         </form>
+
+                        <form name="deleteKunde" method="post" action="deleteKundeServlet">
+                            <input type="hidden" name="user" value="<%= user%>"/>
+                            <input type="submit" value="Account löschen" />
+                        </form>
+
+
                     </div>
                     <div class="bottom_prod_box_big"></div>
                 </div>

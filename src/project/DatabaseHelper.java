@@ -154,6 +154,14 @@ public class DatabaseHelper{
         return loginstate;
     }
 
+    public void deleteKunde(String name){
+        try {
+            stmt.executeUpdate("DELETE FROM tbl_kunde WHERE kun_benutzer='"+name+"';");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public boolean loginMitarbeiter(String name, String password) {
         Boolean loginstate = false;
         try {
