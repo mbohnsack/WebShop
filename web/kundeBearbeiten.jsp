@@ -128,6 +128,10 @@
                             <div class="form_row">
                                 <input type="submit" value="Daten übernehmen" /> </div>
                         </form>
+                        <form name="deleteForm" method="post" action="deleteKundeServlet">
+                            <div class="form_row">
+                                <input type="submit" value="Konto entfernen" /> </div>
+                        </form>
                     </div>
 
                     <div class="bottom_prod_box_big"></div>

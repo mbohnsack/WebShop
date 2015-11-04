@@ -72,6 +72,14 @@ public class DatabaseHelper{
         }
     }
 
+    public void deleteKunde(String name){
+        try {
+            stmt.executeUpdate("DELETE FROM tbl_kunde WHERE kun_benutzer='"+name+"';");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public boolean mitarbeiterFrei(String name){
         Boolean frei=false;
         try {
