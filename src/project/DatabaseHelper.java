@@ -671,6 +671,41 @@ public class DatabaseHelper{
 
         return uebergeordnet;
     }
+
+    public String getUnterkategorie(String kategorie){
+        String unterkategorie = null;
+        ResultSet rs = null;
+
+        try {
+            rs = stmt.executeQuery("SELECT kat_name FROM tbl_kategorie WHERE kat_uebergeordnet = '"+ kategorie +"'");
+            rs.next();
+            unterkategorie = rs.getString("kat_name");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return unterkategorie;
+    }
+
+    public String getKundenMail(String buchungId){
+        ResultSet rs = null;
+        ResultSet rs2 = null;
+        String mail = null;
+        Integer kundenId = null;
+        try {
+            rs = stmt.executeQuery("SELECT kun_id FROM tbl_buchungsliste WHERE buch_code = '"+ buchungId +"'");
+            rs.next();
+            kundenId = rs.getInt("kun_id");
+            rs2 = stmt.executeQuery("SELECT kun_email FROM tbl_kunde WHERE kun_nummer = "+ kundenId);
+            rs2.next();
+            mail = rs2.getString("kun_email");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return mail;
+    }
+
     public void saveFile(File bild, int prodid) throws SQLException, IOException {
         c.setAutoCommit(false);
 
