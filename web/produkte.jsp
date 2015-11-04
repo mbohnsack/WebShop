@@ -24,15 +24,11 @@
                 for (int i = 0; i < db.getAnzahlProdukte(); i++) {
                     ResultSet rs = db.getProductsById(i + 1);
                     while (rs.next()) {
-            %>
-            <form method ="prodBox.jsp" action="post">
-
-                <% request.setAttribute("id", rs.getString(1));
-                    request.setAttribute("herst", rs.getString(3));
-                    request.setAttribute("preis", rs.getString(4));
-                    request.setAttribute("bezeichn", rs.getString(7)); %>
-            </form>
-            <%}%>
+                        request.setAttribute("id", rs.getString(1));
+                        request.setAttribute("herst", rs.getString(3));
+                        request.setAttribute("preis", rs.getString(4));
+                        request.setAttribute("bezeichn", rs.getString(7));
+                    }%>
             <jsp:include page="prodBox.jsp"/>
             <% }
                 db.disconnectDatabase();%>
