@@ -22,12 +22,12 @@ public class createMitarbeiter extends HttpServlet {
         String typ=request.getParameter("typ");
         if(db.mitarbeiterFrei(user)) {
             db.createMitarbeiter(user, pwd, typ);
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/MitarbeiterView/mitarbeiterAnlegen");
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/MitarbeiterView/mitarbeiterAnlegen.jsp");
             PrintWriter out = response.getWriter();
             out.println("<font color=red>Mitarbeiter erfolgreich angelegt.</font>");
             rd.include(request, response);
         }else{
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/MitarbeiterView/mitarbeiterAnlegen");
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/MitarbeiterView/mitarbeiterAnlegen.jsp");
             PrintWriter out = response.getWriter();
             out.println("<font color=red>Mitarbeiter konnte nict erstellt werden, da der Name bereits vergeben ist..</font>");
             rd.include(request, response);

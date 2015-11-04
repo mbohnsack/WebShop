@@ -52,12 +52,12 @@ public class createBuchung extends HttpServlet {
             success=db.createBuchung(mail, abholung, abgabe, products);
             if(success>0){
                 SendMailSSL.sendBuchungMail(mail,success);
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/MitarbeiterView/buchungAnlegen");
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/MitarbeiterView/buchungAnlegen.jsp");
                 PrintWriter out = response.getWriter();
                 out.println("<font color=red>Buchung erfolgreich.</font>");
                 rd.include(request, response);
             }else{
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/MitarbeiterView/buchungAnlegen");
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/MitarbeiterView/buchungAnlegen.jsp");
                 PrintWriter out = response.getWriter();
                 out.println("<font color=red>Buchung konnte nicht erstellt werden. Prüfen sie, ob der Kunde existiert und die Produkte vefügbar sind.</font>");
                 rd.include(request, response);
@@ -76,7 +76,7 @@ public class createBuchung extends HttpServlet {
                         verfuegbareProdukte.add("Das Produkt " + db.getBezeichnung(product)+" ist nicht verfügbar.");
                     }
                 }
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/MitarbeiterView/buchungAnlegen");
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/MitarbeiterView/buchungAnlegen.jsp");
                 PrintWriter out = response.getWriter();
                 for(int i=0;i<verfuegbareProdukte.size();i++){
                     out.println("<font color=red>"+verfuegbareProdukte.get(i)+"</font><br/>");

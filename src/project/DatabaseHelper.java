@@ -672,14 +672,15 @@ public class DatabaseHelper{
         return uebergeordnet;
     }
 
-    public String getUnterkategorie(String kategorie){
-        String unterkategorie = null;
+    public List<String> getUnterkategorie(String kategorie){
+        List<String> unterkategorie = new ArrayList<String>();
         ResultSet rs = null;
 
         try {
             rs = stmt.executeQuery("SELECT kat_name FROM tbl_kategorie WHERE kat_uebergeordnet = '"+ kategorie +"'");
-            rs.next();
-            unterkategorie = rs.getString("kat_name");
+            while(rs.next()){
+                unterkategorie.add(rs.getString("kat_name"));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -741,6 +742,56 @@ public class DatabaseHelper{
         ps.close();
         fis.close();
         c.setAutoCommit(true);
+    }
+
+    public File getFile(Integer produktId) {
+        File bild = null;
+
+        try {
+            c.setAutoCommit(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Get the Large Object Manager to perform operations with
+        LargeObjectManager lobj = null;
+        try {
+            lobj = ((org.postgresql.PGConnection)c).getLargeObjectAPI();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        PreparedStatement ps = null;
+        try {
+            ps = c.prepareStatement("SELECT imgoid FROM imageslo WHERE imgname = ?");
+            ps.setString(1, "myimage.gif");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                // Open the large object for reading
+                int oid = rs.getInt(1);
+                LargeObject obj = lobj.open(oid, LargeObjectManager.READ);
+
+                // Read the data
+                byte buf[] = new byte[obj.size()];
+                obj.read(buf, 0, obj.size());
+                // Do something with the data read here
+
+                // Close the object
+                obj.close();
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            c.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return bild;
     }
 
     public void disconnectDatabase(){
