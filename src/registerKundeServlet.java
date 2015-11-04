@@ -33,17 +33,20 @@ public class registerKundeServlet extends HttpServlet {
         String passwortwd = request.getParameter("passwortwd");
 
         DatabaseHelper db = new DatabaseHelper();
-        if(!db.mitarbeiterFrei(benutzername)) {
+
+        db.createKunde(benutzername, passwort, nname, vname, strasse, hausnr, plz, ort, telefon, mobil, email);
+       /*
+        if(!db.KundeFrei(benutzername)) {
             //JOptionPane.showMessageDialog(null, "Benutzername bereits vergeben!");
             System.out.println("benutzer vergeben");
-        } else if (passwort != passwortwd) {
+        } else if (!passwort.contentEquals(passwortwd)) {
             //JOptionPane.showMessageDialog(null, "Passwörter stimmen nicht überein!");
             System.out.println("passwort stimmt nicht überein");
         } else if (db.mitarbeiterFrei(benutzername)) {
             db.createKunde(benutzername, passwort, nname, vname, strasse, hausnr, plz, ort, telefon, mobil, email);
             //JOptionPane.showMessageDialog(null, "Success");
             System.out.println("success");
-        }
+        }*/
 
         String url = "/register.jsp";
         response.sendRedirect(url);
