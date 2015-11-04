@@ -44,8 +44,8 @@ else {
       <table border="1" class="tableRightdiv">
         <tr>
           <td>Kategorie Name</td>
-          <td>Übergeordnete Kategorie</td>
           <td>Bild</td>
+          <td>Übergeordnete Kategorie</td>
           <td></td>
         </tr>
         <%
