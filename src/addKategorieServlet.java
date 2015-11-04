@@ -28,7 +28,7 @@ public class addKategorieServlet extends HttpServlet {
 
         String kategorieName = null;
         String ueberKategorie = null;
-        File storeFile;
+        File storeFile = null;
 
         DatabaseHelper db = new DatabaseHelper();
         if (ServletFileUpload.isMultipartContent(request)) {
@@ -81,12 +81,8 @@ public class addKategorieServlet extends HttpServlet {
                 }
 
             }
-            try {
-                db.addKategorie(kategorieName, ueberKategorie,storefile);
+            db.addKategorie(kategorieName, ueberKategorie, storeFile);
 
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
         String url = "/MitarbeiterView/kategorieVerwalten.jsp";
         response.sendRedirect(url);

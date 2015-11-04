@@ -6,6 +6,7 @@ import org.postgresql.largeobject.LargeObjectManager;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -267,23 +268,96 @@ public class DatabaseHelper{
         }
     }
 
-    public void addKategorie(String name, String uebergeordnet){
+    public void addKategorie(String name, String uebergeordnet, File bild){
         try {
             ResultSet rs = stmt.executeQuery("SELECT kat_name FROM tbl_kategorie WHERE kat_name = '"+ name +"'");
-            if(rs != null){
-                stmt.executeQuery("INSERT INTO tbl_kategorie (kat_name, kat_uebergeordnet)" +
-                        "VALUES ('"+ name +"', '"+ uebergeordnet +"')");
+            if(!rs.isBeforeFirst()){
+                c.setAutoCommit(false);
+
+// Get the Large Object Manager to perform operations with
+                LargeObjectManager lobj = ((org.postgresql.PGConnection)c).getLargeObjectAPI();
+
+//create a new large object
+                int oid = lobj.create(LargeObjectManager.READ | LargeObjectManager.WRITE);
+
+//open the large object for write
+                LargeObject obj = lobj.open(oid, LargeObjectManager.WRITE);
+
+// Now open the file
+                FileInputStream fis = new FileInputStream(bild);
+
+// copy the data from the file to the large object
+                byte buf[] = new byte[2048];
+                int s, tl = 0;
+                while ((s = fis.read(buf, 0, 2048)) > 0)
+                {
+                    obj.write(buf, 0, s);
+                    tl += s;
+                }
+
+// Close the large object
+                obj.close();
+
+//Now insert the row into imagesLO
+                PreparedStatement ps=c.prepareStatement("INSERT INTO tbl_kategorie VALUES (?,?,?)");
+                ps.setString(1, name);
+                ps.setInt(2,oid);
+                ps.setString(3, uebergeordnet);
+                ps.executeUpdate();
+                ps.close();
+                fis.close();
+                c.setAutoCommit(true);
             }
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void updateKategorie(String name, String uebergeordnet){
+    public void updateKategorie(String name, String uebergeordnet, File bild){
         try {
-            stmt.executeQuery("UPDATE tbl_kategorie SET kat_name = '"+ name + "', kat_uebergeordnet = '"+ uebergeordnet + "' WHERE kat_name = '"+ name + "' ");
-        } catch (SQLException e) {
-            e.printStackTrace();
+            c.setAutoCommit(false);
+
+// Get the Large Object Manager to perform operations with
+            LargeObjectManager lobj = ((org.postgresql.PGConnection)c).getLargeObjectAPI();
+
+//create a new large object
+            int oid = lobj.create(LargeObjectManager.READ | LargeObjectManager.WRITE);
+
+//open the large object for write
+            LargeObject obj = lobj.open(oid, LargeObjectManager.WRITE);
+
+// Now open the file
+            FileInputStream fis = new FileInputStream(bild);
+
+// copy the data from the file to the large object
+            byte buf[] = new byte[2048];
+            int s, tl = 0;
+            while ((s = fis.read(buf, 0, 2048)) > 0)
+            {
+                obj.write(buf, 0, s);
+                tl += s;
+            }
+
+// Close the large object
+            obj.close();
+
+//Now insert the row into imagesLO
+            PreparedStatement ps=c.prepareStatement("INSERT INTO tbl_kategorie VALUES (?,?,?)");
+            ps.setString(1, name);
+            ps.setInt(2,oid);
+            ps.setString(3, uebergeordnet);
+            ps.executeUpdate();
+            ps.close();
+            fis.close();
+            c.setAutoCommit(true);
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
     }
 
