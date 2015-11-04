@@ -687,13 +687,13 @@ public class DatabaseHelper{
         return unterkategorie;
     }
 
-    public String getKundenMail(String buchungId){
+    public String getKundenMail(Integer buchungId){
         ResultSet rs = null;
         ResultSet rs2 = null;
         String mail = null;
         Integer kundenId = null;
         try {
-            rs = stmt.executeQuery("SELECT kun_id FROM tbl_buchungsliste WHERE buch_code = '"+ buchungId +"'");
+            rs = stmt.executeQuery("SELECT kun_id FROM tbl_buchungsliste WHERE buch_code = "+ buchungId);
             rs.next();
             kundenId = rs.getInt("kun_id");
             rs2 = stmt.executeQuery("SELECT kun_email FROM tbl_kunde WHERE kun_nummer = "+ kundenId);
