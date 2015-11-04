@@ -17,7 +17,6 @@ body {
 
 #rightdiv {
     margin-left: 25%;
-
 }
 .tableRightdiv{
     font-size: 80%;
@@ -41,10 +40,7 @@ body {
     margin-left: 10%;
     font-weight: bold;
 }
-div.scroll {
-    overflow: auto;
-    border: 1px solid #666;
-    background-color: #ccc;
-    padding: 8px;
+.scroll{
+    overflow: scroll;
 }
 -->

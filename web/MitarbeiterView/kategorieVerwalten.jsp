@@ -55,7 +55,7 @@ else {
   </div>
 
   <div id="rightdiv">
-    <div>
+    <div class="scroll">
       <table border="1" class="tableRightdiv">
         <tr>
           <td>Kategorie Name</td>
