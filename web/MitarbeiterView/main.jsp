@@ -10,21 +10,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
   loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
-
-  String cookieName = "loginCookie";
-  Cookie cookies [] = request.getCookies ();
-  Cookie myCookie = null;
-  if (cookies != null)
-  {
-    for (int i = 0; i < cookies.length; i++)
-    {
-      if (cookies [i].getName().equals (cookieName))
-      {
-        myCookie = cookies[i];
-        break;
-      }
-    }
-  }
 %>
 <html lang="de">
 <head>
@@ -35,8 +20,8 @@
 </head>
 <body>
 
-  <%if (myCookie == null) {
-    System.out.println(myCookie); %>
+  <%if (loginDaten == null) {
+    %>
     Bitte loggen Sie sich ein!
     <%
   }
