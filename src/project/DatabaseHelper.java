@@ -119,9 +119,10 @@ public class DatabaseHelper{
     public void createKunde(String name,String passwort,String nname, String vname, String strasse, String hnummer, int plz,String ort, int tel, int mobil, String email){
         try{
             ResultSet rs =stmt.executeQuery( "SELECT MAX(kun_nummer) AS MaxID FROM tbl_kunde;" );
+            rs.next();
             int nummer=rs.getInt("MaxID")+1;
             stmt.executeUpdate("INSERT INTO tbl_kunde (kun_nummer, kun_benutzer, kun_passwort, kun_name, kun_vorname, kun_strasse, kun_hausnummer, kun_plz, kun_ort, kun_telefon, kun_mobil, kun_email)" +
-                    "VALUES ("+nummer+",'"+name+"',"+MD5.getMD5(passwort)+",'"+nname+"','"+vname+"','"+strasse+"','"+hnummer+"',"+plz+",'"+ort+"',"+tel+","+mobil+",'"+email+"');");
+                    "VALUES ("+nummer+",'"+name+"','"+MD5.getMD5(passwort)+"','"+nname+"','"+vname+"','"+strasse+"','"+hnummer+"',"+plz+",'"+ort+"',"+tel+","+mobil+",'"+email+"');");
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -678,6 +679,41 @@ public class DatabaseHelper{
 
         return uebergeordnet;
     }
+
+    public String getUnterkategorie(String kategorie){
+        String unterkategorie = null;
+        ResultSet rs = null;
+
+        try {
+            rs = stmt.executeQuery("SELECT kat_name FROM tbl_kategorie WHERE kat_uebergeordnet = '"+ kategorie +"'");
+            rs.next();
+            unterkategorie = rs.getString("kat_name");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return unterkategorie;
+    }
+
+    public String getKundenMail(Integer buchungId){
+        ResultSet rs = null;
+        ResultSet rs2 = null;
+        String mail = null;
+        Integer kundenId = null;
+        try {
+            rs = stmt.executeQuery("SELECT kun_id FROM tbl_buchungsliste WHERE buch_code = "+ buchungId);
+            rs.next();
+            kundenId = rs.getInt("kun_id");
+            rs2 = stmt.executeQuery("SELECT kun_email FROM tbl_kunde WHERE kun_nummer = "+ kundenId);
+            rs2.next();
+            mail = rs2.getString("kun_email");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return mail;
+    }
+
     public void saveFile(File bild, int prodid) throws SQLException, IOException {
         c.setAutoCommit(false);
 
