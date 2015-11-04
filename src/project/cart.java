@@ -23,4 +23,9 @@ public class cart {
     public void addToCart(int id) {
         cartInhalt.add(id);
     }
+
+    public void removeItem(int index){
+        cartInhalt.remove(index);
+        System.out.println("removed index: "+ index);
+    }
 }

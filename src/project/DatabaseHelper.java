@@ -205,7 +205,7 @@ public class DatabaseHelper{
     }
 
     public Integer createBuchung(String kundenmail, Date abholdatum, Date abgabedatum, List<Integer> produktids){
-        java.sql.Date abholung = new java.sql.Date(abholdatum.getTime());
+        java.sql.Date abholung = new java.sql.Date(abholdatum.getTime()); //Format vom servlet nich kompatibel
         java.sql.Date abgabe = new java.sql.Date(abgabedatum.getTime());
         Boolean verfuegbar = false;
         Integer kundenId = null;
@@ -257,6 +257,18 @@ public class DatabaseHelper{
 
         try {
             rs = stmt.executeQuery("SELECT * FROM tbl_buchungsliste WHERE buch_status = 'ausstehend'");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return rs;
+    }
+
+    public ResultSet getBuchungenByKunId(int kunId){
+        ResultSet rs = null;
+
+        try {
+            rs = stmt.executeQuery("SELECT * FROM tbl_buchungsliste WHERE kun_id = '"+kunId+"'");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -687,7 +699,7 @@ public class DatabaseHelper{
         ResultSet rs = null;
 
         try {
-            rs = stmt.executeQuery("SELECT kat_name FROM tbl_kategorie WHERE kat_uebergeordnet = '"+ kategorie +"'");
+            rs = stmt.executeQuery("SELECT kat_name FROM tbl_kategorie WHERE kat_uebergeordnet = '" + kategorie + "'");
             while(rs.next()){
                 unterkategorie.add(rs.getString("kat_name"));
             }

@@ -32,7 +32,7 @@ public class loginServlet extends HttpServlet {
         } else if (targetPage.equals("index.jsp")) {
             login = db.loginKunde(user, pwd);
         }
-        if (login == true) {
+        if (login) {
             request.setAttribute("username", user);
             request.setAttribute("targetpage", targetPage);
             System.out.println("user:" + user + " target:" + targetPage + " login:" + login);

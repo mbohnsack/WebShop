@@ -27,7 +27,7 @@
                         <form name="registerForm" method="post" action="registerKundeServlet">
 
 
-                            // Pflichtfelder
+
                             <div class="form_row">
                                 <label class="contact"><strong>Benutzername</strong></label>
                                 <input type="text" class="contact_input" name="benutzername" placeholder="MaxM62" required/>
@@ -46,7 +46,7 @@
                             </div>
 
 
-                            //optionale felder
+
                             <div class="form_row">
                                 <label class="contact"><strong>Strasse</strong></label>
                                 <input type="text" class="contact_input" name="strasse" placeholder="Musterstrasse"/>
@@ -77,7 +77,7 @@
                             </div>
 
 
-                            //passwort
+
                             <div class="form_row">
                                 <label class="contact"><strong>Passwort</strong></label>
                                 <input type="password" class="contact_input" name="passwort" required/>
