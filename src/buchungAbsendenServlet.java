@@ -46,7 +46,7 @@ public class buchungAbsendenServlet
         shoppingCart = (cart) session.getAttribute("cart");
         List<Integer> produktids = shoppingCart.getCartItems();
 
-        Boolean suxxess = db.createBuchung(kundenmail, abholdatum, abgabedatum, produktids);
+        Integer suxxess = db.createBuchung(kundenmail, abholdatum, abgabedatum, produktids);
         System.out.println("erfolg:" + suxxess);
 
         db.disconnectDatabase();

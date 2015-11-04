@@ -121,7 +121,7 @@ public class DatabaseHelper{
             ResultSet rs =stmt.executeQuery( "SELECT MAX(kun_nummer) AS MaxID FROM tbl_kunde;" );
             int nummer=rs.getInt("MaxID")+1;
             stmt.executeUpdate("INSERT INTO tbl_kunde (kun_nummer, kun_benutzer, kun_passwort, kun_name, kun_vorname, kun_strasse, kun_hausnummer, kun_plz, kun_ort, kun_telefon, kun_mobil, kun_email)" +
-                    "VALUES ("+nummer+",'"+name+"','"+passwort+"','"+nname+"','"+vname+"','"+strasse+"','"+hnummer+"',"+plz+",'"+ort+"',"+tel+","+mobil+",'"+email+"');");
+                    "VALUES ("+nummer+",'"+name+"',"+MD5.getMD5(passwort)+",'"+nname+"','"+vname+"','"+strasse+"','"+hnummer+"',"+plz+",'"+ort+"',"+tel+","+mobil+",'"+email+"');");
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -194,6 +194,8 @@ public class DatabaseHelper{
     }
 
     public Integer createBuchung(String kundenmail, Date abholdatum, Date abgabedatum, List<Integer> produktids){
+        java.sql.Date abholung = new java.sql.Date(abholdatum.getTime());
+        java.sql.Date abgabe = new java.sql.Date(abgabedatum.getTime());
         Boolean verfuegbar = false;
         Integer kundenId = null;
         Integer buchcode = null;
@@ -201,22 +203,19 @@ public class DatabaseHelper{
         ResultSet rs2 = null;
         List<String> hwcodes = new ArrayList<String>();
         try {
-            rs = stmt.executeQuery("SELECT kun_nummer FROM tbl_kunde WHERE kun_email = '"+ kundenmail +"'");
-            rs2 = stmt.executeQuery("SELECT max(buch_code)+1 FROM tbl_buchungsliste");
+            rs2 = stmt.executeQuery("SELECT max(buch_code)+1 as buch_code FROM tbl_buchungsliste");
             rs2.next();
-            buchcode = rs.getInt("buch_code");
-            if(!rs.next()) {
+            buchcode = rs2.getInt("buch_code");
+            rs = stmt.executeQuery("SELECT kun_nummer FROM tbl_kunde WHERE kun_email = '"+ kundenmail +"'");
+            if(rs.isBeforeFirst()) {
+                rs.next();
                 kundenId = rs.getInt("kun_nummer");
-                return -1;
-            } else {
                 for(Integer produkt : produktids){
                     if(produktVerfuegbar(produkt, abholdatum, abgabedatum)){
                         rs = stmt.executeQuery("SELECT prod_code FROM tbl_lagerliste WHERE prod_id = "+ produkt);
                         if(rs.next()){
                             String prodcode = rs.getString("prod_code");
                             hwcodes.add(prodcode);
-                            stmt.executeUpdate("INSERT INTO tbl_buchung_produkt (bestell_id, produkt_code)" +
-                                    " VALUES (" + buchcode + ", '" + prodcode + "')");
                         } else{
                             return -1;
                         }
@@ -225,13 +224,19 @@ public class DatabaseHelper{
                     }
                 }
                 verfuegbar=true;
+
                 stmt.executeUpdate("INSERT INTO tbl_buchungsliste (kun_id, buch_abholdatum, buch_rueckgabedatum, buch_code, buch_status)" +
-                        " VALUES ("+ kundenId +", "+ abholdatum +", "+ abgabedatum +", "+ buchcode +", 'ausstehend'");
+                        " VALUES ("+ kundenId +", '"+ abholung +"', '"+ abgabe +"', "+ buchcode +", 'ausstehend')");
+                for(String hwcode : hwcodes){
+                    stmt.executeUpdate("INSERT INTO tbl_buchung_produkt (bestell_id, produkt_code)" +
+                            " VALUES (" + buchcode + ", '" + hwcode + "')");
+                }
+            } else {
+                return -1;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
 
         return buchcode;
     }
@@ -712,38 +717,70 @@ public class DatabaseHelper{
     }
 
     public List<String> getGebuchteProdukte(int buchung){
+        Statement stmt2 = null;
+        try {
+            stmt2 = c.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         List<String> produkte =new ArrayList<String>();
+        Integer id = null;
+        String produktcode = null;
         ResultSet rs=null;
         ResultSet rsa=null;
+        ResultSet rsb=null;
         try {
-            rs=stmt.executeQuery("SELECT  * FROM tbl_buchungsliste_produkt WHERE bestell_id=" + buchung);
+            rs=stmt2.executeQuery("SELECT  * FROM tbl_buchung_produkt WHERE bestell_id=" + buchung);
             while(rs.next()) {
-                rsa=stmt.executeQuery("SELECT * FROM tbl_produkt WHERE prod_id=(SELECT prod_id FROM tbl_lagerliste WHERE prod_code="+rs.getString("produkt_code")+") ");
-                produkte.add(rsa.getString("prod_bezeichn"));
+                produktcode = rs.getString("produkt_code");
+                rsa = stmt.executeQuery("SELECT prod_id FROM tbl_lagerliste WHERE prod_code = '"+ produktcode +"'");
+                rsa.next();
+                id = rsa.getInt("prod_id");
+                rsb = stmt.executeQuery("SELECT * FROM tbl_produkt WHERE prod_id = "+ id);
+                rsb.next();
+                produkte.add(rsb.getString("prod_bezeichn"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
+        try {
+            stmt2.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return produkte;
     }
 
     public List<Double> getGebuchteProduktePreis(int buchung){
+        Statement stmt2 = null;
+        try {
+            stmt2 = c.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         List<Double> preise =new ArrayList<Double>();
+        Integer id = null;
         ResultSet rs=null;
         ResultSet rsa=null;
+        ResultSet rsb=null;
         try {
-            rs=stmt.executeQuery("SELECT  * FROM tbl_buchungsliste_produkt WHERE bestell_id="+buchung);
+            rs=stmt2.executeQuery("SELECT  * FROM tbl_buchung_produkt WHERE bestell_id="+buchung);
             while(rs.next()) {
-                rsa=stmt.executeQuery("SELECT * FROM tbl_produkt WHERE prod_id=(SELECT prod_id FROM tbl_lagerliste WHERE prod_code="+rs.getString("produkt_code")+") ");
-                preise.add(rsa.getDouble("prod_preis"));
+                rsa=stmt.executeQuery("SELECT prod_id FROM tbl_lagerliste WHERE prod_code='"+rs.getString("produkt_code")+"'");
+                rsa.next();
+                id=rsa.getInt("prod_id");
+                rsb=stmt.executeQuery("SELECT * FROM tbl_produkt WHERE prod_id = "+ id);
+                rsb.next();
+                preise.add(rsb.getDouble("prod_preis"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
+        try {
+            stmt2.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return preise;
     }
 
@@ -751,7 +788,8 @@ public class DatabaseHelper{
         int anzahl=0;
         ResultSet rs=null;
         try {
-            rs=stmt.executeQuery("SELECT COUNT(kun_id) AS anzahl FROM tbl_buchungsliste WHERE kun_id=(SELECT kun_nummer FROM tbl_kunde WHERE kun_mail='"+mail+"')");
+            rs=stmt.executeQuery("SELECT COUNT(kun_id) AS anzahl FROM tbl_buchungsliste WHERE kun_id=(SELECT kun_nummer FROM tbl_kunde WHERE kun_email='"+mail+"')");
+            rs.next();
             anzahl=rs.getInt("anzahl");
         } catch (SQLException e) {
             e.printStackTrace();

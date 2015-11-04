@@ -47,7 +47,7 @@ public class createBuchung extends HttpServlet {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if(request.getParameter("submit").equals("buchen")) {
+        if(request.getParameter("submit").equals("Buchen")) {
             Integer success = null;
             success=db.createBuchung(mail, abholung, abgabe, products);
             if(success>0){
