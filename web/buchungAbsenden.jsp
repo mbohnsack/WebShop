@@ -1,5 +1,6 @@
 <%@ page import="project.DatabaseHelper" %>
 <%@ page import="project.cart" %>
+<%@ page import="project.loginCookie" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.sql.SQLException" %>
 <%@ page import="java.util.List" %>
@@ -49,8 +50,24 @@
                                 e.printStackTrace();
                             }
                         }
-                        db.disconnectDatabase();
-                    %>
+
+
+
+                        Boolean loginState = false;
+                        String user ="";
+
+                        loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
+                        if (loginDaten!=null) {
+                            if(loginDaten.getRolle()=="Kunde"){
+                                loginState = true;
+                                user = loginDaten.getUsername();
+                            }
+                        } else{
+                            loginState = false;
+                        }
+
+
+                        %>
 
                         <form name="updateForm" method="post" action="buchungAbsendenservelet">
 
@@ -64,10 +81,56 @@
                                 <input type="date" value="TT.MM.JJJJ" name="abgabe"/>
                             </div>
 
+
+
+                        <%
+
+
+                        // wenn ein KD im Portal angemeldet ist
+                        if(loginState){
+
+                            String email = "";
+                            ResultSet rs = db.getKundenDatenByLogin(user);
+                            while(rs.next()){
+                                email = rs.getString(12);
+                            }
+                            db.disconnectDatabase();
+                            %>
+
+                            <div class="form_row">
+                            <label class="contact_customMF"><strong>email</strong></label>
+                            <input type="text" name="email" placeholder="<%= email%>"/>
+                            </div>
+
+                            <%
+
+                        }
+                        //wenn KEIN KD angemeldet ist
+                        else{
+                            %>
+                            <br/><p>Sie sind nicht angemeldet, bitte geben Sie Ihre Daten ein.</p><br/>
+                            <div class="form_row">
+                                <label class="contact_customMF"><strong>Vorname</strong></label>
+                                <input type="text" name="vorname" placeholder="Max"/>
+                            </div>
+
+                            <div class="form_row">
+                                <label class="contact_customMF"><strong>Nachname</strong></label>
+                                <input type="text" name="nachname" placeholder="Mustermann"/>
+                            </div>
+
                             <div class="form_row">
                                 <label class="contact_customMF"><strong>email</strong></label>
-                                <input type="text" name="email" placeholder="Bitte email eingeben"/>
-                            </div>
+                                <input type="text" name="email" placeholder="x@y.de"/>
+                                </div>
+
+                            <%
+                        }
+                    %>
+
+
+
+
 
                             <div class="form_row">
                                 <input type="submit" value="Ok"/></div>
