@@ -279,6 +279,24 @@ public class DatabaseHelper{
         return tage;
     }
 
+    public String getZeitraum(Integer buchungId){
+        String zeitraum = null;
+        Date abholung = null;
+        Date rueckgabe = null;
+        ResultSet rs = null;
+        try {
+            rs = stmt.executeQuery("SELECT * FROM tbl_buchungsliste WHERE buch_code = "+ buchungId);
+            rs.next();
+            abholung = rs.getDate("buch_abholdatum");
+            rueckgabe = rs.getDate("buch_rueckgabedatum");
+            zeitraum = abholung.toString() + " - " + rueckgabe.toString();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return zeitraum;
+    }
+
     public Integer addProduct(String kategorie, String hersteller, Double preis, String beschreibung, String details, String bezeichnung, String infBezeichnung){
         Integer id = null;
         try {

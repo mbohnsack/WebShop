@@ -16,7 +16,7 @@
             while(rs.next()){
                 DatabaseHelper db2 = new DatabaseHelper();
                 int anzahl = db2.getAnzahlProdukteInKategorie(rs.getString(1));
-                if (anzahl > 0) {
+                if (anzahl > 0 || db2.getUebergeordneteKategorie(rs.getString(1)).equals("")) {
         %>
         <li class="odd"><form id="category" style="margin-bottom: 0" method="post" action="categories.jsp"><button style="cursor:pointer;" name="category" type="submit" value="<%= rs.getString(1)%>"><%= rs.getString(1)%></button></form></li>
        <!-- <li class="even"><form style="margin-bottom: 0" method="post" action="categories.jsp"><button name="category" type="submit" value="Lautsprecher">Lautsprecher</button></form></li>

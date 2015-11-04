@@ -120,9 +120,85 @@ public class SendMailSSL {
         List<String> produkte=db.getGebuchteProdukte(buchung);
         List<Double> preise=db.getGebuchteProduktePreis(buchung);
         int anzahl=db.getBuchungsZahlByMail(mail);
-        String gebuchteProdukte="";
+        int tage=db.getBuchungsdauerById(buchung);
+        String dauer=db.getZeitraum(buchung);
         db.disconnectDatabase();
+        String gebuchteProdukte="";
+        Double gesamtPreis=0.0;
+        Double modKunde=1.0;
+        if(anzahl>=4){
+            modKunde=0.8;
+        }
+        for(Double preis:preise){
+            gesamtPreis+=(preis+(tage-1*preis*0.6))*modKunde;
+        }
+        for(String produkt:produkte){
+            gebuchteProdukte+="\n"+produkt;
+        }
+        try {
 
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("hipsterrentalcorp@gmail.com"));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(mail));
+            message.setSubject("Bestellung erfasst");
+            message.setText("Sehr geeherter Kunde,"
+                    + "\n\n Ihre Bestellung wurde in unser System aufgenommen." +
+                    "\n Folgende Produkte wurden bestellt:" + gebuchteProdukte +
+                    "\n Der Preis beträgt: "+gesamtPreis+"€"+
+                    "\n Der Buchunszeitraum ist: "+dauer+
+                    "\n Ein Mitarbeiter wird sich schnellstmöglich um Ihre Bestellung kümmern.)" +
+                    "\n Sie erhalten eine weitere Mail, sobald die Bestellung verbindlich angenommen wurde." +
+                    "\n\n Mit freundlichen Grüßen" +
+                    "\n Ihr Team von Hipster Rental Corp" +
+                    "\n\n Hier könnte unsere Adresse oder Ihre Werbung stehen.");
+
+            Transport transport = session.getTransport("smtp");
+            transport.connect("smtp.gmail.com", username, password);
+            transport.sendMessage(message, message.getAllRecipients());
+            transport.close();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    public static void sendStatusUpdateMail(int buchung,String status){
+        final String username = "hipsterrentalcorp@gmail.com";
+        final String password = "YXCVBNM;";
+
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.starttls.enable", true);
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "587");
+
+        Authenticator auth = new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username,password);
+            }
+        };
+
+        Session session = Session.getDefaultInstance(props,auth);
+        DatabaseHelper db=new DatabaseHelper();
+        List<String> produkte=db.getGebuchteProdukte(buchung);
+        List<Double> preise=db.getGebuchteProduktePreis(buchung);
+        int anzahl=0;//db.getBuchungsZahlByMail(mail);
+        int tage=db.getBuchungsdauerById(buchung);
+        String dauer=db.getZeitraum(buchung);
+        db.disconnectDatabase();
+        String gebuchteProdukte="";
+        Double gesamtPreis=0.0;
+        Double modKunde=1.0;
+        if(anzahl>=4){
+            modKunde=0.8;
+        }
+        for(Double preis:preise){
+            gesamtPreis+=(preis+(tage-1*preis*0.6))*modKunde;
+        }
         for(String produkt:produkte){
             gebuchteProdukte+="\n"+produkt;
         }
@@ -136,7 +212,8 @@ public class SendMailSSL {
             message.setText("Sehr geeherter Kunde,"
                     + "\n\n Ihre Bestellung wurde in unser System aufgenommen." +
                     "\n Folgende Produkte wurden bestellt:" + gebuchteProdukte +
-                    "\n Der Preis beträgt: "+"€"+
+                    "\n Der Preis beträgt: "+gesamtPreis+"€"+
+                    "\n Der Buchunszeitraum ist: "+dauer+
                     "\n Ein Mitarbeiter wird sich schnellstmöglich um Ihre Bestellung kümmern.)" +
                     "\n Sie erhalten eine weitere Mail, sobald die Bestellung verbindlich angenommen wurde." +
                     "\n\n Mit freundlichen Grüßen" +
