@@ -23,6 +23,7 @@ public class updateBuchungStatusServlet extends HttpServlet {
         db.updateBuchungsstatus(buchungsID,neuStatus);
         db.disconnectDatabase();
 
+        SendMailSSL.sendStatusUpdateMail(buchungsID,neuStatus);
 
         String url = "/MitarbeiterView/buchungsVerwaltung.jsp";
         response.sendRedirect(url);

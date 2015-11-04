@@ -18,7 +18,7 @@
     <div class="center_prod_box">
         <form id="details" action="details.jsp" method="post" style="height:42px;">
             <button style="margin:0; background:none; border:0; cursor:pointer;" name="details" type="submit"
-                    value=""<%= request.getAttribute("id") %>">
+                    value=<%= request.getAttribute("id") %>>
                 <div class="product_title"><%= request.getAttribute("herst") %> <%= request.getAttribute("bezeichn") %>
                 </div>
             </button>

@@ -17,11 +17,6 @@
   loginCookie loginCookie = new loginCookie(username, sourcepage, targetPage);
   session.setAttribute("loginCookie",loginCookie);
 
-  Cookie cookie = new Cookie("loginCookie","Hallo");
-  cookie.setMaxAge(120 * 60); //nach 2Stunden wird der Cookie gelöscht
-  response.addCookie(cookie);
-
-
   response.sendRedirect(targetPage);
 %>
 
