@@ -14,8 +14,6 @@
     <li class="divider"></li>
     <li><a href="contact.jsp" id="kontakt" class="nav3">Kontakt</a></li>
     <li class="divider"></li>
-    <li><a href="register.jsp" id="registrieren" class="nav4">Registrieren</a></li>
-    <li class="divider"></li>
     <%
         // den loginname des angemeldeten Nutzers auslesen und wenn jemand angemeldet ist die buttons einblenden
         Boolean loginState = false;
@@ -35,7 +33,10 @@
             <li class="divider"></li>
             <li><a href="kundeBearbeiten.jsp" id="konto" class="nav6">Daten &auml;ndern</a></li>
         <%}else{%>
-            <li><a href="loginKunde.jsp" id="anmelden" class="nav5">anmelden</a></li>
+            <li><a href="loginKunde.jsp" id="anmelden" class="nav5">Anmelden</a></li>
+              <li class="divider"></li>
+              <li><a href="register.jsp" id="registrieren" class="nav4">Registrieren</a></li>
+
         <%}%>
 
 </ul>

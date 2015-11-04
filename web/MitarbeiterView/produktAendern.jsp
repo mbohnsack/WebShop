@@ -13,20 +13,7 @@
 <%
   loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
 
-  String cookieName = "loginCookie";
-  Cookie cookies [] = request.getCookies ();
-  Cookie myCookie = null;
-  if (cookies != null)
-  {
-    for (int i = 0; i < cookies.length; i++)
-    {
-      if (cookies [i].getName().equals (cookieName))
-      {
-        myCookie = cookies[i];
-        break;
-      }
-    }
-  }
+
 %>
 <html lang="de">
 <head>
@@ -36,9 +23,9 @@
 </head>
 <body>
 
-<%if (myCookie == null) {
+<%if (loginDaten== null) {
 %>
-No Cookie found with the name <%=cookieName%>
+No Cookie found with the name
 <%
 }
 else {

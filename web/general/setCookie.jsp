@@ -9,23 +9,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%-- Cookie erzeugen --%>
 <%
-  String username = (String) request.getAttribute("username");
-  String targetPage = (String) request.getAttribute("targetpage");
-  String  sourcepage = null;
+  String username =  request.getParameter("username");
+  String targetPage =  request.getParameter("targetpage");
+  String  sourcepage =  request.getParameter("sourcepage");
 
-  if(targetPage.equals("MitarbeiterView/main.jsp")){
-    sourcepage = "../MitarbeiterView/login.jsp";
-  }else if(targetPage.equals("index.jsp")) {
-    sourcepage = "../index.jsp";
-  }
 
-  loginCookie loginCookie = new loginCookie(username,targetPage,sourcepage);
+  loginCookie loginCookie = new loginCookie(username, sourcepage, targetPage);
   session.setAttribute("loginCookie",loginCookie);
-
-  Cookie cookie = new Cookie("loginCookie","Hallo");
-  cookie.setMaxAge(120 * 60); //nach 2Stunden wird der Cookie gelöscht
-  response.addCookie(cookie);
-
 
   response.sendRedirect(targetPage);
 %>

@@ -1,4 +1,5 @@
 import project.DatabaseHelper;
+import project.SendMailSSL;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,8 +23,9 @@ public class updateBuchungStatusServlet extends HttpServlet {
         db.updateBuchungsstatus(buchungsID,neuStatus);
         db.disconnectDatabase();
 
+        SendMailSSL.sendStatusUpdateMail(buchungsID,neuStatus);
 
-        String url = "/MitarbeiterView/buchungenVerwalten.jsp";
+        String url = "/MitarbeiterView/buchungsVerwaltung.jsp";
         response.sendRedirect(url);
 
     }
