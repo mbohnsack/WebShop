@@ -67,7 +67,7 @@ else {
         }
         catch(Exception e){}
       %>
-      <input type="submit" name="pruefen" value="pruefen"/> <<input type="submit" name="buchen" value="Buchen"/>
+      <input type="submit" name="submit" value="pruefen"/> <<input type="submit" name="submit" value="Buchen"/>
     </form>
 
   </div>
