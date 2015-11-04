@@ -57,9 +57,11 @@ else {
     <div>
       <table border="1" class="tableRightdiv">
         <tr>
-          <td>Kategorie Name</td>
-          <td>Übergeordnete Kategorie</td>
-          <td>Bild</td>
+          <td>Buchungs ID </td>
+          <td>Abholungsdatum</td>
+          <td>Rückgabedatum</td>
+          <td>Kunden ID</td>
+          <td>Status</td>
           <td></td>
         </tr>
         <%
