@@ -20,8 +20,7 @@ public class loginCookie {
             System.out.println(db.getMitarbeiterRolle(username));
             this.rolle = db.getMitarbeiterRolle(username);
             db.disconnectDatabase();
-        }
-        if(sourcepage.equals("../index.jsp")) {
+        }else {
             this.rolle = "Kunde";
         }
     }
