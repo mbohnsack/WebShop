@@ -116,15 +116,17 @@ public class DatabaseHelper{
         return rs;
     }
 
-    public void createKunde(String name,String passwort,String nname, String vname, String strasse, String hnummer, int plz,String ort, int tel, int mobil, String email, String orga){
+    public boolean createKunde(String name,String passwort,String nname, String vname, String strasse, String hnummer, int plz,String ort, int tel, int mobil, String email, String orga){
         try{
             ResultSet rs =stmt.executeQuery( "SELECT MAX(kun_nummer) AS MaxID FROM tbl_kunde;" );
             rs.next();
             int nummer=rs.getInt("MaxID")+1;
             stmt.executeUpdate("INSERT INTO tbl_kunde (kun_nummer, kun_benutzer, kun_passwort, kun_name, kun_vorname, kun_strasse, kun_hausnummer, kun_plz, kun_ort, kun_telefon, kun_mobil, kun_email, kun_orga)" +
                     "VALUES ("+nummer+",'"+name+"','"+MD5.getMD5(passwort)+"','"+nname+"','"+vname+"','"+strasse+"','"+hnummer+"',"+plz+",'"+ort+"',"+tel+","+mobil+",'"+email+"','"+orga+"');");
+                    return true;
         }catch(Exception e){
             e.printStackTrace();
+            return false;
         }
     }
 

@@ -78,30 +78,27 @@ public class updateKundeServlet extends HttpServlet {
         }
 
         // Zahlenformate müssen aus den eingabefeldern geparst werden
-
         try {
             plz_int = Integer.parseInt(plz);
         } catch (NumberFormatException e) {
             eingabeFehler = true;
-            message = "PLZ mit ungültigem Wert";
+            message = "PLZ mit ung&uuml;ltigem Wert.";
         }
-
         //TODO vorangestellte 0 kann nicht angezeit/gespeichert werden; mobil und tele
         if (!eingabeFehler) {
             try {
                 tele_int = Integer.parseInt(tele);
             } catch (NumberFormatException e) {
                 eingabeFehler = true;
-                message = "Telefonnummer mit ungültigem Wert";
+                message = "Telefonnummer mit ung&uuml;ltigem Wert.";
             }
         }
-
         if (!eingabeFehler) {
             try {
                 mobil_int = Integer.parseInt(mobil);
             } catch (NumberFormatException e) {
                 eingabeFehler = true;
-                message = "Mobilnummer mit ungültigem Wert";
+                message = "Mobilnummer mit ung&uuml;ltigem Wert.";
             }
         }
 

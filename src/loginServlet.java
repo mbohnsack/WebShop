@@ -44,7 +44,7 @@ public class loginServlet extends HttpServlet {
         } else {
             if (sourcePage.contentEquals("/loginKunde.jsp")){
                 //textausgabe im formular
-                request.setAttribute("message", "Passwort und Login stimmten nicht überein.");
+                request.setAttribute("message", "Passwort und Login stimmten nicht &uuml;berein.");
                 request.getRequestDispatcher("/loginKunde.jsp").forward(request, response);
 
             }else{
