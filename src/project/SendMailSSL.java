@@ -133,7 +133,7 @@ public class SendMailSSL {
             gesamtPreis+=(preis+(tage-1*preis*0.6))*modKunde;
         }
         for(int i=0;i<produkte.size();i++){
-            gebuchteProdukte+="\n"+produkte.get(i)+" ("+ preise.get(i)+")";
+            gebuchteProdukte+="\n"+produkte.get(i)+" ("+ preise.get(i)+"\u20ac)";
         }
         try {
 
@@ -145,7 +145,7 @@ public class SendMailSSL {
             message.setText("Sehr geeherter Kunde,"
                     + "\n\n Ihre Bestellung wurde in unser System aufgenommen." +
                     "\n Folgende Produkte wurden bestellt:" + gebuchteProdukte +
-                    "\n Der Preis betr\u00e4gt: "+gesamtPreis+"€"+
+                    "\n Der Preis betr\u00e4gt: "+gesamtPreis+"\u20ac"+
                     "\n Der Buchunszeitraum ist: "+dauer+
                     "\n Ein Mitarbeiter wird sich schnellstm\u00f6glich um Ihre Bestellung k\u00fcmmern.)" +
                     "\n Sie erhalten eine weitere Mail, sobald die Bestellung verbindlich angenommen wurde." +
