@@ -1,5 +1,7 @@
 <%@ page import="project.DatabaseHelper" %>
 <%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 <%--
   Created by IntelliJ IDEA.
   User: filip
@@ -22,15 +24,8 @@
       DatabaseHelper db = new DatabaseHelper();
     String produktCat = request.getParameter("category");
       ResultSet rs = null;
-      int anzahl = 0;
-
-      if (db.getUebergeordneteKategorie(produktCat).equals("")) {
-
-      }
-      else {
-        anzahl = db.getAnzahlProdukteInKategorie(produktCat);
-        rs = db.getProductsByKategorie(produktCat);
-      }
+      int anzahl = db.getAnzahlProdukteInKategorie(produktCat);
+      System.out.println(db.getUnterkategorie(produktCat));
       %>
     <div id="navigation_top">
       <jsp:include page="navigation_top.jsp" />
@@ -41,6 +36,8 @@
     </div>
     <div id="content" class="content">
       <%
+        if (db.getUnterkategorie(produktCat).isEmpty()) {
+          rs = db.getProductsByKategorie(produktCat);
            for (int i = 0; i<anzahl; i++) {
            while(rs.next()){
              request.setAttribute("id", rs.getString(1));
@@ -49,7 +46,18 @@
              request.setAttribute("bezeichn", rs.getString(7));
       %>
       <jsp:include page="prodBox.jsp" />
-      <% }} db.disconnectDatabase();%>
+      <% }}} else {
+        List<String> ukat = new ArrayList<String>();
+                ukat = db.getUnterkategorie(produktCat);
+
+        for (String temp : ukat) {
+          request.setAttribute("herst", temp);
+          %>
+      <jsp:include page="prodBox.jsp" />
+      <%
+        }
+      %>
+      <%} db.disconnectDatabase();%>
     </div>
     <div id="navigation_right" class="navigation_right">
       <jsp:include page="navigation_right.jsp" />
