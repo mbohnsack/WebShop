@@ -54,7 +54,7 @@ else {
   </div>
 
   <div id="rightdiv">
-    <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post" action="../addKategorieServlet"><div ><h2>Produkt anlegen</h2></div>
+    <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post" enctype="multipart/form-data" action="../addKategorieServlet"><div ><h2>Produkt anlegen</h2></div>
         <div ><label >Kategorie Name</label><input  type="text" name="kategorieName" /></div>
         <div ><label >Übergeordenete Kategorie</label><div ><select name="ueberKategorie" >
           <%
