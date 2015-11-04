@@ -15,16 +15,15 @@ public class loginCookie {
         this.sourcepage = sourcepage;
 
 
-        if(sourcepage == "../MitarbeiterView/login.jsp"){
+        if(sourcepage.equals("../MitarbeiterView/login.jsp")) {
             DatabaseHelper db = new DatabaseHelper();
-            if(db.getMitarbeiterRolle(username).equals("mitarbeiter") || db.getMitarbeiterRolle(username).equals("admin")) {
-                this.rolle = db.getMitarbeiterRolle(username);
-            }
+            System.out.println(db.getMitarbeiterRolle(username));
+            this.rolle = db.getMitarbeiterRolle(username);
             db.disconnectDatabase();
-        }else{
+        }
+        if(sourcepage.equals("../index.jsp")) {
             this.rolle = "Kunde";
         }
-
     }
 
     public String getRolle() {

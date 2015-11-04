@@ -23,7 +23,7 @@
                     <div class="top_prod_box_big"></div>
                     <div class="center_prod_box_big">
                     <div class="contact_form">
-                        <form name="registerForm" method="post" action="../registerKundeServlet">
+                        <form name="registerForm" method="post" action="registerKundeServlet">
                             <div class="form_row">
                                 <label class="contact"><strong>Benutzername</strong></label>
                                 <input type="text" class="contact_input" name="benutzername" placeholder="MaxM62"/>
@@ -66,11 +66,11 @@
                             </div>
                             <div class="form_row">
                                 <label class="contact"><strong>Passwort</strong></label>
-                                <input type="text" class="contact_input" name="passwort"/>
+                                <input type="password" class="contact_input" name="passwort"/>
                             </div>
                             <div class="form_row">
                                 <label class="contact"><strong>Passwort wiederholen</strong></label>
-                                <textarea class="contact_textarea" name="passwortwd"></textarea>
+                                <input type="password" class="contact_input" name="passwortwd"/>
                             </div>
                             <div class="form_row"><input type="submit" value="Registrieren"/></div>
                         </form>

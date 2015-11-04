@@ -17,7 +17,7 @@
   Password: <input type="password" name="password"/> <br/>
   <input type="submit" value="Login" />
   <input type="hidden" name="targetpage" value="MitarbeiterView/main.jsp"/> <br/>
-  <input type="hidden" name="sourcepage" value="/MitarbeiterView/login.jsp"/> <br/>
+  <input type="hidden" name="sourcepage" value="../MitarbeiterView/login.jsp"/> <br/>
 
 </form>
 </body>
