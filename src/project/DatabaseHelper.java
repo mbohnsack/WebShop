@@ -707,6 +707,15 @@ public class DatabaseHelper{
         return mail;
     }
 
+    public void addPaket(Integer paketId, String pakettyp, Integer prio, Integer prodId){
+        try {
+            stmt.executeUpdate("INSERT INTO tbl_paketinhalte (pak_id, pak_typ, pak_priorisierung, prod_id, inhalt_id) " +
+                    "VALUES ("+ paketId +", '"+ pakettyp +"', "+ prio +", "+ prodId +", (SELECT max(inhalt_id) FROM tbl_paketinhalte)+1)");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void saveFile(File bild, int prodid) throws SQLException, IOException {
         c.setAutoCommit(false);
 
@@ -744,7 +753,7 @@ public class DatabaseHelper{
         c.setAutoCommit(true);
     }
 
-    public File getFile(Integer produktId) {
+    public File getBildKategorie(String kategorie) {
         File bild = null;
 
         try {
@@ -763,8 +772,8 @@ public class DatabaseHelper{
 
         PreparedStatement ps = null;
         try {
-            ps = c.prepareStatement("SELECT imgoid FROM imageslo WHERE imgname = ?");
-            ps.setString(1, "myimage.gif");
+            ps = c.prepareStatement("SELECT kat_bild FROM tbl_kategorie WHERE kat_name = ?");
+            ps.setString(1, kategorie);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 // Open the large object for reading
@@ -779,6 +788,7 @@ public class DatabaseHelper{
                 // Close the object
                 obj.close();
             }
+
             rs.close();
             ps.close();
         } catch (SQLException e) {
