@@ -134,7 +134,7 @@ public class DatabaseHelper{
         Boolean frei=false;
         try {
             ResultSet rs=stmt.executeQuery("SELECT * FROM tbl_kunde WHERE kun_benutzer='" + name + "';");
-            if (!rs.isBeforeFirst()){
+            if (!rs.next()){
                 frei=true;
             }
         }catch(Exception e){
