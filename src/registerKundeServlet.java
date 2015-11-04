@@ -17,6 +17,8 @@ public class registerKundeServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
+
+        System.out.println("TEST MAN");
         String benutzername = request.getParameter("benutzername");
         String nname = request.getParameter("nname");
         String vname = request.getParameter("vname");
@@ -31,17 +33,23 @@ public class registerKundeServlet extends HttpServlet {
         String passwortwd = request.getParameter("passwortwd");
 
         DatabaseHelper db = new DatabaseHelper();
-        if(db.mitarbeiterFrei(benutzername) == false) {
-            JOptionPane.showMessageDialog(null, "Benutzername bereits vergeben!");
+        if(!db.mitarbeiterFrei(benutzername)) {
+            //JOptionPane.showMessageDialog(null, "Benutzername bereits vergeben!");
+            System.out.println("benutzer vergeben");
         } else if (passwort != passwortwd) {
-            JOptionPane.showMessageDialog(null, "Passwörter stimmen nicht überein!");
+            //JOptionPane.showMessageDialog(null, "Passwörter stimmen nicht überein!");
+            System.out.println("passwort stimmt nicht überein");
         } else if (db.mitarbeiterFrei(benutzername)) {
             db.createKunde(benutzername, passwort, nname, vname, strasse, hausnr, plz, ort, telefon, mobil, email);
+            //JOptionPane.showMessageDialog(null, "Success");
+            System.out.println("success");
         }
 
         String url = "/register.jsp";
         response.sendRedirect(url);
 
+
+        db.disconnectDatabase();
     }
 
 

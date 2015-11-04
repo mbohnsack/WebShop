@@ -21,8 +21,16 @@
     <%
       DatabaseHelper db = new DatabaseHelper();
     String produktCat = request.getParameter("category");
-    int anzahl = db.getAnzahlProdukteInKategorie(produktCat);
-    ResultSet rs = db.getProductsByKategorie(produktCat);
+      ResultSet rs = null;
+      int anzahl = 0;
+
+      if (db.getUebergeordneteKategorie(produktCat).equals("")) {
+
+      }
+      else {
+        anzahl = db.getAnzahlProdukteInKategorie(produktCat);
+        rs = db.getProductsByKategorie(produktCat);
+      }
       %>
     <div id="navigation_top">
       <jsp:include page="navigation_top.jsp" />
@@ -46,7 +54,7 @@
         <div class="bottom_prod_box"></div>
         <div class="prod_details_tab"> <a href="#" title="header=[Add to cart] body=[&nbsp;] fade=[on]"><img src="images/cart.gif" alt="" border="0" class="left_bt" /></a> </div>
       </div>
-      <% } db.disconnectDatabase();}%>
+      <% }} db.disconnectDatabase();%>
     </div>
     <div id="navigation_right" class="navigation_right">
       <jsp:include page="navigation_right.jsp" />
