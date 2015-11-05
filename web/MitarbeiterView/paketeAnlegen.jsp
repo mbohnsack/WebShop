@@ -40,10 +40,10 @@ else {
 
   <div id="rightdiv">
     <div>
-      <form name="buchungform" method="post" action="../addPaketServlet">
-        <div ><label >Paketname</label><input  type="text" name="produktname" /></div>
-        <div ><label >Paket Name2</label><input  type="text" name="produktname2" /></div>
-        <div ><label >Produktbeschreibung</label><textarea class="medium" name="produktbeschreibung" cols="20" rows="5" ></textarea></div>
+      <form  style="margin:0 auto;max-width:60%;min-width:20%"  method="post" enctype="multipart/form-data" action="../addPaketServlet">
+        <div ><label >Paketname</label><input  type="text" name="paketname" /></div>
+        <div ><label >Paketname 2</label><input  type="text" name="paketname2" /></div>
+        <div ><label >Paketbeschreibung</label><textarea class="medium" name="paketbeschreibung" cols="20" rows="5" ></textarea></div>
         <div ><label >Technische Daten</label><textarea class="medium" name="details" cols="20" rows="5" ></textarea></div>
         <div ><label >Kategorie</label>
           <select name="kategorie" >
@@ -60,11 +60,15 @@ else {
           %>
         </select>
         </div>
-          <div ><label >Hersteller</label><input  type="text" name="hersteller" /></div>
+          <div ><label >Hersteller</label><input  type="text" name="hersteller" value="Paket" readonly/></div>
           <div ><label >Preis</label><input  type="text" name="preis" /></div>
-          <div ><label >Bild hochladen</label><label><div >Datei auswählen</div><input type="file"  name="file" /></label></div>
+
         <label >Produkte</label>
-        <div>
+          <table border="1">
+            <tr>
+              <td>Produktname</td>
+              <td>Prio</td>
+            </tr>
                 <%
                 DatabaseHelper db = new project.DatabaseHelper();
                 try{
@@ -76,7 +80,7 @@ else {
                     id= rs.getInt("prod_id");
                     bezeichnung=rs.getString("prod_bezeichn");
                  %>
-                <table border="1">
+
                   <tr>
                   <td>
                   <input type="checkbox"  name="produkte" value=<%=id%>/><%=bezeichnung %><br/>
@@ -89,18 +93,16 @@ else {
                       </select>
                     </td>
                   </tr>
-                </table>
+
                 <%
                   }
                 %>
-                </select>
-
-        </div>
+          </table>
         <%
           }
           catch(Exception e){}
         %>
-        <input type="submit" name="buchen" value="Buchen"/>
+        <input class="submit" type="submit" name="anlegen" value="Anlegen" />
       </form>
 
   </div>

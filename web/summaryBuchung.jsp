@@ -34,8 +34,8 @@
 
 
             <p>Buchungs Code lautet: ${message}</p>
-            <-- alle produkte mit preis -->
-            <-- datum -->
+            <!-- alle produkte mit preis -->
+            <!-- datum -->
 
 
             <form name="facebook" method="post" action="">

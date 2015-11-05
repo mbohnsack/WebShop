@@ -23,7 +23,7 @@
                 </div>
             </button>
         </form>
-        <div class="product_img"><a href="details.jsp"><img style="width:92px; height: 92px" src="images/p1.jpg" alt=""
+        <div class="product_img"><a href="details.jsp"><img style="width:92px; height: 92px" src="/produktBild?prodid=<%= request.getAttribute("id")%>&&number=1" alt=""
                                                             border="0"/></a></div>
         <div class="prod_price"><span class="price"><%= request.getAttribute("preis") %> €</span></div>
 

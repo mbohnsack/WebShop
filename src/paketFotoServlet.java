@@ -15,24 +15,20 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * Created by Chris on 29.10.2015.
+ * Created by Malte on 05.11.2015.
  */
-@WebServlet("/addProduktServlet")
-public class addProduktServlet extends HttpServlet {
+@WebServlet("/paketFotoServlet")
+public class paketFotoServlet extends HttpServlet{
     private final String UPLOAD_DIRECTORY = "upload";
-    private final int THRESHOLD_SIZE     = 1024 * 1024 * 10; // 10MB
-    private final int MAX_FILE_SIZE      = 1024 * 1024 * 40; // 40MB
-    private final int MAX_REQUEST_SIZE   = 1024 * 1024 * 50; // 50MB
+    private final int THRESHOLD_SIZE = 1024 * 1024 * 10; // 10MB
+    private final int MAX_FILE_SIZE = 1024 * 1024 * 40; // 40MB
+    private final int MAX_REQUEST_SIZE = 1024 * 1024 * 50; // 50MB
+
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
-        File storeFile=null;
-        String produktname = null;
-        String produktname2 = null;
-        String produktbeschreibung = null;
-        String details = null;
-        String kategorie = null;
-        String hersteller = null;
-        double preis=0.0;
+
+        int prodid = 0;
+        File storeFile = null;
 
         DatabaseHelper db = new DatabaseHelper();
         if (ServletFileUpload.isMultipartContent(request)) {
@@ -56,7 +52,7 @@ public class addProduktServlet extends HttpServlet {
             }
 
 
-            for (FileItem item: formItems) {
+            for (FileItem item : formItems) {
                 // processes only fields that are not form fields
                 if (!item.isFormField()) {
                     String fileName = new File(item.getName()).getName();
@@ -70,30 +66,12 @@ public class addProduktServlet extends HttpServlet {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }else{
-                    String name=item.getFieldName();
-                    if(name!=null) {
+                } else {
+                    String name = item.getFieldName();
+                    if (name != null) {
                         switch (name) {
-                            case "produktname":
-                                produktname = item.getString();
-                                break;
-                            case "produktname2":
-                                produktname2 = item.getString();
-                                break;
-                            case "produktbeschreibung":
-                                produktbeschreibung = item.getString();
-                                break;
-                            case "details":
-                                details = item.getString();
-                                break;
-                            case "kategorie":
-                                kategorie = item.getString();
-                                break;
-                            case "hersteller":
-                                hersteller = item.getString();
-                                break;
-                            case "preis":
-                                preis = Double.parseDouble(item.getString());
+                            case "paket":
+                                prodid = Integer.parseInt(item.getString());
                                 break;
                         }
                     }
@@ -101,15 +79,14 @@ public class addProduktServlet extends HttpServlet {
 
             }
             try {
-                int prodid=db.addProduct(kategorie, hersteller, preis, produktbeschreibung, details, produktname, produktname2);
-                db.saveBildProdukt(storeFile,prodid);
+                db.saveBildProdukt(storeFile, prodid);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }
 
-        String url = "/MitarbeiterView/produktVerwalten.jsp";
-        response.sendRedirect( url );
+        }
+        String url = "/MitarbeiterView/addFotoPaket.jsp";
+        response.sendRedirect(url);
         db.disconnectDatabase();
     }
 }

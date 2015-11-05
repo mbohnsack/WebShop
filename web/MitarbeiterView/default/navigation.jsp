@@ -38,9 +38,12 @@
 <label class="naviLabel">Pakete</label>
 <div class="navlinks"><a href="paketeAnlegen.jsp" ><b>Pakete anlegen</b></a></div>
 <div class="navlinks"><a href="paketeVerwalten.jsp" ><b>Pakete verwalten</b></a></div>
+<div class="navlinks"><a href="addFotoPaket.jsp"><b>Foto hinzufügen</b></a></div>
 <label class="naviLabel">Produkte</label>
 <div class="navlinks"><a href="produktAnlegen.jsp"><b>Produkte anlegen</b></a></div>
 <div class="navlinks"><a href="produktVerwalten.jsp"><b>Produkte verwalten</b></a></div>
+<div class="navlinks"><a href="addFotoProdukt.jsp"><b>Foto hinzufügen</b></a></div>
+<div class="navlinks"><a href="addHWCode.jsp"><b>Hardwarecode hinzufügen</b></a></div>
 <label class="naviLabel">Kategorie</label>
 <div class="navlinks"><a href="KategorieAnlegen.jsp"><b>Kategorie anlegen</b></a></div>
 <div class="navlinks"><a href="kategorieVerwalten.jsp"><b>Kategorien verwalten</b></a></div>

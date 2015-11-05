@@ -85,7 +85,7 @@ public class produktFotoServlet extends HttpServlet {
             }
 
         }
-        String url = "/MitarbeiterView/kategorieVerwalten.jsp";
+        String url = "/MitarbeiterView/addFotoProdukt.jsp";
         response.sendRedirect(url);
         db.disconnectDatabase();
     }
