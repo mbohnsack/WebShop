@@ -1,4 +1,5 @@
 <%@ page import="project.DatabaseHelper" %>
+<%@ page import="project.loginCookie" %>
 <%@ page import="java.sql.ResultSet" %>
 <%--
   Created by IntelliJ IDEA.
