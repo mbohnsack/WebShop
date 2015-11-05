@@ -773,6 +773,18 @@ public class DatabaseHelper{
         }
     }
 
+    public ResultSet getProdukteOfPaket(Integer paketid){
+        ResultSet rs = null;
+
+        try {
+            rs = stmt.executeQuery("SELECT * FROM tbl_paketinhalte WHERE pak_id = "+ paketid);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return rs;
+    }
+
     public void saveBildProdukt(File bild, int prodid) throws SQLException, IOException {
 
         FileInputStream fis = new FileInputStream(bild);
