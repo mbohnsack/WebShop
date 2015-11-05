@@ -749,7 +749,7 @@ public class DatabaseHelper{
 
         FileInputStream fis = new FileInputStream(bild);
         PreparedStatement ps = c.prepareStatement("INSERT INTO tbl_bild VALUES (?, ?)");
-        ps.setString(1, bild.getName());
+        ps.setInt(1, prodid);
         ps.setBinaryStream(2, fis, bild.length());
         ps.executeUpdate();
         ps.close();
@@ -767,18 +767,18 @@ public class DatabaseHelper{
             ResultSet rs = ps.executeQuery();
 
             if (rs.isBeforeFirst()) {
-                for(int i = 0; i<number; i++){
+                for (int i = 0; i < number; i++) {
                     rs.next();
                 }
-                    imgBytes = rs.getBytes(2);
-                    // use the stream in some way here
+                imgBytes = rs.getBytes(1);
+                // use the stream in some way here
                 rs.close();
             }
 //            img = ImageIO.read(new ByteArrayInputStream(imgBytes));
-            ps.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+                ps.close();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
 
         return imgBytes;
     }

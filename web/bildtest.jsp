@@ -11,6 +11,6 @@
     <title></title>
 </head>
 <body>
-<img src="/produktBild?prodid=1&&number1"/>
+<img src="/produktBild?prodid=1&&number=1"/>
 </body>
 </html>
