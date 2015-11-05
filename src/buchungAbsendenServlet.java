@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +26,7 @@ public class buchungAbsendenServlet
 
 
         DatabaseHelper db = new DatabaseHelper();
-        String kundenmail = "";
+        String email = "";
 
 
         // den loginname des angemeldeten Nutzers auslesen
@@ -39,31 +40,52 @@ public class buchungAbsendenServlet
 
                 ResultSet rs = db.getKundenDatenByLogin(user);
                 try{
-                    kundenmail = rs.getString(12);
+                    email = rs.getString(12);
                 }catch(SQLException e){}
             }
         }else{
-            kundenmail = request.getParameter("email");
-            //TODO abfragen für restliche felder
-            //TODO createKunde
+            email = request.getParameter("email");
+            String vname = request.getParameter("vorname");
+            String nname = request.getParameter("name");
+            String strasse = request.getParameter("strasse");
+            String hausnr = request.getParameter("hausn");
+            String ort = request.getParameter("ort");
+            String plz = request.getParameter("plz");
+            String tele = request.getParameter("tele");
+            String mobil = request.getParameter("mobil");
+            String orga = request.getParameter("orga");
+            String benutzername = "";
+            String passwort = "";
+
+
+            int plz_int = 0;
+            int telefon_int = 0;
+            int mobil_int = 0;
+            //TODO exception
+            try{
+                plz_int = Integer.parseInt(plz);
+                telefon_int = Integer.parseInt(tele);
+                mobil_int = Integer.parseInt(mobil);
+            }catch(NumberFormatException e){
+                // alles bleibt 0
+            }
+
+
+            //TODO fail ?!
+            boolean result = db.createKunde(benutzername, passwort, nname, vname, strasse, hausnr, plz_int, ort, telefon_int, mobil_int, email, orga);
         }
 
-
         //TODO Datumsformat is nich konform...
-        String abholDatumString = request.getParameter("abholdatum");
-        String abgabeDatumString = request.getParameter("abgabedatum");
-
+        Date abholdatum  = new Date();
+        Date abgabedatum = new Date();
         SimpleDateFormat sdf  = new SimpleDateFormat("yyyy-MM-dd");
-        Date abholdatum = null;
-        Date abgabedatum = null;
 
         try{
-            abholdatum = sdf.parse(abholDatumString);
-            abgabedatum = sdf.parse(abgabeDatumString);
-
-
-        }catch(Exception e){}
-
+            abholdatum = sdf.parse(request.getParameter("abholdatum"));
+            abgabedatum = sdf.parse(request.getParameter("abgabedatum"));
+        }catch(ParseException e){
+            //Datum konnte nich geparst werden
+        }
 
 
         cart shoppingCart;
@@ -71,12 +93,22 @@ public class buchungAbsendenServlet
         shoppingCart = (cart) session.getAttribute("cart");
         List<Integer> produktids = shoppingCart.getCartItems();
 
-        Integer suxxess = db.createBuchung(kundenmail, abholdatum, abgabedatum, produktids);
-        System.out.println("erfolg:" + suxxess);
+        Integer buchungsCode = db.createBuchung(email, abholdatum, abgabedatum, produktids);
 
         db.disconnectDatabase();
 
-        String url = "/index.jsp";
-        response.sendRedirect(url);
+        if(buchungsCode != -1){
+            //Buchung erfolgreich
+            request.setAttribute("buchCode", buchungsCode);
+            request.getRequestDispatcher("/summaryBuchung.jsp").forward(request, response);
+        }
+        else{
+            //Buchung fehlgeschlagen
+            String message = "Buchung fehlgeschlagen bitte erneut versuchen.";
+            request.setAttribute("message", message);
+            request.getRequestDispatcher("/buchungAbsenden.jsp").forward(request, response);
+        }
+
+
     }
 }

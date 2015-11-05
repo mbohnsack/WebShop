@@ -49,31 +49,31 @@
 
                             <div class="form_row">
                                 <label class="contact"><strong>Strasse</strong></label>
-                                <input type="text" class="contact_input" name="strasse" placeholder="Musterstrasse"/>
+                                <input type="text"  name="strasse"/>
                             </div>
                             <div class="form_row">
                                 <label class="contact"><strong>Hausnummer</strong></label>
-                                <input type="text" class="contact_input" name="hausnr" placeholder="42"/>
+                                <input type="text"  name="hausnr"/>
                             </div>
                             <div class="form_row">
                                 <label class="contact"><strong>PLZ</strong></label>
-                                <input type="text" class="contact_input" name="plz" placeholder="42424"/>
+                                <input type="text"  name="plz"/>
                             </div>
                             <div class="form_row">
                                 <label class="contact"><strong>Ort</strong></label>
-                                <input type="text" class="contact_input" name="ort" placeholder="Da Hood"/>
+                                <input type="text"  name="ort"/>
                             </div>
                             <div class="form_row">
                                 <label class="contact"><strong>Telefon</strong></label>
-                                <input type="text" class="contact_input" name="telefon"/>
+                                <input type="text"  name="telefon"/>
                             </div>
                             <div class="form_row">
                                 <label class="contact"><strong>Mobil</strong></label>
-                                <input type="text" class="contact_input" name="mobil"/>
+                                <input type="text"  name="mobil"/>
                             </div>
                             <div class="form_row">
                                 <label class="contact"><strong>Firma/Organisation</strong></label>
-                                <input type="text" class="contact_input" name="orga" placeholder="XY"/>
+                                <input type="text"  name="orga" placeholder="XY"/>
                             </div>
 
 

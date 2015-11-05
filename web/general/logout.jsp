@@ -17,7 +17,7 @@
 
     //session beenden
     session.removeAttribute("loginCookie");
-    session.invalidate();
+    // session.invalidate(); //Nich notwendig, auskommentiert, da es auch den cart löscht
 
     response.sendRedirect(targetPage);
 %>
