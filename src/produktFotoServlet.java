@@ -79,7 +79,7 @@ public class produktFotoServlet extends HttpServlet {
 
             }
             try {
-                db.saveFile(storeFile, prodid);
+                db.saveBildProdukt(storeFile, prodid);
             } catch (SQLException e) {
                 e.printStackTrace();
             }

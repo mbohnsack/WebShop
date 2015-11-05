@@ -40,12 +40,20 @@ public class registerKundeServlet extends HttpServlet {
         String passwort = request.getParameter("passwort");
         String passwortBest = request.getParameter("passwortBest");
 
-        /*
-        // prüfen, ob optionale nummernfelder leer sind wegen exception
-        if(plz.contentEquals("")){plz="0";}
-        if(tele.contentEquals("")){tele="0";}
-        if(mobil.contentEquals("")){mobil="0";}
-        */
+
+        System.out.println("tele: "+tele);
+        System.out.println("mobil: "+mobil);
+        System.out.println("plz: "+plz);
+
+
+        if (plz == null) plz = "0";
+        if (tele == null) tele = "0";
+        if (mobil == null) mobil = "0";
+
+        System.out.println("tele: "+tele);
+        System.out.println("mobil: "+mobil);
+        System.out.println("plz: "+plz);
+
 
         DatabaseHelper db = new DatabaseHelper();
 
@@ -68,7 +76,6 @@ public class registerKundeServlet extends HttpServlet {
                 message = "PLZ mit ung&uuml;ltigem Wert.";
             }
         }
-        //TODO vorangestellte 0 kann nicht angezeit/gespeichert werden; mobil und tele
         if(!eingabeFehler){
             try{
                 telefon_int = Integer.parseInt(tele);

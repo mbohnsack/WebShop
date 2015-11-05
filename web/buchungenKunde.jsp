@@ -35,6 +35,7 @@
         user = "mf";
       }
 
+      //TODO alles
       // hier wird der username in die kundenummer gewandelt (funktioniert erstmal)
       DatabaseHelper db = new DatabaseHelper();
       ResultSet zwischenSet = db.getKundenDatenByLogin(user);

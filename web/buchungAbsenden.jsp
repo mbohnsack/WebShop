@@ -4,6 +4,7 @@
 <%@ page import="java.sql.SQLException" %>
 <%@ page import="java.util.List" %>
 <%@ page import="project.loginCookie" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -26,6 +27,7 @@
         <div class="content">
             <div class="center_content">
                 <div class="center_title_bar">Buchung best&auml;tigen</div>
+                <div class="center_title_bar" style="color: red">${message}</div>
                 <div class="prod_box_big">
                     <div class="top_prod_box_big"></div>
                     <div class="center_prod_box_big">
@@ -36,7 +38,11 @@
                             double gesamtpreis = 0;
                             cart shoppingCart;
                             shoppingCart = (cart) session.getAttribute("cart");
-                            List<Integer> produktids = shoppingCart.getCartItems();
+                            List<Integer> produktids = new ArrayList<Integer>();
+                            if(shoppingCart != null){
+                                //unchecked
+                                produktids = shoppingCart.getCartItems();
+                            }
 
                             DatabaseHelper db = new DatabaseHelper();
 
@@ -99,7 +105,7 @@
 
 
                           <%
-                              // Wenn der KD angemeldet ist brauch er mail nicht anzugeben
+                              // Wenn der KD angemeldet ist brauch er nix anzugeben
                               session = request.getSession();
                               loginCookie loginDaten = (loginCookie)
                                       session.getAttribute("loginCookie");

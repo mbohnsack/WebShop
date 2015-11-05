@@ -3,6 +3,7 @@
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.sql.SQLException" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
@@ -21,7 +22,12 @@
         double gesamtpreis = 0;
         cart shoppingCart;
         shoppingCart = (cart) session.getAttribute("cart");
-        List<Integer> produktids = shoppingCart.getCartItems();
+        List<Integer> produktids = new ArrayList<Integer>();
+        if(shoppingCart != null){
+            //unchecked
+            produktids = shoppingCart.getCartItems();
+        }
+
 
         DatabaseHelper db = new DatabaseHelper();
 
