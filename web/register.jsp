@@ -73,7 +73,7 @@
                             </div>
                             <div class="form_row">
                                 <label class="contact"><strong>Firma/Organisation</strong></label>
-                                <input type="text"  name="orga" placeholder="XY"/>
+                                <input type="text"  name="orga" />
                             </div>
 
 

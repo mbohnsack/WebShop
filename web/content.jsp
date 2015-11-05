@@ -11,7 +11,7 @@
 <%
     DatabaseHelper db = new DatabaseHelper();
     ResultSet rs = db.getTopProducts();
-    request.setAttribute("databasehelper", db);
+
         while(rs.next()){
             request.setAttribute("id", rs.getString(1));
             request.setAttribute("herst", rs.getString(3));
