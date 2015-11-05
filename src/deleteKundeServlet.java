@@ -11,12 +11,13 @@ import java.io.IOException;
 public class deleteKundeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
-        String kundeUsername = request.getParameter("");
+        String kundeUsername = request.getParameter("deleteKunde");
 
         DatabaseHelper db = new DatabaseHelper();
         db.deleteKunde(kundeUsername);
 
-        String url = "index.jsp";
+
+        String url = "general/logout.jsp";
         response.sendRedirect( url );
         db.disconnectDatabase();
     }

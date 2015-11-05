@@ -126,15 +126,13 @@
                             <div class="form_row">
                                 <input type="submit" value="Daten übernehmen" /> </div>
                         </form>
-                        <form name="deleteForm" method="post" action="deleteKundeServlet">
-                            <div class="form_row">
-                                <input type="submit" value="Konto entfernen" /> </div>
-                        </form>
 
-                        <form name="deleteKunde" method="post" action="deleteKundeServlet">
-                            <input type="hidden" name="user" value="<%= user%>"/>
+                        <form method="post" action="deleteKundeServlet">
+                            <button name="deleteKunde" type="submit" value="<%= user%>">Löschen</button></form>
+                            <!--
+                            <input type="hidden" name="user" value=""/>
                             <input type="submit" value="Account löschen" />
-                        </form>
+                        </form> -->
 
 
                     </div>
