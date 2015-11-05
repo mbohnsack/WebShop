@@ -11,8 +11,11 @@
     //Cookie mit den Anmeldedaten auslesen und löschen
     loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
     String targetPage = loginDaten.getTargetpage();
+    // quick and dirty
     if (targetPage.contentEquals("index.jsp")){
         targetPage = "../index.jsp";
+    }else{
+        targetPage = "../MitarbeiterView/login.jsp";
     }
 
     //session beenden
