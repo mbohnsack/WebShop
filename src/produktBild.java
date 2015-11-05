@@ -24,5 +24,6 @@ public class produktBild extends HttpServlet{
         response.setContentType("image/jpeg");
         response.setContentLength(content.length);
         response.getOutputStream().write(content);
+        db.disconnectDatabase();
     }
 }

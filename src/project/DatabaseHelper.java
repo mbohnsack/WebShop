@@ -568,6 +568,15 @@ public class DatabaseHelper{
         return verfuegbar;
     }
 
+    public void addHWCode(Integer produktid, String hwcode){
+        try {
+            stmt.executeUpdate("INSERT INTO tbl_lagerliste (prod_id, prod_code)" +
+                    " VALUES ("+ produktid +", '"+ hwcode +"')");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public Integer getHWCode (Integer produktid, Date abholung, Date abgabe){
         List<String> codes = new ArrayList<String>();
         List<Integer> bCodes = new ArrayList<Integer>();
