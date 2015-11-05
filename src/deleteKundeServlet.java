@@ -17,6 +17,11 @@ public class deleteKundeServlet extends HttpServlet {
         DatabaseHelper db = new DatabaseHelper();
         HttpSession session = request.getSession();
 
+
+
+        //TODO hier könnte noch die PW abfrage rein
+
+
         String user = "";
         loginCookie loginDaten = (loginCookie)
                 session.getAttribute("loginCookie");

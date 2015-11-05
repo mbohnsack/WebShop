@@ -11,14 +11,18 @@
 <%
     DatabaseHelper db = new DatabaseHelper();
     ResultSet rs = db.getTopProducts();
+    request.setAttribute("databasehelper", db);
         while(rs.next()){
             request.setAttribute("id", rs.getString(1));
             request.setAttribute("herst", rs.getString(3));
             request.setAttribute("preis", rs.getString(4));
             request.setAttribute("bezeichn", rs.getString(7));
-        DatabaseHelper db2 = new DatabaseHelper();
+
+
+    %><jsp:include page="prodBox.jsp" /><%
+
+    }db.disconnectDatabase();
+
 %>
-<jsp:include page="prodBox.jsp" />
-<% db2.disconnectDatabase();}db.disconnectDatabase(); %>
 </body>
 </html>

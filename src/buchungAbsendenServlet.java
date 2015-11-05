@@ -28,9 +28,15 @@ public class buchungAbsendenServlet
 
         DatabaseHelper db = new DatabaseHelper();
         String email = "";
+        String message = ""; //gibt erfolgs oder fehlermeldung aus
+        boolean eingabeFehler = false;
+
+        int plz_int = 0;
+        int mobil_int = 0;
+        int telefon_int = 0;
 
 
-        // den loginname des angemeldeten Nutzers auslesen
+        // wenn KD angemeldet ist, brauch er nix anzugeben + den loginname des angemeldeten Nutzers auslesen
         String user = "";
         HttpSession session = request.getSession();
         loginCookie loginDaten = (loginCookie)
@@ -42,12 +48,17 @@ public class buchungAbsendenServlet
                 ResultSet rs = db.getKundenDatenByLogin(user);
                 try{
                     email = rs.getString(12);
-                }catch(SQLException e){}
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
             }
         }else{
+            //Pflicht auslesn
             email = request.getParameter("email");
             String vname = request.getParameter("vorname");
             String nname = request.getParameter("name");
+
+            //optional auslesn
             String strasse = request.getParameter("strasse");
             String hausnr = request.getParameter("hausn");
             String ort = request.getParameter("ort");
@@ -58,73 +69,93 @@ public class buchungAbsendenServlet
             String benutzername = "";
             String passwort = "";
 
+            //falls optionale int nicht eingegeben wurden wegen NumberFormatException
+            if (plz == "") plz = "0";
+            if (tele == "") tele = "0";
+            if (mobil == "") mobil = "0";
 
-            int plz_int = 0;
-            int telefon_int = 0;
-            int mobil_int = 0;
-            //TODO exception
+            //Zahleneingaben prüfen
             try{
                 plz_int = Integer.parseInt(plz);
-                telefon_int = Integer.parseInt(tele);
-                mobil_int = Integer.parseInt(mobil);
             }catch(NumberFormatException e){
-                // alles bleibt 0
+                eingabeFehler = true;
+                message = "PLZ mit ung&uuml;ltigem Wert.";
+            }
+            if(!eingabeFehler){
+                try{
+                    telefon_int = Integer.parseInt(tele);
+                }catch(NumberFormatException e){
+                    eingabeFehler = true;
+                    message = "Telefonnummer mit ung&uuml;ltigem Wert.";
+                }
+            }
+            if(!eingabeFehler){
+                try{
+                    mobil_int = Integer.parseInt(mobil);
+                }catch(NumberFormatException e){
+                    eingabeFehler = true;
+                    message = "Mobilnummer mit ung&uuml;ltigem Wert.";
+                }
             }
 
-
-            //TODO fail ?!
-            // boolean result = db.createKunde(benutzername, passwort, nname, vname, strasse, hausnr, plz_int, ort, telefon_int, mobil_int, email, orga);
+            // nutzerdaten hinterlegen OHNE registrierung, PW(=""), login(="")
+            // TODO erzeugt "leere" nutzer mit denen sich jeder anmelden kann....
+            if (!eingabeFehler) {
+                boolean result = db.createKunde(benutzername, passwort, nname, vname, strasse, hausnr, plz_int, ort, telefon_int, mobil_int, email, orga);
+                if (!result){
+                    message = "Für die Buchungsbearbeitung wurden Ihre Daten hinterlegt.";
+                }else{
+                    eingabeFehler = true;
+                    message = "Die für die Buchungsbearbeitung notwendigen Daten konnten nicht hinterlegt werden.(Serverfehler)";
+                }
+            }
         }
 
-        //TODO Datumsformat is nich konform...
-        Date abholdatum  = null;
-        Date abgabedatum = null;
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String abholungTemp = request.getParameter("abholung");
-        String abgabeTemp = request.getParameter("abgabe");
+        if (!eingabeFehler) {
+            // Datum auslesen und parsen
+            Date abholdatum  = null;
+            Date abgabedatum = null;
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            String abholungTemp = request.getParameter("abholung");
+            String abgabeTemp = request.getParameter("abgabe");
+            try{
+                abholdatum = format.parse(abholungTemp);
+            }catch(ParseException e){
+                e.printStackTrace();
+            }
+            try{
+                abgabedatum = format.parse(abgabeTemp);
+            }catch(ParseException e){
+                e.printStackTrace();
+            }
 
-        System.out.println(abholungTemp);
-        System.out.println(abgabeTemp);
+            //Produktliste ausm cart holen
+            cart shoppingCart;
+            session = request.getSession();
+            shoppingCart = (cart) session.getAttribute("cart");
+            List<Integer> produktids = new ArrayList<Integer>();
+            if(shoppingCart != null){
+                //unchecked
+                produktids = shoppingCart.getCartItems();
+            }
 
-        try{
-            abholdatum = format.parse(abholungTemp);
-        }catch(ParseException e){
-            e.printStackTrace();
+            Integer buchungsCode = db.createBuchung(email, abholdatum, abgabedatum, produktids);
+
+            if(buchungsCode != -1){
+                //Buchung erfolgreich
+                request.setAttribute("buchCode", buchungsCode);
+                request.getRequestDispatcher("/summaryBuchung.jsp").forward(request, response);
+            }
+            else{
+                //Buchung fehlgeschlagen
+                message = "Buchung fehlgeschlagen bitte erneut versuchen.(Serverfehler)";
+            }
         }
-        try{
-            abgabedatum = format.parse(abgabeTemp);
-        }catch(ParseException e){
-            e.printStackTrace();
-        }
-
-        System.out.println(abholdatum);
-        System.out.println(abgabedatum);
-
-        cart shoppingCart;
-        session = request.getSession();
-        shoppingCart = (cart) session.getAttribute("cart");
-        List<Integer> produktids = new ArrayList<Integer>();
-        if(shoppingCart != null){
-            //unchecked
-            produktids = shoppingCart.getCartItems();
-        }
-
-        Integer buchungsCode = db.createBuchung(email, abholdatum, abgabedatum, produktids);
 
         db.disconnectDatabase();
 
-        if(buchungsCode != -1){
-            //Buchung erfolgreich
-            request.setAttribute("buchCode", buchungsCode);
-            request.getRequestDispatcher("/summaryBuchung.jsp").forward(request, response);
-        }
-        else{
-            //Buchung fehlgeschlagen
-            String message = "Buchung fehlgeschlagen bitte erneut versuchen.";
-            request.setAttribute("message", message);
-            request.getRequestDispatcher("/buchungAbsenden.jsp").forward(request, response);
-        }
-
+        request.setAttribute("message", message);
+        request.getRequestDispatcher("/buchungAbsenden.jsp").forward(request, response);
 
     }
 }

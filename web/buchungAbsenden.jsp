@@ -32,7 +32,7 @@
                     <div class="top_prod_box_big"></div>
                     <div class="center_prod_box_big">
 
-                        <div><strong>Produkte zu buchen: </strong></div>
+                        <div><strong>Bitte bestätigen Sie die Buchung mit Ihren Daten. </strong></div>
                         <br/>
                         <%
                             double gesamtpreis = 0;
@@ -90,15 +90,16 @@
                             %>
 
                         <br/>
+                        <div class="form_row"><label><strong>Pflichtangaben</strong></label></div>
                         <form name="buchungKDform" method="post" action="buchungAbsendenservelet">
 
                             <div class="form_row">
                                 <label class="contact_customMF"><strong>abholung</strong></label>
-                                <input type="date"  name="abholung"/>
+                                <input type="date"  name="abholung" required/>
                             </div>
 
                             <div class="form_row">
-                                <label class="contact_customMF"><strong>abgabe</strong></label>
+                                <label class="contact_customMF" required><strong>abgabe</strong></label>
                                 <input type="date"  name="abgabe"/>
                             </div>
 
@@ -120,7 +121,7 @@
                             <%
                             //wenn der KD NICHT angemeldet ist
                             }else{%>
-                                <div class="form_row"><label><strong>Pflichtangaben</strong></label></div>
+
                                 <div class="form_row">
                                     <label class="contact_customMF"><strong>email</strong></label>
                                     <input type="email" name="email"  required/>

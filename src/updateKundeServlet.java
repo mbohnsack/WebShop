@@ -84,7 +84,7 @@ public class updateKundeServlet extends HttpServlet {
             eingabeFehler = true;
             message = "PLZ mit ung&uuml;ltigem Wert.";
         }
-        //TODO vorangestellte 0 kann nicht angezeit/gespeichert werden; mobil und tele
+
         if (!eingabeFehler) {
             try {
                 tele_int = Integer.parseInt(tele);
