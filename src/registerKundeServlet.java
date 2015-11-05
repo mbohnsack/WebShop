@@ -24,7 +24,6 @@ public class registerKundeServlet extends HttpServlet {
         int mobil_int = 0;
         int telefon_int = 0;
 
-
         //Alle Daten aus den Felder lesen
         String benutzername = request.getParameter("benutzername");
         String nname = request.getParameter("nname");
@@ -34,26 +33,16 @@ public class registerKundeServlet extends HttpServlet {
         String hausnr = request.getParameter("hausnr");
         String ort = request.getParameter("ort");
         String plz = request.getParameter("plz");
-        String tele = request.getParameter("tele");
+        String tele = request.getParameter("telefon");
         String mobil = request.getParameter("mobil");
         String orga = request.getParameter("orga");
+
         String passwort = request.getParameter("passwort");
         String passwortBest = request.getParameter("passwortBest");
 
-
-        System.out.println("tele: "+tele);
-        System.out.println("mobil: "+mobil);
-        System.out.println("plz: "+plz);
-
-
-        if (plz == null) plz = "0";
-        if (tele == null) tele = "0";
-        if (mobil == null) mobil = "0";
-
-        System.out.println("tele: "+tele);
-        System.out.println("mobil: "+mobil);
-        System.out.println("plz: "+plz);
-
+        if (plz == "") plz = "0";
+        if (tele == "") tele = "0";
+        if (mobil == "") mobil = "0";
 
         DatabaseHelper db = new DatabaseHelper();
 
@@ -64,8 +53,6 @@ public class registerKundeServlet extends HttpServlet {
             eingabeFehler = true;
             message = "Der Nutzername ist schon vorhanden.";
         }
-        db.disconnectDatabase();
-
 
         //Zahleneingaben prüfen
         if(!eingabeFehler){
@@ -95,20 +82,22 @@ public class registerKundeServlet extends HttpServlet {
 
         // prüfen ob PW übereinstimmen
         if (!eingabeFehler) {
-            if (passwort != passwortBest) {
+            if (!passwort.contentEquals(passwortBest)) {
                 eingabeFehler = true;
-                message = "Die Passwörter stimmen nicht &uuml;berein.";
+                message = "Die Passw&ouml;rter stimmen nicht &uuml;berein.";
             }
         }
 
         if (!eingabeFehler) {
             boolean result = db.createKunde(benutzername, passwort, nname, vname, strasse, hausnr, plz_int, ort, telefon_int, mobil_int, email, orga);
-            if (!result){ // ja geht auch anders aber fehlersuche-.-
+            if (!result){
                 message = "Der Account konnte nicht erstellt werden.";
             }else{
                 message = "Sie haben sich erfolgreich registriert.";
             }
         }
+
+        db.disconnectDatabase();
 
         //textausgabe im formular
         request.setAttribute("message", message);

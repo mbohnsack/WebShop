@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -28,7 +27,7 @@ public class addKategorieServlet extends HttpServlet {
 
         String kategorieName = null;
         String ueberKategorie = null;
-        File storeFile = null;
+        File storeFile;
 
         DatabaseHelper db = new DatabaseHelper();
         if (ServletFileUpload.isMultipartContent(request)) {
@@ -51,7 +50,7 @@ public class addKategorieServlet extends HttpServlet {
                 e.printStackTrace();
             }
 
-
+/*
             for (FileItem item: formItems) {
                 // processes only fields that are not form fields
                 if (!item.isFormField()) {
@@ -81,8 +80,12 @@ public class addKategorieServlet extends HttpServlet {
                 }
 
             }
-            db.addKategorie(kategorieName, ueberKategorie, storeFile);
+            try {
+                db.addKategorie(kategorieName, ueberKategorie,storefile);
 
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }*/
         }
         String url = "/MitarbeiterView/kategorieVerwalten.jsp";
         response.sendRedirect(url);
