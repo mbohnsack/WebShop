@@ -507,6 +507,18 @@ public class DatabaseHelper{
         return rs;
     }
 
+    public ResultSet getAllKategorienWithUnterkategorien(){
+        ResultSet rs = null;
+
+        try {
+            rs = stmt.executeQuery("SELECT kat_uebergeordnet FROM tbl_kategorie WHERE NOT kat_uebergeordnet = 'n. v.'");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return rs;
+    }
+
     public ResultSet getKategorie(String category){
         ResultSet cat = null;
         try {
