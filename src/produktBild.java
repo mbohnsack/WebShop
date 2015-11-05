@@ -15,9 +15,8 @@ public class produktBild extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 
-        //DatabaseHelper db = new DatabaseHelper();
+        DatabaseHelper db = new DatabaseHelper();
 
-        DatabaseHelper db = (DatabaseHelper)request.getAttribute("db");
 
         String id = request.getParameter("prodid");
         String number = request.getParameter("number");
@@ -25,7 +24,7 @@ public class produktBild extends HttpServlet{
         System.out.println(number);
         Integer number1 = Integer.parseInt(number);
         byte[] content = db.getBildProdukt(prodid, number1);
-        //db.disconnectDatabase();
+        db.disconnectDatabase();
 
         response.setContentType("image/jpeg");
         response.setContentLength(content.length);
