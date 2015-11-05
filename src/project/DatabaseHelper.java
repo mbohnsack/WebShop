@@ -4,10 +4,9 @@ import MD5.MD5;
 import org.postgresql.largeobject.LargeObject;
 import org.postgresql.largeobject.LargeObjectManager;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -746,93 +745,96 @@ public class DatabaseHelper{
         }
     }
 
-    public void saveFile(File bild, int prodid) throws SQLException, IOException {
-        c.setAutoCommit(false);
+    public void saveBildProdukt(File bild, int prodid) throws SQLException, IOException {
 
-// Get the Large Object Manager to perform operations with
-        LargeObjectManager lobj = ((org.postgresql.PGConnection)c).getLargeObjectAPI();
-
-//create a new large object
-        int oid = lobj.create(LargeObjectManager.READ | LargeObjectManager.WRITE);
-
-//open the large object for write
-        LargeObject obj = lobj.open(oid, LargeObjectManager.WRITE);
-
-// Now open the file
         FileInputStream fis = new FileInputStream(bild);
-
-// copy the data from the file to the large object
-        byte buf[] = new byte[2048];
-        int s, tl = 0;
-        while ((s = fis.read(buf, 0, 2048)) > 0)
-        {
-            obj.write(buf, 0, s);
-            tl += s;
-        }
-
-// Close the large object
-        obj.close();
-
-//Now insert the row into imagesLO
-       PreparedStatement ps=c.prepareStatement("INSERT INTO tbl_bild VALUES (?,?)");
-        ps.setInt(1,prodid);
-        ps.setInt(2,oid);
+        PreparedStatement ps = c.prepareStatement("INSERT INTO tbl_bild VALUES (?, ?)");
+        ps.setString(1, bild.getName());
+        ps.setBinaryStream(2, fis, bild.length());
         ps.executeUpdate();
         ps.close();
         fis.close();
-        c.setAutoCommit(true);
+
     }
 
-    public File getBildKategorie(String kategorie) {
-        File bild = null;
-
-        try {
-            c.setAutoCommit(false);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        // Get the Large Object Manager to perform operations with
-        LargeObjectManager lobj = null;
-        try {
-            lobj = ((org.postgresql.PGConnection)c).getLargeObjectAPI();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public BufferedImage getBildProdukt(Integer prodid){
 
         PreparedStatement ps = null;
+        BufferedImage img = null;
         try {
-            ps = c.prepareStatement("SELECT kat_bild FROM tbl_kategorie WHERE kat_name = ?");
-            ps.setString(1, kategorie);
+            ps = c.prepareStatement("SELECT bilder FROM tbl_bild WHERE prod_id=?");
+            ps.setInt(1, prodid);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                // Open the large object for reading
-                int oid = rs.getInt(1);
-                LargeObject obj = lobj.open(oid, LargeObjectManager.READ);
-
-                // Read the data
-                byte buf[] = new byte[obj.size()];
-                obj.read(buf, 0, obj.size());
-                // Do something with the data read here
-
-                // Close the object
-                obj.close();
+            byte[] imgBytes = null;
+            if (rs != null) {
+                while(rs.next()) {
+                    imgBytes = rs.getBytes(1);
+                    // use the stream in some way here
+                }
+                rs.close();
             }
-
-            rs.close();
+            img = ImageIO.read(new ByteArrayInputStream(imgBytes));
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-
-        try {
-            c.setAutoCommit(true);
-        } catch (SQLException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return bild;
+
+        return img;
     }
+
+//    public File getBildKategorie(String kategorie) {
+//        File bild = null;
+//
+//        try {
+//            c.setAutoCommit(false);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        // Get the Large Object Manager to perform operations with
+//        LargeObjectManager lobj = null;
+//        try {
+//            lobj = ((org.postgresql.PGConnection)c).getLargeObjectAPI();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        PreparedStatement ps = null;
+//        try {
+//            ps = c.prepareStatement("SELECT kat_bild FROM tbl_kategorie WHERE kat_name = ?");
+//            ps.setString(1, kategorie);
+//            ResultSet rs = ps.executeQuery();
+//            while (rs.next()) {
+//                // Open the large object for reading
+//                int oid = rs.getInt(1);
+//                LargeObject obj = lobj.open(oid, LargeObjectManager.READ);
+//
+//                // Read the data
+//                byte buf[] = new byte[obj.size()];
+//                obj.read(buf, 0, obj.size());
+//                // Do something with the data read here
+//
+//                // Close the object
+//                obj.close();
+//            }
+//
+//            rs.close();
+//            ps.close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        try {
+//            c.setAutoCommit(true);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return bild;
+//    }
 
     public void disconnectDatabase(){
         try {
