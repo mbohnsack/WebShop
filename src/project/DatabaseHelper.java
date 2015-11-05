@@ -615,6 +615,16 @@ public class DatabaseHelper{
         return produktid;
     }
 
+    public ResultSet getAllPakete(){
+        ResultSet rs = null;
+        try {
+            rs = stmt.executeQuery("SELECT * FROM tbl_produkt WHERE prod_hersteller = 'Paket'");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
     public ResultSet getMitarbeiter(){
         ResultSet rs=null;
         try {
