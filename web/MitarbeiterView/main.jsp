@@ -38,7 +38,33 @@
       </div>
 
       <div id="rightdiv">
-          Willkommen in der MitarbeiterApp hier haben Sie die Möglichkeiten ihre Daten anzulegen und zu verwalten.
+        <br>
+          <b>Willkommen in der MitarbeiterApp. Hier haben Sie die Möglichkeiten ihre Daten anzulegen und zu verwalten.</b><br>
+        <br>
+          In der linken Navigationsleiste können Sie <b>Buchungen, Pakete, Produkte oder Kategorien</b> anlegen bzw. verwalten.<br>
+        <br>
+        <br>
+        <b>Buchungen:</b><br>
+            - <b>Buchungen anlegen:</b> Hier legen Sie manuell Buchungen (z.B. eine telefonische Buchung) an.<br>
+            - <b>Buchungen verwalten:</b> Hier werden alle Buchungen, die auf dem Status ausstehend sind, aufgelistet. Mitarbeiter haben dabei die Möglichkeit diese an- bzw. abzulehnen.<br>
+        <br>
+        <br>
+        <b>Pakete:</b><br>
+            - <b>Pakete anlegen:</b> Pakete, also mehrere Produkte, die zusammengefasst werden, können hier angelegt werden.<br>
+            - <b>Pakete verwalten:</b> Alle Pakete sind hier aufgelistet und können verändert werden.<br>
+            - <b>Foto hinzufügen:</b> Hier kann ein Foto für das jeweilige Paket hinzugefügt werden.<br>
+        <br>
+        <br>
+        <b>Produkte:</b><br>
+            - <b>Produkte anlegen:</b> Alle Produkte, die auf der Seite erscheinen, werden hier entsprechend angelegt.<br>
+            - <b>Produkte verwalten:</b> Alle Produkte werden aufgelistet und können verändert werden.<br>
+            - <b>Foto hinzufügen:</b> Hier können Fotos für das jeweilige Produkte hinzugefügt werden.<br>
+            - <b>Hardwarecode hinzufügen:</b> Hier muss die 10-stellige alphanumerische ID manuell eingetragen werden. Diese wird meist vom physischen Produkte abgelesen.<br>
+        <br>
+        <br>
+        <b>Kategorie:</b><br>
+            - <b>Kategorie anlegen:</b> Verschiedene (Unter-)Kategorien können hier angelegt werden, zu denen dann die Produkte zugeordnet werden können.<br>
+            - <b>Kategorien verwalten:</b> Alle Kategorien werden aufgelistet und können bearbeitet werden.<br>
 
       </div>
 

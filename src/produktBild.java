@@ -21,7 +21,6 @@ public class produktBild extends HttpServlet{
         String id = request.getParameter("prodid");
         String number = request.getParameter("number");
         Integer prodid = Integer.parseInt(id);
-        System.out.println(number);
         Integer number1 = Integer.parseInt(number);
         byte[] content = db.getBildProdukt(prodid, number1);
         db.disconnectDatabase();
