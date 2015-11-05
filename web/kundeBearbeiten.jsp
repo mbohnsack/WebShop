@@ -128,8 +128,11 @@
                         </form>
 
                         <form method="post" action="deleteKundeServlet">
-                            <button name="deleteKunde" type="submit" value="<%= user%>">Löschen</button></form>
-                            <!--
+                            <button name="deleteKunde" type="submit" value="<%= user%>">Löschen</button>
+                        </form>
+
+
+                        <!--
                             <input type="hidden" name="user" value=""/>
                             <input type="submit" value="Account löschen" />
                         </form> -->

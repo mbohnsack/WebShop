@@ -360,7 +360,7 @@ a.join{
     width:195px;
     height:84px;
     text-align:center;
-    /*background:url(images/cart_bg.gif) no-repeat center;*/
+    background:url(images/cart_bg.gif) no-repeat center;
 }
 .cart_title{
     font-size:12px;

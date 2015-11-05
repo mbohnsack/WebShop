@@ -90,16 +90,16 @@
                             %>
 
                         <br/>
-                        <form name="updateForm" method="post" action="buchungAbsendenservelet">
+                        <form name="buchungKDform" method="post" action="buchungAbsendenservelet">
 
                             <div class="form_row">
                                 <label class="contact_customMF"><strong>abholung</strong></label>
-                                <input type="date" value="JJJJ-MM-TT" name="anholung"/>
+                                <input type="date"  name="abholung"/>
                             </div>
 
                             <div class="form_row">
                                 <label class="contact_customMF"><strong>abgabe</strong></label>
-                                <input type="date" value="JJJJ-MM-TT" name="abgabe"/>
+                                <input type="date"  name="abgabe"/>
                             </div>
 
 

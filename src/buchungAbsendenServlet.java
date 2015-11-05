@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -72,26 +73,41 @@ public class buchungAbsendenServlet
 
 
             //TODO fail ?!
-            boolean result = db.createKunde(benutzername, passwort, nname, vname, strasse, hausnr, plz_int, ort, telefon_int, mobil_int, email, orga);
+            // boolean result = db.createKunde(benutzername, passwort, nname, vname, strasse, hausnr, plz_int, ort, telefon_int, mobil_int, email, orga);
         }
 
         //TODO Datumsformat is nich konform...
-        Date abholdatum  = new Date();
-        Date abgabedatum = new Date();
-        SimpleDateFormat sdf  = new SimpleDateFormat("yyyy-MM-dd");
+        Date abholdatum  = null;
+        Date abgabedatum = null;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String abholungTemp = request.getParameter("abholung");
+        String abgabeTemp = request.getParameter("abgabe");
+
+        System.out.println(abholungTemp);
+        System.out.println(abgabeTemp);
 
         try{
-            abholdatum = sdf.parse(request.getParameter("abholdatum"));
-            abgabedatum = sdf.parse(request.getParameter("abgabedatum"));
+            abholdatum = format.parse(abholungTemp);
         }catch(ParseException e){
-            //Datum konnte nich geparst werden
+            e.printStackTrace();
+        }
+        try{
+            abgabedatum = format.parse(abgabeTemp);
+        }catch(ParseException e){
+            e.printStackTrace();
         }
 
+        System.out.println(abholdatum);
+        System.out.println(abgabedatum);
 
         cart shoppingCart;
         session = request.getSession();
         shoppingCart = (cart) session.getAttribute("cart");
-        List<Integer> produktids = shoppingCart.getCartItems();
+        List<Integer> produktids = new ArrayList<Integer>();
+        if(shoppingCart != null){
+            //unchecked
+            produktids = shoppingCart.getCartItems();
+        }
 
         Integer buchungsCode = db.createBuchung(email, abholdatum, abgabedatum, produktids);
 
