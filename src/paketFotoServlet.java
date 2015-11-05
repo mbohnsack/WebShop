@@ -15,10 +15,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * Created by Malte on 04.11.2015.
+ * Created by Malte on 05.11.2015.
  */
-@WebServlet("/produktFotoServlet")
-public class produktFotoServlet extends HttpServlet {
+@WebServlet("/paketFotoServlet")
+public class paketFotoServlet extends HttpServlet{
     private final String UPLOAD_DIRECTORY = "upload";
     private final int THRESHOLD_SIZE = 1024 * 1024 * 10; // 10MB
     private final int MAX_FILE_SIZE = 1024 * 1024 * 40; // 40MB
@@ -70,7 +70,7 @@ public class produktFotoServlet extends HttpServlet {
                     String name = item.getFieldName();
                     if (name != null) {
                         switch (name) {
-                            case "kategorie":
+                            case "paket":
                                 prodid = Integer.parseInt(item.getString());
                                 break;
                         }
@@ -85,7 +85,7 @@ public class produktFotoServlet extends HttpServlet {
             }
 
         }
-        String url = "/MitarbeiterView/addFotoProdukt.jsp";
+        String url = "/MitarbeiterView/addFotoPaket.jsp";
         response.sendRedirect(url);
         db.disconnectDatabase();
     }
