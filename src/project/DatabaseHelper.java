@@ -511,7 +511,7 @@ public class DatabaseHelper{
         ResultSet rs = null;
 
         try {
-            rs = stmt.executeQuery("SELECT kat_uebergeordnet FROM tbl_kategorie WHERE NOT kat_uebergeordnet = 'n. v.'");
+            rs = stmt.executeQuery("SELECT kat_uebergeordnet FROM tbl_kategorie WHERE NOT kat_uebergeordnet = 'n. v.' Group BY kat_uebergeordnet");
         } catch (SQLException e) {
             e.printStackTrace();
         }
