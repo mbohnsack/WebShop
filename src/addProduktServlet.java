@@ -30,7 +30,7 @@ public class addProduktServlet extends HttpServlet {
         String produktname2 = null;
         String produktbeschreibung = null;
         String details = null;
-        String kategorie = "Mischpulte";
+        String kategorie = null;
         String hersteller = null;
         double preis=0.0;
 

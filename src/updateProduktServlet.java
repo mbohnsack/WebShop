@@ -23,7 +23,6 @@ public class updateProduktServlet extends HttpServlet {
         String hersteller = request.getParameter("hersteller");
         double preis =  Double.parseDouble(request.getParameter("preis"));
         int anzahlMBuchungen = Integer.parseInt(request.getParameter("anzahlMBuchungen"));
-        String file = request.getParameter("file");
 
         DatabaseHelper db = new DatabaseHelper();
         db.updateProduct(produktid,kategorie,hersteller,preis,produktbeschreibung,details,produktname,produktname2,anzahlMBuchungen);
