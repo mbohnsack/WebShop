@@ -738,7 +738,7 @@ public class DatabaseHelper{
         return uebergeordnet;
     }
 
-    public ResultSet getUnterkategorie(String kategorie){
+    public ResultSet getUnterkategorieRS(String kategorie){
         ResultSet rs = null;
 
         try {
@@ -749,6 +749,22 @@ public class DatabaseHelper{
 
         return rs;
     }
+
+     public List<String> getUnterkategorie(String kategorie){
+         List<String> unterkategorie = new ArrayList<String>();
+         ResultSet rs = null;
+
+            try {
+                rs = stmt.executeQuery("SELECT kat_name FROM tbl_kategorie WHERE kat_uebergeordnet = '" + kategorie + "'");
+            while(rs.next()){
+                unterkategorie.add(rs.getString("kat_name"));
+     }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+         return unterkategorie;
+        }
 
     public String getKundenMail(Integer buchungId){
         ResultSet rs = null;

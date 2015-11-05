@@ -13,8 +13,7 @@
     <li><a href="produkte.jsp" id="produkte" class="nav2">Produkte</a></li>
     <li class="divider"></li>
     <li><a href="contact.jsp" id="kontakt" class="nav3">Kontakt</a></li>
-    <li class="divider"></li>
-    <li><a href="buchungenKunde.jsp" id="buchungen" class="nav3">Buchungen</a></li>
+
 
 
 
@@ -33,6 +32,9 @@
             loginState = false;
         }
         if(loginState){%>
+
+            <li><a href="buchungenKunde.jsp" id="buchungen" class="nav3">Buchungen</a></li>
+             <li class="divider"></li>
             <li><a href="general/logout.jsp" id="abmelden" class="nav5"><%= user%> abmelden</a></li>
             <li class="divider"></li>
             <li><a href="kundeBearbeiten.jsp" id="konto" class="nav6">Daten &auml;ndern</a></li>

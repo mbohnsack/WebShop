@@ -65,6 +65,11 @@
         <b>Kategorie:</b><br>
             - <b>Kategorie anlegen:</b> Verschiedene (Unter-)Kategorien können hier angelegt werden, zu denen dann die Produkte zugeordnet werden können.<br>
             - <b>Kategorien verwalten:</b> Alle Kategorien werden aufgelistet und können bearbeitet werden.<br>
+          <br>
+          <br>
+          <b>Mitarbeiter (nur mit der Rolle Admin sichtbar):</b><br>
+          - <b>Mitarbeiter anlegen:</b> Hier können Mitarbeiter-Konten angelegt werden.<br>
+          - <b>Mitarbeiter verwalten:</b> Alle Mitarbeiter werden hier aufgelistet und man kann sie bearbeiten.<br>
 
       </div>
 
