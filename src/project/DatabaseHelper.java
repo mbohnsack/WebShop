@@ -750,9 +750,16 @@ public class DatabaseHelper{
     }
 
     public void addPaket(Integer paketId, String pakettyp, Integer prio, Integer prodId){
+        ResultSet rs = null;
         try {
-            stmt.executeUpdate("INSERT INTO tbl_paketinhalte (pak_id, pak_typ, pak_priorisierung, prod_id, inhalt_id) " +
-                    "VALUES ("+ paketId +", '"+ pakettyp +"', "+ prio +", "+ prodId +", (SELECT max(inhalt_id) FROM tbl_paketinhalte)+1)");
+            rs = stmt.executeQuery("SELECT * FROM tbl_paketinhalte WHERE inhalt_id = 1");
+            if(rs.isBeforeFirst()) {
+                stmt.executeUpdate("INSERT INTO tbl_paketinhalte (pak_id, pak_typ, pak_priorisierung, prod_id, inhalt_id) " +
+                        "VALUES (" + paketId + ", '" + pakettyp + "', " + prio + ", " + prodId + ", (SELECT max(inhalt_id) FROM tbl_paketinhalte)+1)");
+            } else{
+                stmt.executeUpdate("INSERT INTO tbl_paketinhalte (pak_id, pak_typ, pak_priorisierung, prod_id, inhalt_id) " +
+                        "VALUES (" + paketId + ", '" + pakettyp + "', " + prio + ", " + prodId + ", "+ 1 +")");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -760,7 +767,7 @@ public class DatabaseHelper{
 
     public void updatePaket(Integer paketId, String pakettyp, Integer prio, Integer prodId, Integer id){
         try {
-            stmt.executeUpdate("UPDATE tbl_paketinhalte SET pak_id = "+ paketId +", pak_typ = '"+ pakettyp +"', pak_priorisierung = "+ prio +", prod_id = "+ prodId +" WHERE inhalt_id = "+ id);
+                stmt.executeUpdate("UPDATE tbl_paketinhalte SET pak_id = "+ paketId +", pak_typ = '"+ pakettyp +"', pak_priorisierung = "+ prio +", prod_id = "+ prodId +" WHERE inhalt_id = "+ id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
