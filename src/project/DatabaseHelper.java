@@ -757,32 +757,30 @@ public class DatabaseHelper{
 
     }
 
-    public BufferedImage getBildProdukt(Integer prodid){
+    public byte[] getBildProdukt(Integer prodid, Integer number){
 
         PreparedStatement ps = null;
-        BufferedImage img = null;
+        byte[] imgBytes = null;
         try {
             ps = c.prepareStatement("SELECT bilder FROM tbl_bild WHERE prod_id=?");
             ps.setInt(1, prodid);
             ResultSet rs = ps.executeQuery();
-            byte[] imgBytes = null;
-            if (rs != null) {
-                while(rs.next()) {
-                    imgBytes = rs.getBytes(1);
-                    // use the stream in some way here
+
+            if (rs.isBeforeFirst()) {
+                for(int i = 0; i<number; i++){
+                    rs.next();
                 }
+                    imgBytes = rs.getBytes(2);
+                    // use the stream in some way here
                 rs.close();
             }
-            img = ImageIO.read(new ByteArrayInputStream(imgBytes));
+//            img = ImageIO.read(new ByteArrayInputStream(imgBytes));
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
-
-        return img;
+        return imgBytes;
     }
 
 //    public File getBildKategorie(String kategorie) {
