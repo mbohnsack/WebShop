@@ -1,7 +1,3 @@
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import project.DatabaseHelper;
 
 import javax.servlet.ServletException;
@@ -9,7 +5,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +18,7 @@ public class addPaketServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
-       // String[] produkte = request.getParameterValues("produkte");
+        String[] produkte = request.getParameterValues("produkte");
         List<Integer> prioList = new ArrayList<>();
 
         String paketname =  request.getParameter("paketname");
@@ -31,10 +27,10 @@ public class addPaketServlet extends HttpServlet {
         String details = request.getParameter("details");
         String kategorie = request.getParameter("kategorie");
         String hersteller = request.getParameter("hersteller");
-        double preis =  Double.parseDouble(request.getParameter("preis"));
+        double preis = Double.parseDouble(request.getParameter("preis"));
 
 
-/*
+
         for (String produktId : produkte) {
             Integer prio = Integer.parseInt(request.getParameter(produktId.substring(0, produktId.length() - 1)));
             prioList.add(prio);
@@ -57,7 +53,7 @@ public class addPaketServlet extends HttpServlet {
             //Paketinhalte in die Pakettabelle schreiben
             int  anzahlProdukte = produkte.length;
             for(int counterP =0;counterP<anzahlProdukte;counterP++){
-                db.addPaket(prodid,kategorie,prioList.get(counterP),Integer.parseInt( produkte[counterP]));
+                db.addPaket(prodid,kategorie,prioList.get(counterP),Integer.parseInt( produkte[counterP].substring(0, produkte[counterP].length() - 1)));
             }
 
 
@@ -68,6 +64,6 @@ public class addPaketServlet extends HttpServlet {
         String url = "/MitarbeiterView/paketeVerwalten.jsp";
         response.sendRedirect( url );
         db.disconnectDatabase();
-        */
+
     }
 }
