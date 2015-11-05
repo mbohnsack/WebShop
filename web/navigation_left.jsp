@@ -37,7 +37,7 @@
 
         <li class="even">
             <form id="category2" style="margin-bottom: 0" method="post" action="categories.jsp">
-                <button style="cursor:pointer;" name="category" type="submit" value="<%= unterkat.getString(1)%>"><%= unterkat.getString(1)%></button>
+                <button style="cursor:pointer;" name="category" type="submit" value="<%= unterkat.getString(1)%>">&nbsp;&nbsp;<%= unterkat.getString(1)%></button>
             </form>
         </li>
 
@@ -48,7 +48,7 @@
             while(rs2.next()){
                 DatabaseHelper db4 = new DatabaseHelper();
                 int anzahl = db4.getAnzahlProdukteInKategorie(rs2.getString(1));
-                if (anzahl > 0 && db4.getUebergeordneteKategorie(rs2.getString(1)).equals("n. v.")) {
+                if (anzahl > 0 && db4.getUebergeordneteKategorie(rs2.getString(1)).equals("n. v.") && db4.getUnterkategorie(rs2.getString(1)).isEmpty()) {
         %>
         <li class="odd">
             <form id="category3" style="margin-bottom: 0" method="post" action="categories.jsp">
