@@ -5,7 +5,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.*;
 import java.io.IOException;
 
 /**
@@ -97,7 +96,7 @@ public class registerKundeServlet extends HttpServlet {
 
         if (!eingabeFehler) {
             boolean result = db.createKunde(benutzername, passwort, nname, vname, strasse, hausnr, plz_int, ort, telefon_int, mobil_int, email, orga);
-            if (result == false){ // ja geht auch anders aber fehlersuche-.-
+            if (!result){ // ja geht auch anders aber fehlersuche-.-
                 message = "Der Account konnte nicht erstellt werden.";
             }else{
                 message = "Sie haben sich erfolgreich registriert.";

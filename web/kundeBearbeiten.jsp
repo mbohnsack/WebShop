@@ -121,12 +121,14 @@
                                 <label class="contact_customMF"><strong>Passwort Alt</strong></label>
                                 <input type="password" name="pw" required/>
                             </div>
-                            <% } db.disconnectDatabase();
-
-                            %>
+                            <% } db.disconnectDatabase();%>
 
                             <div class="form_row">
                                 <input type="submit" value="Daten übernehmen" /> </div>
+                        </form>
+                        <form name="deleteForm" method="post" action="deleteKundeServlet">
+                            <div class="form_row">
+                                <input type="submit" value="Konto entfernen" /> </div>
                         </form>
                     </div>
 

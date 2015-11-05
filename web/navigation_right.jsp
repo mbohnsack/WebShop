@@ -18,45 +18,76 @@
     <div class="cart_title">Warenkorb</div><br/>
 
     <%
-        double gesamtPreis = 0;
-
+        double gesamtpreis = 0;
         cart shoppingCart;
-        session = request.getSession();
         shoppingCart = (cart) session.getAttribute("cart");
-        if (shoppingCart == null) {
-            shoppingCart = new cart();
-            session.setAttribute("cart", shoppingCart);
-        }
         List<Integer> produktids = shoppingCart.getCartItems();
 
         DatabaseHelper db = new DatabaseHelper();
 
-        for (Integer produkt : produktids) {
-            ResultSet produktDaten = db.getProductsById(produkt.intValue());
-            try {
-                while (produktDaten.next()) {
-    %><span><p><%= produktDaten.getString("prod_bezeichn")%>
-     | <%= produktDaten.getString("prod_preis")%>&euro;</p></span><%
+    %>
+    <table style="width: 98%" style="background-color: #a6847d" align="center">
+        <th align="left">Artikel</th><th align="left">Preis</th><th align="left">Entf</th>
+        <%
 
-                gesamtPreis = gesamtPreis + Double.parseDouble(produktDaten.getString("prod_preis"));
+            for (Integer produkt : produktids) {
+
+        %>
+        <tr>
+            <%
+                ResultSet produktDaten = db.getProductsById(produkt);
+                try {
+                    while (produktDaten.next()) {
+                        gesamtpreis = gesamtpreis + Double.parseDouble(produktDaten.getString("prod_preis"));
+            %>
+            <td align="left"><%= produktDaten.getString("prod_bezeichn")%></td>
+            <td align="left"><%= produktDaten.getString("prod_preis")%>&euro;</td>
+            <td align="left">
+                <form id="cart" action="removeFromCart" method="post">
+                    <input type="hidden" name="produktID" value="<%= produktids.indexOf(produkt) %>"/>
+                    <input type="hidden" name="sourcepage" value="buchungAbsenden.jsp"/>
+                    <button name="removeFromCart" type="submit">-</button>
+                </form>
+            </td>
+
+            <%
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            %>
+        </tr>
+        <%
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    db.disconnectDatabase();
-%>
+        %>
+
+        <tr><td align="left"><strong>Gesamtpreis</strong></td>
+            <td align="left"><strong><%= gesamtpreis%>&euro;</strong></td> </tr>
+    </table>
+    <%
+        db.disconnectDatabase();
+    %>
 
 
-    <br/>
-    <span class="border_cart"></span> Gesamt: <span class="price"><%= gesamtPreis%>&euro;</span>
-    <form name="buchen" method="post" action="buchungAbsenden.jsp">
-        <button>Jetzt buchen</button>
-    </form>
+    <table style="width: 98%" style="background-color: #a6847d" align="center">
+        <tr>
+            <td>
+                <form name="buchen" method="post" action="buchungAbsenden.jsp">
+                    <button>buchen</button>
+                </form>
+            </td>
+            <td>
+                <form name="leeren" method="post" action="cartLeerenServlet">
+                    <button>Korb leeren</button>
+                </form>
 
-    <form name="leeren" method="post" action="cartLeerenServlet">
-        <button>Korb leeren</button>
-    </form>
+            </td>
+        </tr>
+
+    </table>
+
+
+
 
 
 </div>

@@ -14,6 +14,10 @@
     <li class="divider"></li>
     <li><a href="contact.jsp" id="kontakt" class="nav3">Kontakt</a></li>
     <li class="divider"></li>
+    <li><a href="buchungenKunde.jsp" id="buchungen" class="nav3">Buchungen</a></li>
+
+
+
     <%
         // den loginname des angemeldeten Nutzers auslesen und wenn jemand angemeldet ist die buttons einblenden
         Boolean loginState = false;
