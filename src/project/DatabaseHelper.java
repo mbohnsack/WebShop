@@ -529,6 +529,18 @@ public class DatabaseHelper{
         return cat;
     }
 
+    public ResultSet getAllProductsSortedByName(){
+        ResultSet rs = null;
+
+        try {
+            rs = stmt.executeQuery("SELECT * FROM tbl_produkt ORDER BY prod_hersteller, prod_bezeichn");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return rs;
+    }
+
     public String getBezeichnung(Integer produktid){
         String bezeichnung = null;
         try {
