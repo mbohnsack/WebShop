@@ -41,16 +41,16 @@ else {
   </div>
 
   <div id="rightdiv">
-  <%
+    <%
 
-    int produktId = Integer.parseInt(request.getParameter("aendern"));
+      int produktId = Integer.parseInt(request.getParameter("aendern"));
 
 
-    DatabaseHelper db = new DatabaseHelper();
-    ResultSet product = db.getProductsById(produktId);
-    product.next();
-    System.out.println(product.getString(1));
-  %>
+      DatabaseHelper db = new DatabaseHelper();
+      ResultSet product = db.getProductsById(produktId);
+      product.next();
+      System.out.println(product.getString(1));
+    %>
     <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post" action="../updateProduktServlet"><div ><h2>Produkt aendern</h2></div>
       <div ><label >Produkt Name</label><input  type="text" name="produktname" value="<%=product.getString(7)%>"/></div>
       <div ><label >Produkt Name2</label><input  type="text" name="produktname2" value="<%=product.getString(8)%>" /></div>
@@ -66,7 +66,7 @@ else {
         %>
         <option value="<%=allKategories.getString(1)%>" selected="selected"><%=allKategories.getString(1)%></option>
         <%
-            }else{
+        }else{
         %>
         <option value="<%=allKategories.getString(1)%>"><%=allKategories.getString(1)%></option>
         <%
@@ -75,11 +75,11 @@ else {
         %>
       </select>
       </div>
-      <div ><label >Hersteller</label><input  type="text" name="hersteller" readonly value="<%=product.getString(3)%>" /></div>
+      <div ><label >Hersteller</label><input  type="text" name="hersteller" value="<%=product.getString(3)%>" /></div>
       <div ><label >Preis</label><input  type="text" name="preis" value="<%=product.getString(4)%>"/></div>
       <div ><label >Anzahl der Buchungen</label><input  type="text" name="anzahlMBuchungen" value="<%=product.getString(9)%>" /></div>
 
-      <div class="submit"><button type="submit" name=produktid value="<%=produktId%>">Speichern</button></div>
+      <div class="submit"><button type="submit" name=produktid value="<%=produktId%>">Ändern</button></div>
 
     </form>
 

@@ -40,7 +40,7 @@ else {
 
   <div id="rightdiv">
     <div>
-      <form  style="margin:0 auto;max-width:60%;min-width:20%"  method="post" enctype="multipart/form-data" action="../addPaketServlet">
+      <form  style="margin:0 auto;max-width:60%;min-width:20%"  method="post" action="../addPaketServlet">
         <div ><label >Paketname</label><input  type="text" name="paketname" /></div>
         <div ><label >Paketname 2</label><input  type="text" name="paketname2" /></div>
         <div ><label >Paketbeschreibung</label><textarea class="medium" name="paketbeschreibung" cols="20" rows="5" ></textarea></div>
