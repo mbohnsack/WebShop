@@ -10,7 +10,7 @@
         </div>
     </div>
     <div id="header">
-        <a href="#"><img alt="" border="0" width="150" height="150" /></a>
+        <div id="logo"> </div>
         <!-- end of oferte_content-->
     </div>
 </div>
