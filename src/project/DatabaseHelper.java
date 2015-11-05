@@ -718,6 +718,14 @@ public class DatabaseHelper{
         }
     }
 
+    public void updatePaket(Integer paketId, String pakettyp, Integer prio, Integer prodId, Integer id){
+        try {
+            stmt.executeUpdate("UPDATE tbl_paketinhalte SET pak_id = "+ paketId +", pak_typ = '"+ pakettyp +"', pak_priorisierung = "+ prio +", prod_id = "+ prodId +" WHERE inhalt_id = "+ id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void saveFile(File bild, int prodid) throws SQLException, IOException {
         c.setAutoCommit(false);
 
