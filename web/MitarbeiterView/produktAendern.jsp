@@ -75,7 +75,7 @@ else {
         %>
       </select>
       </div>
-      <div ><label >Hersteller</label><input  type="text" name="hersteller" value="<%=product.getString(3)%>" /></div>
+      <div ><label >Hersteller</label><input  type="text" name="hersteller" readonly value="<%=product.getString(3)%>" /></div>
       <div ><label >Preis</label><input  type="text" name="preis" value="<%=product.getString(4)%>"/></div>
       <div ><label >Anzahl der Buchungen</label><input  type="text" name="anzahlMBuchungen" value="<%=product.getString(9)%>" /></div>
 
