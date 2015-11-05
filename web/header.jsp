@@ -9,8 +9,4 @@
             <input type="image" src="images/search.gif" class="search_bt"/>
         </div>
     </div>
-    <div id="header">
-        <div id="logo"> <a href="#"><img src="images/logo.jpg" alt="" border="0" width="150" height="150" /></a> </div>
-        <!-- end of oferte_content-->
-    </div>
 </div>
