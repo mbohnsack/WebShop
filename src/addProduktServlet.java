@@ -102,7 +102,7 @@ public class addProduktServlet extends HttpServlet {
             }
             try {
                 int prodid=db.addProduct(kategorie, hersteller, preis, produktbeschreibung, details, produktname, produktname2);
-                db.saveFile(storeFile,prodid);
+                db.saveBildProdukt(storeFile,prodid);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
