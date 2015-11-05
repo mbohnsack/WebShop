@@ -68,7 +68,7 @@ else {
             <%}%>
           <td>
             <form method="post" action="../updateBuchungStatusServlet">
-              <input type="hidden" name="buchungsID" value="<%=austehendeBuchungen.getString(1)%>"\>
+              <input type="hidden" name="buchungsID" value="<%=austehendeBuchungen.getString(4)%>">
               <button name="aendern" type="submit" value="angenommen">Annehmen</button>
               <button name="aendern" type="submit" value="abgelehnt">Ablehnen</button>
             </form>

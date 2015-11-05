@@ -4,10 +4,9 @@ import MD5.MD5;
 import org.postgresql.largeobject.LargeObject;
 import org.postgresql.largeobject.LargeObjectManager;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -72,6 +71,14 @@ public class DatabaseHelper{
         }
     }
 
+    public void deleteKunde(String name){
+        try {
+            stmt.executeUpdate("DELETE FROM tbl_kunde WHERE kun_benutzer='"+name+"';");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public boolean mitarbeiterFrei(String name){
         Boolean frei=false;
         try {
@@ -116,15 +123,17 @@ public class DatabaseHelper{
         return rs;
     }
 
-    public void createKunde(String name,String passwort,String nname, String vname, String strasse, String hnummer, int plz,String ort, int tel, int mobil, String email){
+    public boolean createKunde(String name,String passwort,String nname, String vname, String strasse, String hnummer, int plz,String ort, int tel, int mobil, String email, String orga){
         try{
             ResultSet rs =stmt.executeQuery( "SELECT MAX(kun_nummer) AS MaxID FROM tbl_kunde;" );
             rs.next();
             int nummer=rs.getInt("MaxID")+1;
-            stmt.executeUpdate("INSERT INTO tbl_kunde (kun_nummer, kun_benutzer, kun_passwort, kun_name, kun_vorname, kun_strasse, kun_hausnummer, kun_plz, kun_ort, kun_telefon, kun_mobil, kun_email)" +
-                    "VALUES ("+nummer+",'"+name+"','"+MD5.getMD5(passwort)+"','"+nname+"','"+vname+"','"+strasse+"','"+hnummer+"',"+plz+",'"+ort+"',"+tel+","+mobil+",'"+email+"');");
+            stmt.executeUpdate("INSERT INTO tbl_kunde (kun_nummer, kun_benutzer, kun_passwort, kun_name, kun_vorname, kun_strasse, kun_hausnummer, kun_plz, kun_ort, kun_telefon, kun_mobil, kun_email, kun_orga)" +
+                    "VALUES ("+nummer+",'"+name+"','"+MD5.getMD5(passwort)+"','"+nname+"','"+vname+"','"+strasse+"','"+hnummer+"',"+plz+",'"+ort+"',"+tel+","+mobil+",'"+email+"','"+orga+"');");
+                    return true;
         }catch(Exception e){
             e.printStackTrace();
+            return false;
         }
     }
 
@@ -132,7 +141,7 @@ public class DatabaseHelper{
         Boolean frei=false;
         try {
             ResultSet rs=stmt.executeQuery("SELECT * FROM tbl_kunde WHERE kun_benutzer='" + name + "';");
-            if (!rs.isBeforeFirst()){
+            if (!rs.next()){
                 frei=true;
             }
         }catch(Exception e){
@@ -203,7 +212,7 @@ public class DatabaseHelper{
     }
 
     public Integer createBuchung(String kundenmail, Date abholdatum, Date abgabedatum, List<Integer> produktids){
-        java.sql.Date abholung = new java.sql.Date(abholdatum.getTime());
+        java.sql.Date abholung = new java.sql.Date(abholdatum.getTime()); //Format vom servlet nich kompatibel
         java.sql.Date abgabe = new java.sql.Date(abgabedatum.getTime());
         Boolean verfuegbar = false;
         Integer kundenId = null;
@@ -255,6 +264,18 @@ public class DatabaseHelper{
 
         try {
             rs = stmt.executeQuery("SELECT * FROM tbl_buchungsliste WHERE buch_status = 'ausstehend'");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return rs;
+    }
+
+    public ResultSet getBuchungenByKunId(int kunId){
+        ResultSet rs = null;
+
+        try {
+            rs = stmt.executeQuery("SELECT * FROM tbl_buchungsliste WHERE kun_id = '"+kunId+"'");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -641,10 +662,10 @@ public class DatabaseHelper{
         }
         return rs;
     }
-    public void updateKundenDaten(Integer kundenNR, String nname, String vname, String strasse, String ort, String email, String hausn, int plz, int tele, int mobil, String passwort, String login){
+    public void updateKundenDaten(Integer kundenNR, String nname, String vname, String strasse, String ort, String email, String hausn, int plz, int tele, int mobil, String passwort, String login, String orga){
         try{
             stmt.executeUpdate("UPDATE tbl_kunde " +
-                    "SET kun_name = '"+nname+"', kun_vorname = '"+vname+"', kun_strasse = '"+strasse+"', kun_ort = '"+ort+"', kun_email = '"+email+"', kun_hausnummer = '"+hausn+"', kun_plz = '"+plz+"', kun_telefon = '"+tele+"', kun_mobil = '"+mobil+"', kun_passwort = '"+ MD5.getMD5(passwort)+"', kun_benutzer = '"+login+"' WHERE kun_nummer = '"+kundenNR+"' ");
+                    "SET kun_name = '"+nname+"', kun_vorname = '"+vname+"', kun_strasse = '"+strasse+"', kun_ort = '"+ort+"', kun_email = '"+email+"', kun_hausnummer = '"+hausn+"', kun_plz = '"+plz+"', kun_telefon = '"+tele+"', kun_mobil = '"+mobil+"', kun_passwort = '"+ MD5.getMD5(passwort)+"', kun_benutzer = '"+login+"', kun_orga = '"+orga+"' WHERE kun_nummer = '"+kundenNR+"' ");
         }catch(Exception e){
             e.printStackTrace();
 }
@@ -680,14 +701,15 @@ public class DatabaseHelper{
         return uebergeordnet;
     }
 
-    public String getUnterkategorie(String kategorie){
-        String unterkategorie = null;
+    public List<String> getUnterkategorie(String kategorie){
+        List<String> unterkategorie = new ArrayList<String>();
         ResultSet rs = null;
 
         try {
-            rs = stmt.executeQuery("SELECT kat_name FROM tbl_kategorie WHERE kat_uebergeordnet = '"+ kategorie +"'");
-            rs.next();
-            unterkategorie = rs.getString("kat_name");
+            rs = stmt.executeQuery("SELECT kat_name FROM tbl_kategorie WHERE kat_uebergeordnet = '" + kategorie + "'");
+            while(rs.next()){
+                unterkategorie.add(rs.getString("kat_name"));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -714,42 +736,113 @@ public class DatabaseHelper{
         return mail;
     }
 
-    public void saveFile(File bild, int prodid) throws SQLException, IOException {
-        c.setAutoCommit(false);
-
-// Get the Large Object Manager to perform operations with
-        LargeObjectManager lobj = ((org.postgresql.PGConnection)c).getLargeObjectAPI();
-
-//create a new large object
-        int oid = lobj.create(LargeObjectManager.READ | LargeObjectManager.WRITE);
-
-//open the large object for write
-        LargeObject obj = lobj.open(oid, LargeObjectManager.WRITE);
-
-// Now open the file
-        FileInputStream fis = new FileInputStream(bild);
-
-// copy the data from the file to the large object
-        byte buf[] = new byte[2048];
-        int s, tl = 0;
-        while ((s = fis.read(buf, 0, 2048)) > 0)
-        {
-            obj.write(buf, 0, s);
-            tl += s;
+    public void addPaket(Integer paketId, String pakettyp, Integer prio, Integer prodId){
+        try {
+            stmt.executeUpdate("INSERT INTO tbl_paketinhalte (pak_id, pak_typ, pak_priorisierung, prod_id, inhalt_id) " +
+                    "VALUES ("+ paketId +", '"+ pakettyp +"', "+ prio +", "+ prodId +", (SELECT max(inhalt_id) FROM tbl_paketinhalte)+1)");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+    }
 
-// Close the large object
-        obj.close();
+    public void updatePaket(Integer paketId, String pakettyp, Integer prio, Integer prodId, Integer id){
+        try {
+            stmt.executeUpdate("UPDATE tbl_paketinhalte SET pak_id = "+ paketId +", pak_typ = '"+ pakettyp +"', pak_priorisierung = "+ prio +", prod_id = "+ prodId +" WHERE inhalt_id = "+ id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-//Now insert the row into imagesLO
-       PreparedStatement ps=c.prepareStatement("INSERT INTO tbl_bild VALUES (?,?)");
-        ps.setInt(1,prodid);
-        ps.setInt(2,oid);
+    public void saveBildProdukt(File bild, int prodid) throws SQLException, IOException {
+
+        FileInputStream fis = new FileInputStream(bild);
+        PreparedStatement ps = c.prepareStatement("INSERT INTO tbl_bild VALUES (?, ?)");
+        ps.setString(1, bild.getName());
+        ps.setBinaryStream(2, fis, bild.length());
         ps.executeUpdate();
         ps.close();
         fis.close();
-        c.setAutoCommit(true);
+
     }
+
+    public BufferedImage getBildProdukt(Integer prodid){
+
+        PreparedStatement ps = null;
+        BufferedImage img = null;
+        try {
+            ps = c.prepareStatement("SELECT bilder FROM tbl_bild WHERE prod_id=?");
+            ps.setInt(1, prodid);
+            ResultSet rs = ps.executeQuery();
+            byte[] imgBytes = null;
+            if (rs != null) {
+                while(rs.next()) {
+                    imgBytes = rs.getBytes(1);
+                    // use the stream in some way here
+                }
+                rs.close();
+            }
+            img = ImageIO.read(new ByteArrayInputStream(imgBytes));
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return img;
+    }
+
+//    public File getBildKategorie(String kategorie) {
+//        File bild = null;
+//
+//        try {
+//            c.setAutoCommit(false);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        // Get the Large Object Manager to perform operations with
+//        LargeObjectManager lobj = null;
+//        try {
+//            lobj = ((org.postgresql.PGConnection)c).getLargeObjectAPI();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        PreparedStatement ps = null;
+//        try {
+//            ps = c.prepareStatement("SELECT kat_bild FROM tbl_kategorie WHERE kat_name = ?");
+//            ps.setString(1, kategorie);
+//            ResultSet rs = ps.executeQuery();
+//            while (rs.next()) {
+//                // Open the large object for reading
+//                int oid = rs.getInt(1);
+//                LargeObject obj = lobj.open(oid, LargeObjectManager.READ);
+//
+//                // Read the data
+//                byte buf[] = new byte[obj.size()];
+//                obj.read(buf, 0, obj.size());
+//                // Do something with the data read here
+//
+//                // Close the object
+//                obj.close();
+//            }
+//
+//            rs.close();
+//            ps.close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        try {
+//            c.setAutoCommit(true);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return bild;
+//    }
 
     public void disconnectDatabase(){
         try {

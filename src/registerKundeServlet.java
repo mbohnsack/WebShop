@@ -5,7 +5,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.*;
 import java.io.IOException;
 
 /**
@@ -18,42 +17,101 @@ public class registerKundeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
-        System.out.println("TEST MAN");
+        String message = ""; //gibt erfolgs oder fehlermeldung aus
+        boolean eingabeFehler = false;
+
+        int plz_int = 0;
+        int mobil_int = 0;
+        int telefon_int = 0;
+
+
+        //Alle Daten aus den Felder lesen
         String benutzername = request.getParameter("benutzername");
         String nname = request.getParameter("nname");
         String vname = request.getParameter("vname");
         String email = request.getParameter("email");
         String strasse = request.getParameter("strasse");
         String hausnr = request.getParameter("hausnr");
-        int plz = Integer.parseInt(request.getParameter("plz"));
         String ort = request.getParameter("ort");
-        int telefon = Integer.parseInt(request.getParameter("telefon"));
-        int mobil = Integer.parseInt(request.getParameter("mobil"));
+        String plz = request.getParameter("plz");
+        String tele = request.getParameter("tele");
+        String mobil = request.getParameter("mobil");
+        String orga = request.getParameter("orga");
         String passwort = request.getParameter("passwort");
-        String passwortwd = request.getParameter("passwortwd");
+        String passwortBest = request.getParameter("passwortBest");
+
+
+        System.out.println("tele: "+tele);
+        System.out.println("mobil: "+mobil);
+        System.out.println("plz: "+plz);
+
+
+        if (plz == null) plz = "0";
+        if (tele == null) tele = "0";
+        if (mobil == null) mobil = "0";
+
+        System.out.println("tele: "+tele);
+        System.out.println("mobil: "+mobil);
+        System.out.println("plz: "+plz);
+
 
         DatabaseHelper db = new DatabaseHelper();
 
-        db.createKunde(benutzername, passwort, nname, vname, strasse, hausnr, plz, ort, telefon, mobil, email);
-       /*
-        if(!db.KundeFrei(benutzername)) {
-            //JOptionPane.showMessageDialog(null, "Benutzername bereits vergeben!");
-            System.out.println("benutzer vergeben");
-        } else if (!passwort.contentEquals(passwortwd)) {
-            //JOptionPane.showMessageDialog(null, "Passwörter stimmen nicht überein!");
-            System.out.println("passwort stimmt nicht überein");
-        } else if (db.mitarbeiterFrei(benutzername)) {
-            db.createKunde(benutzername, passwort, nname, vname, strasse, hausnr, plz, ort, telefon, mobil, email);
-            //JOptionPane.showMessageDialog(null, "Success");
-            System.out.println("success");
-        }*/
+        System.out.println(benutzername);
 
-        String url = "/register.jsp";
-        response.sendRedirect(url);
-
-
+        //prüfen ob nutzername schon vorhanden
+        if(!db.KundeFrei(benutzername)){
+            eingabeFehler = true;
+            message = "Der Nutzername ist schon vorhanden.";
+        }
         db.disconnectDatabase();
+
+
+        //Zahleneingaben prüfen
+        if(!eingabeFehler){
+            try{
+                plz_int = Integer.parseInt(plz);
+            }catch(NumberFormatException e){
+                eingabeFehler = true;
+                message = "PLZ mit ung&uuml;ltigem Wert.";
+            }
+        }
+        if(!eingabeFehler){
+            try{
+                telefon_int = Integer.parseInt(tele);
+            }catch(NumberFormatException e){
+                eingabeFehler = true;
+                message = "Telefonnummer mit ung&uuml;ltigem Wert.";
+            }
+        }
+        if(!eingabeFehler){
+            try{
+                mobil_int = Integer.parseInt(mobil);
+            }catch(NumberFormatException e){
+                eingabeFehler = true;
+                message = "Mobilnummer mit ung&uuml;ltigem Wert.";
+            }
+        }
+
+        // prüfen ob PW übereinstimmen
+        if (!eingabeFehler) {
+            if (passwort != passwortBest) {
+                eingabeFehler = true;
+                message = "Die Passwörter stimmen nicht &uuml;berein.";
+            }
+        }
+
+        if (!eingabeFehler) {
+            boolean result = db.createKunde(benutzername, passwort, nname, vname, strasse, hausnr, plz_int, ort, telefon_int, mobil_int, email, orga);
+            if (!result){ // ja geht auch anders aber fehlersuche-.-
+                message = "Der Account konnte nicht erstellt werden.";
+            }else{
+                message = "Sie haben sich erfolgreich registriert.";
+            }
+        }
+
+        //textausgabe im formular
+        request.setAttribute("message", message);
+        request.getRequestDispatcher("/register.jsp").forward(request, response);
     }
-
-
 }

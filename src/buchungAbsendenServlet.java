@@ -1,5 +1,6 @@
 import project.DatabaseHelper;
 import project.cart;
+import project.loginCookie;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -19,39 +23,92 @@ public class buchungAbsendenServlet
 
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
+
+
         DatabaseHelper db = new DatabaseHelper();
+        String email = "";
 
-        String kundenmail = request.getParameter("email");
 
-        String abholDatumString = request.getParameter("abholdatum");
-        String abgabeDatumString = request.getParameter("abgabedatum");
+        // den loginname des angemeldeten Nutzers auslesen
+        String user = "";
+        HttpSession session = request.getSession();
+        loginCookie loginDaten = (loginCookie)
+                session.getAttribute("loginCookie");
+        if (loginDaten != null) {
+            if (loginDaten.getRolle() == "Kunde") {
+                user = loginDaten.getUsername();
 
-        SimpleDateFormat sdf  = new SimpleDateFormat("dd.MM.yyyy");
-        long abgabeDatumInMs = 0;
-        long abholDatumInMs = 0;
-        try{
-            Date abgabedatumSDF = sdf.parse(abgabeDatumString);
-            Date abholdatumSDF = sdf.parse(abholDatumString);
-            abholDatumInMs = abholdatumSDF.getTime();
-            abgabeDatumInMs = abgabedatumSDF.getTime();
+                ResultSet rs = db.getKundenDatenByLogin(user);
+                try{
+                    email = rs.getString(12);
+                }catch(SQLException e){}
+            }
+        }else{
+            email = request.getParameter("email");
+            String vname = request.getParameter("vorname");
+            String nname = request.getParameter("name");
+            String strasse = request.getParameter("strasse");
+            String hausnr = request.getParameter("hausn");
+            String ort = request.getParameter("ort");
+            String plz = request.getParameter("plz");
+            String tele = request.getParameter("tele");
+            String mobil = request.getParameter("mobil");
+            String orga = request.getParameter("orga");
+            String benutzername = "";
+            String passwort = "";
 
-        }catch(Exception e){
+
+            int plz_int = 0;
+            int telefon_int = 0;
+            int mobil_int = 0;
+            //TODO exception
+            try{
+                plz_int = Integer.parseInt(plz);
+                telefon_int = Integer.parseInt(tele);
+                mobil_int = Integer.parseInt(mobil);
+            }catch(NumberFormatException e){
+                // alles bleibt 0
+            }
+
+
+            //TODO fail ?!
+            boolean result = db.createKunde(benutzername, passwort, nname, vname, strasse, hausnr, plz_int, ort, telefon_int, mobil_int, email, orga);
         }
 
-        Date abholdatum = new Date(abholDatumInMs);
-        Date abgabedatum = new Date(abgabeDatumInMs);
+        //TODO Datumsformat is nich konform...
+        Date abholdatum  = new Date();
+        Date abgabedatum = new Date();
+        SimpleDateFormat sdf  = new SimpleDateFormat("yyyy-MM-dd");
+
+        try{
+            abholdatum = sdf.parse(request.getParameter("abholdatum"));
+            abgabedatum = sdf.parse(request.getParameter("abgabedatum"));
+        }catch(ParseException e){
+            //Datum konnte nich geparst werden
+        }
+
 
         cart shoppingCart;
-        HttpSession session = request.getSession();
+        session = request.getSession();
         shoppingCart = (cart) session.getAttribute("cart");
         List<Integer> produktids = shoppingCart.getCartItems();
 
-        Integer suxxess = db.createBuchung(kundenmail, abholdatum, abgabedatum, produktids);
-        System.out.println("erfolg:" + suxxess);
+        Integer buchungsCode = db.createBuchung(email, abholdatum, abgabedatum, produktids);
 
         db.disconnectDatabase();
 
-        String url = "/index.jsp";
-        response.sendRedirect(url);
+        if(buchungsCode != -1){
+            //Buchung erfolgreich
+            request.setAttribute("buchCode", buchungsCode);
+            request.getRequestDispatcher("/summaryBuchung.jsp").forward(request, response);
+        }
+        else{
+            //Buchung fehlgeschlagen
+            String message = "Buchung fehlgeschlagen bitte erneut versuchen.";
+            request.setAttribute("message", message);
+            request.getRequestDispatcher("/buchungAbsenden.jsp").forward(request, response);
+        }
+
+
     }
 }

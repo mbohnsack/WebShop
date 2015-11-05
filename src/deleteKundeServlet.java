@@ -7,15 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/deleteMitarbeiterServelt")
+@WebServlet("/deleteKundeServlet")
 public class deleteKundeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
-
-        String user = request.getParameter("user");
+        String kundeUsername = request.getParameter("");
 
         DatabaseHelper db = new DatabaseHelper();
-        db.deleteKunde(user);
+        db.deleteKunde(kundeUsername);
 
         String url = "index.jsp";
         response.sendRedirect( url );

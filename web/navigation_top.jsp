@@ -14,10 +14,10 @@
     <li class="divider"></li>
     <li><a href="contact.jsp" id="kontakt" class="nav3">Kontakt</a></li>
     <li class="divider"></li>
-    <li><a href="register.jsp" id="registrieren" class="nav4">Registrieren</a></li>
-    <li class="divider"></li>
-    <li><a href="buchungsEinsichtKunde.jsp" id="buchungsEinsicht" class="nav5">Buchungs Einsicht</a></li>
-    <li class="divider"></li>
+    <li><a href="buchungenKunde.jsp" id="buchungen" class="nav3">Buchungen</a></li>
+
+
+
     <%
         // den loginname des angemeldeten Nutzers auslesen und wenn jemand angemeldet ist die buttons einblenden
         Boolean loginState = false;
@@ -33,15 +33,14 @@
             loginState = false;
         }
         if(loginState){%>
-            <li><a href="../general/logout.jsp" id="abmelden" class="nav6"><%= user%> abmelden</a></li>
+            <li><a href="general/logout.jsp" id="abmelden" class="nav5"><%= user%> abmelden</a></li>
             <li class="divider"></li>
-            <li><a href="kundeBearbeiten.jsp" id="konto" class="nav7">Daten &auml;ndern</a></li>
+            <li><a href="kundeBearbeiten.jsp" id="konto" class="nav6">Daten &auml;ndern</a></li>
         <%}else{%>
             <li><a href="loginKunde.jsp" id="anmelden" class="nav5">Anmelden</a></li>
               <li class="divider"></li>
               <li><a href="register.jsp" id="registrieren" class="nav4">Registrieren</a></li>
 
-            <li><a href="loginKunde.jsp" id="anmelden" class="nav6">anmelden</a></li>
         <%}%>
 
 </ul>

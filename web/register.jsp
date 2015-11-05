@@ -19,58 +19,72 @@
         <div class="content">
             <div class="center_content">
                 <div class="center_title_bar">Registrieren</div>
+                <div class="center_title_bar" style="color: red">${message}</div>
                 <div class="prod_box_big">
                     <div class="top_prod_box_big"></div>
                     <div class="center_prod_box_big">
                     <div class="contact_form">
                         <form name="registerForm" method="post" action="registerKundeServlet">
+
+
+
                             <div class="form_row">
                                 <label class="contact"><strong>Benutzername</strong></label>
-                                <input type="text" class="contact_input" name="benutzername" placeholder="MaxM62"/>
+                                <input type="text" class="contact_input" name="benutzername" placeholder="MaxM62" required/>
                             </div>
                             <div class="form_row">
                                 <label class="contact"><strong>Nachname</strong></label>
-                                <input type="text" class="contact_input" name="nname" placeholder="Mustermann"/>
+                                <input type="text" class="contact_input" name="nname" placeholder="Mustermann" required/>
                             </div>
                             <div class="form_row">
                                 <label class="contact"><strong>Vorname</strong></label>
-                                <input type="text" class="contact_input" name="vname" placeholder="Max"/>
+                                <input type="text" class="contact_input" name="vname" placeholder="Max" required/>
                             </div>
                             <div class="form_row">
                                 <label class="contact"><strong>Email</strong></label>
-                                <input type="text" class="contact_input" name="email" placeholder="max.mustermann@gmx.com"/>
+                                <input type="email" class="contact_input" name="email" placeholder="max.mustermann@gmx.com" required/>
                             </div>
+
+
+
                             <div class="form_row">
                                 <label class="contact"><strong>Strasse</strong></label>
-                                <input type="text" class="contact_input" name="strasse" placeholder="Musterstrasse"/>
+                                <input type="text"  name="strasse"/>
                             </div>
                             <div class="form_row">
                                 <label class="contact"><strong>Hausnummer</strong></label>
-                                <input type="text" class="contact_input" name="hausnr" placeholder="42"/>
+                                <input type="text"  name="hausnr"/>
                             </div>
                             <div class="form_row">
                                 <label class="contact"><strong>PLZ</strong></label>
-                                <input type="text" class="contact_input" name="plz" placeholder="42424"/>
+                                <input type="text"  name="plz"/>
                             </div>
                             <div class="form_row">
                                 <label class="contact"><strong>Ort</strong></label>
-                                <input type="text" class="contact_input" name="ort" placeholder="Da Hood"/>
+                                <input type="text"  name="ort"/>
                             </div>
                             <div class="form_row">
                                 <label class="contact"><strong>Telefon</strong></label>
-                                <input type="text" class="contact_input" name="telefon" placeholder="0123456789"/>
+                                <input type="text"  name="telefon"/>
                             </div>
                             <div class="form_row">
                                 <label class="contact"><strong>Mobil</strong></label>
-                                <input type="text" class="contact_input" name="mobil" placeholder="0987654321"/>
+                                <input type="text"  name="mobil"/>
                             </div>
                             <div class="form_row">
+                                <label class="contact"><strong>Firma/Organisation</strong></label>
+                                <input type="text"  name="orga" placeholder="XY"/>
+                            </div>
+
+
+
+                            <div class="form_row">
                                 <label class="contact"><strong>Passwort</strong></label>
-                                <input type="password" class="contact_input" name="passwort"/>
+                                <input type="password" class="contact_input" name="passwort" required/>
                             </div>
                             <div class="form_row">
                                 <label class="contact"><strong>Passwort wiederholen</strong></label>
-                                <input type="password" class="contact_input" name="passwortwd"/>
+                                <input type="password" class="contact_input" name="passwortBest" required/>
                             </div>
                             <div class="form_row"><input type="submit" value="Registrieren"/></div>
                         </form>

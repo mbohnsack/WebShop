@@ -11,10 +11,13 @@
     //Cookie mit den Anmeldedaten auslesen und löschen
     loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
     String targetPage = loginDaten.getTargetpage();
+    if (targetPage.contentEquals("index.jsp")){
+        targetPage = "../index.jsp";
+    }
 
     //session beenden
     session.removeAttribute("loginCookie");
-    session.invalidate();
+    // session.invalidate(); //Nich notwendig, auskommentiert, da es auch den cart löscht
 
     response.sendRedirect(targetPage);
 %>
