@@ -32,7 +32,7 @@
                     <div class="top_prod_box_big"></div>
                     <div class="center_prod_box_big">
 
-                        <div><strong>Bitte bestätigen Sie die Buchung mit Ihren Daten. </strong></div>
+                        <div><strong>Bitte bestätigen Sie die Buchung durch Eingabe Ihren Daten. </strong></div>
                         <br/>
                         <%
                             double gesamtpreis = 0;
@@ -84,9 +84,33 @@
 
                         <tr><td align="left"><strong>Gesamtpreis</strong></td>
                             <td align="left"><strong><%= gesamtpreis%>&euro;</strong></td> </tr>
+                        <tr><td align="left">Rabatt</td>
+                                <td align="left">nix&euro;</td> </tr>
+                        <tr><td align="left"><strong>Endsumme</strong></td>
+                            <td align="left"><strong><%= gesamtpreis%>&euro;</strong></td> </tr>
                         </table>
                             <%
                                 db.disconnectDatabase();
+                                //TODO Rabatt
+                                //TODO Buchungszeitraum !!! Feiertage
+                                /*
+
+                                    zB---- http://www.java-forum.org/thema/jollyday-pruefen-ob-datum-feiertag.126785/ ------
+
+                                    Calendar testDate = GregorianCalendar.getInstance();
+                                    testDate.set(2011, 11, 25);
+
+                                    HolidayManager manager = HolidayManager
+                                            .getInstance(HolidayCalendar.GERMANY);
+
+                                    Set<Holiday> holidays = manager.getHolidays(2011, "bw");
+                                    for (Holiday h : holidays) {
+                                        System.out.println(h.getDate() + " " + h.getDescription());
+                                    }
+                                    System.out.println(manager.isHoliday(testDate, "bw"));
+
+
+                                 */
                             %>
 
                         <br/>
@@ -99,8 +123,8 @@
                             </div>
 
                             <div class="form_row">
-                                <label class="contact_customMF" required><strong>abgabe</strong></label>
-                                <input type="date"  name="abgabe"/>
+                                <label class="contact_customMF" ><strong>abgabe</strong></label>
+                                <input type="date"  name="abgabe" required/>
                             </div>
 
 
@@ -140,31 +164,31 @@
                                 <div class="form_row"><label><strong>Optionale Angaben</strong></label></div>
                                 <div class="form_row">
                                     <label class="contact"><strong>Strasse</strong></label>
-                                    <input type="text" class="contact_input" name="strasse" />
+                                    <input type="text"  name="strasse" />
                                 </div>
                                 <div class="form_row">
                                     <label class="contact"><strong>Hausnummer</strong></label>
-                                    <input type="text" class="contact_input" name="hausnr" />
+                                    <input type="text" name="hausnr" />
                                 </div>
                                 <div class="form_row">
                                     <label class="contact"><strong>PLZ</strong></label>
-                                    <input type="text" class="contact_input" name="plz" />
+                                    <input type="text"  name="plz" />
                                 </div>
                                 <div class="form_row">
                                     <label class="contact"><strong>Ort</strong></label>
-                                    <input type="text" class="contact_input" name="ort" />
+                                    <input type="text"  name="ort" />
                                 </div>
                                 <div class="form_row">
                                     <label class="contact"><strong>Telefon</strong></label>
-                                    <input type="text" class="contact_input" name="telefon"/>
+                                    <input type="text"  name="telefon"/>
                                 </div>
                                 <div class="form_row">
                                     <label class="contact"><strong>Mobil</strong></label>
-                                    <input type="text" class="contact_input" name="mobil"/>
+                                    <input type="text"  name="mobil"/>
                                 </div>
                                 <div class="form_row">
                                     <label class="contact"><strong>Firma/Organisation</strong></label>
-                                    <input type="text" class="contact_input" name="orga" />
+                                    <input type="text"  name="orga" />
                                 </div>
 
                             <%}%>
@@ -178,7 +202,7 @@
                             <button>weiter shoppen</button>
                         </form>
                         <form name="cartLeeren" method="post" action="cartLeerenServlet">
-                            <button>Buchung/Warenkorb leeren</button>
+                            <button>Buchung/Warenkorb leeren und zur Startseite</button>
                         </form>
 
                     </div>

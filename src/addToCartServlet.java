@@ -21,7 +21,6 @@ public class addToCartServlet extends HttpServlet {
 
         String pIDstring = request.getParameter("produktID");
         int pID = Integer.parseInt(pIDstring);
-        System.out.println(pID + " added");
 
         cart shoppingCart;
         HttpSession session = request.getSession();
@@ -34,7 +33,6 @@ public class addToCartServlet extends HttpServlet {
         session.setAttribute("cart", shoppingCart);
 
         List<Integer> aktuellerInhalt = shoppingCart.getCartItems();
-        System.out.println(aktuellerInhalt.size());
 
         response.sendRedirect(sourcePage);
     }

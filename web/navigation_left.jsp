@@ -1,5 +1,7 @@
 <%@ page import="project.DatabaseHelper" %>
 <%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,24 +12,55 @@
 
     <div class="title_box">Kategorien</div>
     <ul class="left_menu">
+
         <%
-        DatabaseHelper db = new DatabaseHelper();
-        ResultSet rs = db.getAllKategories();
+            DatabaseHelper db = new DatabaseHelper();
+            ResultSet rs = db.getAllKategorienWithUnterkategorien();
 
             while(rs.next()){
                 DatabaseHelper db2 = new DatabaseHelper();
-                int anzahl = db2.getAnzahlProdukteInKategorie(rs.getString(1));
-                if (anzahl > 0 || db2.getUebergeordneteKategorie(rs.getString(1)).equals("")) {
-        %>
+
+                 %>
         <li class="odd">
             <form id="category" style="margin-bottom: 0" method="post" action="categories.jsp">
                 <button style="cursor:pointer;" name="category" type="submit" value="<%= rs.getString(1)%>"><%= rs.getString(1)%></button>
             </form>
         </li>
-       <!-- <li class="even"><form style="margin-bottom: 0" method="post" action="categories.jsp"><button name="category" type="submit" value="Lautsprecher">Lautsprecher</button></form></li>
-   --> <%
-                 }db2.disconnectDatabase();
-        } db.disconnectDatabase();%>
+
+        <% ResultSet unterkat = db2.getUnterkategorieRS(rs.getString(1));
+
+                    while (unterkat.next()) {
+                        DatabaseHelper db5 = new DatabaseHelper();
+                        int anzahl = db5.getAnzahlProdukteInKategorie(unterkat.getString(1));
+                        if (anzahl > 0) {
+        %>
+
+        <li class="even">
+            <form id="category2" style="margin-bottom: 0" method="post" action="categories.jsp">
+                <button style="cursor:pointer;" name="category" type="submit" value="<%= unterkat.getString(1)%>">&nbsp;&nbsp;<%= unterkat.getString(1)%></button>
+            </form>
+        </li>
+
+        <% } db5.disconnectDatabase(); } db2.disconnectDatabase(); } db.disconnectDatabase();
+
+            DatabaseHelper db3 = new DatabaseHelper();
+            ResultSet rs2 = db3.getAllKategories();
+            while(rs2.next()){
+                DatabaseHelper db4 = new DatabaseHelper();
+                int anzahl = db4.getAnzahlProdukteInKategorie(rs2.getString(1));
+                if (anzahl > 0 && db4.getUebergeordneteKategorie(rs2.getString(1)).equals("n. v.") && db4.getUnterkategorie(rs2.getString(1)).isEmpty()) {
+        %>
+        <li class="odd">
+            <form id="category3" style="margin-bottom: 0" method="post" action="categories.jsp">
+                <button style="cursor:pointer;" name="category" type="submit" value="<%= rs2.getString(1)%>"><%= rs2.getString(1)%></button>
+            </form>
+        </li>
+
+        <%
+            }
+        db4.disconnectDatabase(); }
+         db3.disconnectDatabase();%>
+
     </ul>
     <div class="title_box">Paket</div>
     <div class="border_box">

@@ -1,6 +1,9 @@
 <%@page import="project.DatabaseHelper" %>
 <%@page import="project.loginCookie" %>
 <%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.sql.SQLException" %>
+<%@ page import="java.util.Date" %>
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -21,46 +24,130 @@
       <jsp:include page="navigation_left.jsp" />
     </div>
 
-    <%
-      // den loginname des angemeldeten Nutzers auslesen
-      String user ="";
-      loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
-      if (loginDaten!=null) {
-        if(loginDaten.getRolle()=="Kunde"){
-          user = loginDaten.getUsername();
-        }
-      }else{
-        // Kunde muss seine email angeben um buchungen zu sehen
-        // html elemente hier
-        user = "mf";
-      }
+    <%!
+      // Methode um die ID aus der Mail zu holen
+      int getKundenIdByMail(String mail) {
+        DatabaseHelper db = new DatabaseHelper();
+        ResultSet kundenDaten = db.getKundenDatenByMail(mail);
 
-      //TODO alles
-      // hier wird der username in die kundenummer gewandelt (funktioniert erstmal)
-      DatabaseHelper db = new DatabaseHelper();
-      ResultSet zwischenSet = db.getKundenDatenByLogin(user);
-      int kdnr = 0;
-      while(zwischenSet.next()){
-        kdnr = Integer.parseInt(zwischenSet.getString(1));
+          try {
+            kundenDaten.next();
+            return kundenDaten.getInt("kun_nummer");
+          }catch (SQLException e) {
+            e.printStackTrace();
+          }
+        return -1;
       }
-      ResultSet buchungsDaten = db.getBuchungenByKunId(kdnr);
     %>
 
     <div class="content">
       <div class="center_content">
         <div class="center_title_bar">Buchungen</div>
-         <div class="center_title_bar" style="color: red">${message}</div>
         <div class="prod_box_big">
           <div class="top_prod_box_big"></div>
           <div class="center_prod_box_big">
+            <p style="color: red">${message}</p>
 
-            <% while(buchungsDaten.next()){ %>
-            <div><%= buchungsDaten.getString(2)%> | <%= buchungsDaten.getString(3)%> | <%= buchungsDaten.getString(5)%></div>
-            <% } db.disconnectDatabase();%>
+            <%
+              // wenn der KD sich nicht anmelden will gibt es mehrere KundenID's mit der gleichen mail also nur eine buchung pro ID
+              // abfrage muss über mail erfolgen geht aber  nicht weil mail nicht in der Buchungstabelle enthalten ist
+              DatabaseHelper db = new DatabaseHelper();
+              int kunId = -2;
+              String user = "";
+
+              // damit das dokument wieder richtig geladen wird wenn der KD seine mail schon angegeben hatte
+              String email = "";
+              email = (String)request.getAttribute("perMail");
+              if (email == null){ email = "";}
+              System.out.println("email "+email);
 
 
+
+              loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
+
+              // *******
+              // Wenn KD angemeldet ist seine KD nummer auslesen
+              // ******
+              if (loginDaten!=null) {
+                if(loginDaten.getRolle()=="Kunde"){
+                  user = loginDaten.getUsername();
+                }
+                ResultSet kundenDaten = db.getKundenDatenByLogin(user);
+                while(kundenDaten.next()){
+                  kunId = Integer.parseInt(kundenDaten.getString(1));
+                }
+
+              }else{
+                // *******
+                // Wenn kein KD angemeldet email abfragn und daraus kun_nummer machen
+                // ******
+                if (request.getParameter("submit") != null && email.contentEquals(""))
+                {
+                  email = request.getParameter("email");
+                  kunId = getKundenIdByMail(email);
+                  if(kunId == -1){
+                    %><p style="color: red">Die eingegebene Mail ist nicht im System.</p><%
+                }else if(request.getParameter("submit") != null && !email.contentEquals("")){
+                    kunId = getKundenIdByMail(email);
+                  }
+              }
+
+                // Das email eingabe formular
+            %>
+
+            <p>Sie sind nicht angemeldet. Bitte Email eingeben um Buchungen anzuzeigen.</p>
+            <form name="mailEingabe" method="post" >
+              <input type="email" name="email"  required/>
+              <input type="submit" name="submit" value="Ok"/>
+            </form><br/>
+
+            <%
+              }
+
+              // Tabelle mit den Buchungen (wird nur angezeigt wenn die KD nummer abgefragt wurde
+              if(kunId != -1 && kunId != -2){
+                ResultSet buchungsDaten = db.getBuchungenByKunId(kunId);
+
+            %>
+            <table style="width: 90%" align="center">
+              <tr><th align="left">Buchungs-Nummer</th><th align="left">Abhol-Datum</th><th align="left">Abgabe-Datum</th>
+                <th align="left">Buchungs-Status</th><th align="left">Strornieren</th></tr>
+
+            <%
+                while(buchungsDaten.next()){
+                  // Datum prüfen
+                  Date abholdatum = buchungsDaten.getDate(2);
+                  Date now = new java.sql.Date(System.currentTimeMillis());
+            %>
+              <tr>
+            <td align="left"><%= buchungsDaten.getString(4)%></td>
+            <td align="left"><%= buchungsDaten.getString(2)%></td>
+            <td align="left"><%= buchungsDaten.getString(3)%></td>
+            <td align="left"><%= buchungsDaten.getString(5)%></td>
+            <td align="left">
+              <%
+                //storno knopf nur anzeigen, wenn das datum in der zukunft liegt
+                if (abholdatum.after(now) && buchungsDaten.getString(5).contentEquals("ausstehend")){
+              %>
+            <form name="storno" action="buchungStorno" method="post">
+              <input type="hidden" name="buchungsID" value="<%= buchungsDaten.getString(4)%>"/>
+              <input type="hidden" name="aendern" value="storniert"/>
+              <input type="hidden" name="email" value="<%= email%>"/>
+              <button name="storno" type="submit">stornieren</button>
+            </form>
+              <%
+                }
+              %>
+            </td></tr>
+
+            <%
+              }%>
+            </table><br/>
+            <%
+              db.disconnectDatabase();
+              }
+            %>
           </div>
-
           <div class="bottom_prod_box_big"></div>
         </div>
       </div>
