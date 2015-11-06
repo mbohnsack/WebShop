@@ -19,7 +19,7 @@ public class deleteKundeServlet extends HttpServlet {
 
 
 
-        //TODO hier könnte noch die PW abfrage rein
+        // hier könnte noch die PW abfrage rein
 
 
         String user = "";

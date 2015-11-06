@@ -1,3 +1,6 @@
+import de.jollyday.Holiday;
+import de.jollyday.HolidayCalendar;
+import de.jollyday.HolidayManager;
 import project.DatabaseHelper;
 import project.cart;
 import project.loginCookie;
@@ -13,9 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 @WebServlet("/buchungAbsendenservelet")
@@ -140,26 +141,55 @@ public class buchungAbsendenServlet
                 e.printStackTrace();
             }
 
-            //Produktliste ausm cart holen
-            cart shoppingCart;
-            session = request.getSession();
-            shoppingCart = (cart) session.getAttribute("cart");
-            List<Integer> produktids = new ArrayList<Integer>();
-            if(shoppingCart != null){
-                //unchecked
-                produktids = shoppingCart.getCartItems();
+            // wenn abgabe vor abhol
+            if(abgabedatum.before(abholdatum)){
+                eingabeFehler = true;
+                message = "Das Abgabedatum liegt vor dem Abholdatum!";
             }
 
-            Integer buchungsCode = db.createBuchung(email, abholdatum, abgabedatum, produktids);
-
-            if(buchungsCode != -1){
-                //Buchung erfolgreich
-                request.setAttribute("buchCode", buchungsCode);
-                request.getRequestDispatcher("/summaryBuchung.jsp").forward(request, response);
+            // Prüft ob ein Datum auf einen Feirtag fällt
+            HolidayManager manager = HolidayManager.getInstance(HolidayCalendar.GERMANY);
+            if (!eingabeFehler) {
+                Calendar abholFeier = GregorianCalendar.getInstance();
+                abholFeier.setTime(abholdatum);
+                System.out.println(manager.isHoliday(abholFeier, "bw"));
+                if (manager.isHoliday(abholFeier, "bw")) {
+                    eingabeFehler = true;
+                    message = "Das Abholdatum liegt an einem Feiertag.";
+                }
             }
-            else{
-                //Buchung fehlgeschlagen
-                message = "Buchung fehlgeschlagen bitte erneut versuchen. (Serverfehler)";
+            if (!eingabeFehler) {
+                Calendar abgabeFeier = GregorianCalendar.getInstance();
+                abgabeFeier.setTime(abgabedatum);
+                System.out.println(manager.isHoliday(abgabeFeier, "bw"));
+                if(manager.isHoliday(abgabeFeier, "bw")){
+                    eingabeFehler = true;
+                    message = "Das Abgabedatum liegt an einem Feiertag.";
+                }
+            }
+
+            if (!eingabeFehler) {
+                //Produktliste ausm cart holen
+                cart shoppingCart;
+                session = request.getSession();
+                shoppingCart = (cart) session.getAttribute("cart");
+                List<Integer> produktids = new ArrayList<Integer>();
+                if(shoppingCart != null){
+                    //unchecked
+                    produktids = shoppingCart.getCartItems();
+                }
+
+                Integer buchungsCode = db.createBuchung(email, abholdatum, abgabedatum, produktids);
+
+                if(buchungsCode != -1){
+                    //Buchung erfolgreich
+                    request.setAttribute("buchCode", buchungsCode);
+                    request.getRequestDispatcher("/summaryBuchung.jsp").forward(request, response);
+                }
+                else{
+                    //Buchung fehlgeschlagen
+                    message = "Buchung fehlgeschlagen bitte erneut versuchen. (Serverfehler)";
+                }
             }
         }
 
