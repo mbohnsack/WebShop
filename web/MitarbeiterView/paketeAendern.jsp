@@ -12,7 +12,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
   loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
-
+  int inthalt_id = 0;
 
 %>
 <html lang="de">
@@ -51,28 +51,16 @@ else {
       paket.next();
       System.out.println(paket.getString(1));
     %>
-    <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post" action="../updateProduktServlet"><div ><h2>Produkt aendern</h2></div>
+    <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post" action="../updatePaketServlet"><div ><h2>Produkt aendern</h2></div>
       <div ><label >Produkt Name</label><input  type="text" name="produktname" value="<%=paket.getString(7)%>"/></div>
       <div ><label >Produkt Name2</label><input  type="text" name="produktname2" value="<%=paket.getString(8)%>" /></div>
       <div ><label >Produktbeschreibung</label><textarea class="medium" name="produktbeschreibung" cols="20" rows="5"  ><%=paket.getString(5)%></textarea></div>
       <div ><label >Technische Daten</label><textarea class="medium" name="details" cols="20" rows="5" ><%=paket.getString(6)%></textarea></div>
 
-      <div ><label >Kategorie</label><select name="kategorie" selected="<%=paket.getString(2)%>">
-        <%
-          DatabaseHelper db2 = new DatabaseHelper();
-          ResultSet allKategories = db2.getAllKategories();
-          while (allKategories.next()){
-            if(allKategories.getString(1).equals(paket.getString(2))){
-        %>
-               <option value="<%=allKategories.getString(1)%>" selected="selected"><%=allKategories.getString(1)%></option>
-        <%
-        }else{
-        %>
-                <option value="<%=allKategories.getString(1)%>"><%=allKategories.getString(1)%></option>
-        <%
-            }
-          }
-        %>
+      <div ><label >Kategorie</label><select  name="kategorie">
+
+                <option selected value="Paket">Paket</option>
+
       </select>
       </div>
       <div ><label >Hersteller</label><input  type="text" name="hersteller" value="<%=paket.getString(3)%>" /></div>
@@ -95,7 +83,7 @@ else {
               id= rs.getInt("prod_id");
               bezeichnung=rs.getString("prod_bezeichn");
 
-              boolean cheacked = false;
+              boolean checked = false;
         %>
 
         <tr>
@@ -106,10 +94,13 @@ else {
                 while(rsPaketProdukte.next())
                 {
                   int idPaketPordukt= rsPaketProdukte.getInt(4);
+                  inthalt_id = rsPaketProdukte.getInt(5);
+
                   int prio = rsPaketProdukte.getInt(3);
+
                   if(idPaketPordukt==id){
             %>
-                      <input type="checkbox"  checked name="produkte" value=<%=id%>/><%=bezeichnung %><br/>
+                      <input type="checkbox"  checked name="produkte" value="<%=id%>"/><%=bezeichnung %><br/>
                       </td>
                       <td>
                         <select name="<%=id%>" value="<%=prio%>" >
@@ -119,12 +110,12 @@ else {
                         </select>
                       </td>
             <%
-                    cheacked=true;
-                    db4.disconnectDatabase();
+                    checked=true;
+
                   }
 
                   }
-              if (cheacked==false){
+              if (checked==false){
             %>
                         <input type="checkbox"  name="produkte" value=<%=id%>/><%=bezeichnung %><br/>
                       </td>
@@ -153,15 +144,15 @@ else {
         }
 
       %>
-      <div class="submit"><button type="submit" name=produktid value="<%=paketID%>">Ändern</button></div>
 
+      <div class="submit"><button type="submit" name=paketid value="<%=paketID%>">Ändern</button></div>
+      <input type="hidden" name="inhaltid" value="<%=inthalt_id%>"/>
     </form>
 
   </div>
 
 </div>
 <%
-    db2.disconnectDatabase();
     db3.disconnectDatabase();
 
   }
