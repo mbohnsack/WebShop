@@ -46,8 +46,11 @@ public class buchungAbsendenServlet
                 user = loginDaten.getUsername();
 
                 ResultSet rs = db.getKundenDatenByLogin(user);
+
                 try{
+                    rs.next();
                     email = rs.getString(12);
+                    System.out.println(email);
                 }catch(SQLException e){
                     e.printStackTrace();
                 }
@@ -55,19 +58,28 @@ public class buchungAbsendenServlet
         }else{
             //Pflicht auslesn
             email = request.getParameter("email");
-            String vname = request.getParameter("vorname");
-            String nname = request.getParameter("name");
+            String vname = request.getParameter("vname");
+            String nname = request.getParameter("nname");
 
             //optional auslesn
             String strasse = request.getParameter("strasse");
-            String hausnr = request.getParameter("hausn");
+            String hausnr = request.getParameter("hausnr");
             String ort = request.getParameter("ort");
             String plz = request.getParameter("plz");
-            String tele = request.getParameter("tele");
+            String tele = request.getParameter("telefon");
             String mobil = request.getParameter("mobil");
             String orga = request.getParameter("orga");
+
+
+            //erzeugt random user wegen primarykey und weil der  %&#%&&$*+& KD sich ja nich anmelden will
             String benutzername = "";
-            String passwort = "";
+            String passwort = "h4x0r"; //;-P
+
+            do {
+                int zahl = (int)(Math.random() * 100000);
+                benutzername = "x" + String.valueOf(zahl);
+            }while (!db.KundeFrei(benutzername));
+
 
             //falls optionale int nicht eingegeben wurden wegen NumberFormatException
             if (plz == "") plz = "0";
@@ -98,15 +110,14 @@ public class buchungAbsendenServlet
                 }
             }
 
-            // nutzerdaten hinterlegen OHNE registrierung, PW(=""), login(="")
-            // TODO erzeugt "leere" nutzer mit denen sich jeder anmelden kann....
-            if (!eingabeFehler) {
+            // nutzerdaten hinterlegen mit randomuser und PW
+             if (!eingabeFehler) {
                 boolean result = db.createKunde(benutzername, passwort, nname, vname, strasse, hausnr, plz_int, ort, telefon_int, mobil_int, email, orga);
-                if (!result){
-                    message = "Für die Buchungsbearbeitung wurden Ihre Daten hinterlegt.";
+                if (result){
+                    message = "F&uuml;r die Buchungsbearbeitung wurden Ihre Daten hinterlegt.";
                 }else{
                     eingabeFehler = true;
-                    message = "Die für die Buchungsbearbeitung notwendigen Daten konnten nicht hinterlegt werden.(Serverfehler)";
+                    message = "Die f&uuml;r die Buchungsbearbeitung notwendigen Daten konnten nicht hinterlegt werden.(Serverfehler)";
                 }
             }
         }
@@ -148,7 +159,7 @@ public class buchungAbsendenServlet
             }
             else{
                 //Buchung fehlgeschlagen
-                message = "Buchung fehlgeschlagen bitte erneut versuchen.(Serverfehler)";
+                message = "Buchung fehlgeschlagen bitte erneut versuchen. (Serverfehler)";
             }
         }
 

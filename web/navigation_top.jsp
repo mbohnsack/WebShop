@@ -9,13 +9,9 @@
 <div class="left_menu_corner"></div>
 <ul class="menu">
     <li><a href="index.jsp" id="startseite" class="nav1">Startseite</a></li>
-    <li class="divider"></li>
     <li><a href="produkte.jsp" id="produkte" class="nav2">Produkte</a></li>
-    <li class="divider"></li>
     <li><a href="contact.jsp" id="kontakt" class="nav3">Kontakt</a></li>
-
-
-
+    <li><a href="buchungenKunde.jsp" id="buchungen" class="nav3">Buchungen</a></li>
 
     <%
         // den loginname des angemeldeten Nutzers auslesen und wenn jemand angemeldet ist die buttons einblenden
@@ -32,15 +28,10 @@
             loginState = false;
         }
         if(loginState){%>
-
-            <li><a href="buchungenKunde.jsp" id="buchungen" class="nav3">Buchungen</a></li>
-             <li class="divider"></li>
             <li><a href="general/logout.jsp" id="abmelden" class="nav5"><%= user%> abmelden</a></li>
-            <li class="divider"></li>
             <li><a href="kundeBearbeiten.jsp" id="konto" class="nav6">Daten &auml;ndern</a></li>
         <%}else{%>
             <li><a href="loginKunde.jsp" id="anmelden" class="nav5">Anmelden</a></li>
-              <li class="divider"></li>
               <li><a href="register.jsp" id="registrieren" class="nav4">Registrieren</a></li>
 
         <%}%>

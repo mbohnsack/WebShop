@@ -23,7 +23,7 @@ public class DatabaseHelper{
         try {
             Class.forName("org.postgresql.Driver");
             c = DriverManager.getConnection(
-                "jdbc:postgresql://mbohnbowling.ddns.net:5432/Webshop", "webuser", "winf114"); //Hier später die entsprechende Serveranbindung
+                "jdbc:postgresql://mbohnbowling.ddns.net:5432/Webshop", "webuser", "winf114"); //Hier spï¿½ter die entsprechende Serveranbindung
              stmt = c.createStatement();
         } catch (Exception e) {
             System.out.println("Could not create a statement");
@@ -206,7 +206,7 @@ public class DatabaseHelper{
     }
 
     public Integer createBuchung(String kundenmail, Date abholdatum, Date abgabedatum, List<Integer> produktids){
-        java.sql.Date abholung = new java.sql.Date(abholdatum.getTime()); //Format vom servlet nich kompatibel
+        java.sql.Date abholung = new java.sql.Date(abholdatum.getTime());
         java.sql.Date abgabe = new java.sql.Date(abgabedatum.getTime());
         Boolean verfuegbar = false;
         Integer kundenId = null;
@@ -277,11 +277,24 @@ public class DatabaseHelper{
         return rs;
     }
 
+    public ResultSet getBuchungById(int buchId){
+        ResultSet rs = null;
+
+        try {
+            rs = stmt.executeQuery("SELECT * FROM tbl_buchungsliste WHERE buch_code = '"+buchId+"'");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return rs;
+    }
+
     public Boolean updateBuchungsstatus(Integer buchungsId, String status){
         Boolean erfolgreich = false;
 
         try {
             stmt.executeUpdate("UPDATE tbl_buchungsliste SET buch_status = '"+ status +"' WHERE buch_code = "+ buchungsId);
+            erfolgreich = true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -694,6 +707,15 @@ public class DatabaseHelper{
         ResultSet rs=null;
         try{
             rs=stmt.executeQuery("SELECT * FROM tbl_kunde WHERE kun_benutzer = '" + login +"'");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return rs;
+    }
+    public ResultSet getKundenDatenByMail(String mail){
+        ResultSet rs=null;
+        try{
+            rs=stmt.executeQuery("SELECT * FROM tbl_kunde WHERE kun_email = '" + mail +"'");
         }catch(Exception e){
             e.printStackTrace();
         }
