@@ -43,43 +43,117 @@ else {
   <div id="rightdiv">
     <%
 
-      int produktId = Integer.parseInt(request.getParameter("aendern"));
+      int paketID = Integer.parseInt(request.getParameter("aendern"));
 
 
       DatabaseHelper db = new DatabaseHelper();
-      ResultSet product = db.getProductsById(produktId);
-      product.next();
-      System.out.println(product.getString(1));
+      ResultSet paket = db.getProductsById(paketID);
+      paket.next();
+      System.out.println(paket.getString(1));
     %>
     <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post" action="../updateProduktServlet"><div ><h2>Produkt aendern</h2></div>
-      <div ><label >Produkt Name</label><input  type="text" name="produktname" value="<%=product.getString(7)%>"/></div>
-      <div ><label >Produkt Name2</label><input  type="text" name="produktname2" value="<%=product.getString(8)%>" /></div>
-      <div ><label >Produktbeschreibung</label><textarea class="medium" name="produktbeschreibung" cols="20" rows="5"  ><%=product.getString(5)%></textarea></div>
-      <div ><label >Technische Daten</label><textarea class="medium" name="details" cols="20" rows="5" ><%=product.getString(6)%></textarea></div>
+      <div ><label >Produkt Name</label><input  type="text" name="produktname" value="<%=paket.getString(7)%>"/></div>
+      <div ><label >Produkt Name2</label><input  type="text" name="produktname2" value="<%=paket.getString(8)%>" /></div>
+      <div ><label >Produktbeschreibung</label><textarea class="medium" name="produktbeschreibung" cols="20" rows="5"  ><%=paket.getString(5)%></textarea></div>
+      <div ><label >Technische Daten</label><textarea class="medium" name="details" cols="20" rows="5" ><%=paket.getString(6)%></textarea></div>
 
-      <div ><label >Kategorie</label><select name="kategorie" selected="<%=product.getString(2)%>">
+      <div ><label >Kategorie</label><select name="kategorie" selected="<%=paket.getString(2)%>">
         <%
           DatabaseHelper db2 = new DatabaseHelper();
           ResultSet allKategories = db2.getAllKategories();
           while (allKategories.next()){
-            if(allKategories.getString(1).equals(product.getString(2))){
+            if(allKategories.getString(1).equals(paket.getString(2))){
         %>
-        <option value="<%=allKategories.getString(1)%>" selected="selected"><%=allKategories.getString(1)%></option>
+               <option value="<%=allKategories.getString(1)%>" selected="selected"><%=allKategories.getString(1)%></option>
         <%
         }else{
         %>
-        <option value="<%=allKategories.getString(1)%>"><%=allKategories.getString(1)%></option>
+                <option value="<%=allKategories.getString(1)%>"><%=allKategories.getString(1)%></option>
         <%
             }
           }
         %>
       </select>
       </div>
-      <div ><label >Hersteller</label><input  type="text" name="hersteller" value="<%=product.getString(3)%>" /></div>
-      <div ><label >Preis</label><input  type="text" name="preis" value="<%=product.getString(4)%>"/></div>
-      <div ><label >Anzahl der Buchungen</label><input  type="text" name="anzahlMBuchungen" value="<%=product.getString(9)%>" /></div>
+      <div ><label >Hersteller</label><input  type="text" name="hersteller" value="<%=paket.getString(3)%>" /></div>
+      <div ><label >Preis</label><input  type="text" name="preis" value="<%=paket.getString(4)%>"/></div>
+      <div ><label >Anzahl der Buchungen</label><input  type="text" name="anzahlMBuchungen" value="<%=paket.getString(9)%>" /></div>
+      <label >Produkte</label>
+      <table border="1">
+        <tr>
+          <td>Produktname</td>
+          <td>Prio</td>
+        </tr>
+        <%
+          DatabaseHelper db3 = new project.DatabaseHelper();
+          try{
+            ResultSet rs= db3.getAllProducts();
+            int id;
+            String bezeichnung;
+            while(rs.next())
+            {
+              id= rs.getInt("prod_id");
+              bezeichnung=rs.getString("prod_bezeichn");
 
-      <div class="submit"><button type="submit" name=produktid value="<%=produktId%>">Ändern</button></div>
+              boolean cheacked = false;
+        %>
+
+        <tr>
+          <td>
+            <%
+              DatabaseHelper db4 = new project.DatabaseHelper();
+                ResultSet rsPaketProdukte= db4.getProdukteOfPaket(paketID);
+                while(rsPaketProdukte.next())
+                {
+                  int idPaketPordukt= rsPaketProdukte.getInt(4);
+                  int prio = rsPaketProdukte.getInt(3);
+                  if(idPaketPordukt==id){
+            %>
+                      <input type="checkbox"  checked name="produkte" value=<%=id%>/><%=bezeichnung %><br/>
+                      </td>
+                      <td>
+                        <select name="<%=id%>" value="<%=prio%>" >
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                        </select>
+                      </td>
+            <%
+                    cheacked=true;
+
+                  }
+
+                  }
+              if (cheacked==false){
+            %>
+                        <input type="checkbox"  name="produkte" value=<%=id%>/><%=bezeichnung %><br/>
+                      </td>
+                      <td>
+                        <select name="<%=id%>" >
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                        </select>
+                      </td>
+            <%
+                  }
+                }
+
+
+
+            %>
+
+        </tr>
+      </table>
+      <%
+
+
+        }catch(Exception e) {
+
+        }
+
+      %>
+      <div class="submit"><button type="submit" name=produktid value="<%=paketID%>">Ändern</button></div>
 
     </form>
 
@@ -87,9 +161,10 @@ else {
 
 </div>
 <%
-    db.disconnectDatabase();
     db2.disconnectDatabase();
+    db3.disconnectDatabase();
   }
 %>
 </body>
 </html>
+
