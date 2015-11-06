@@ -49,12 +49,20 @@
             <p style="color: red">${message}</p>
 
             <%
-              //TODO wenn der KD nicht angemeldet ist gibt es mehrere KundenID's mit der gleichen mail also nur eine buchung pro ID
-              //abfrage muss über mail erfolgen
-
+              // wenn der KD sich nicht anmelden will gibt es mehrere KundenID's mit der gleichen mail also nur eine buchung pro ID
+              // abfrage muss über mail erfolgen geht aber  nicht weil mail nicht in der Buchungstabelle enthalten ist
               DatabaseHelper db = new DatabaseHelper();
               int kunId = -2;
               String user = "";
+
+              // damit das dokument wieder richtig geladen wird wenn der KD seine mail schon angegeben hatte
+              String email = "";
+              email = (String)request.getAttribute("perMail");
+              if (email == null){ email = "";}
+              System.out.println("email "+email);
+
+
+
               loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
 
               // *******
@@ -73,14 +81,16 @@
                 // *******
                 // Wenn kein KD angemeldet email abfragn und daraus kun_nummer machen
                 // ******
-                if (request.getParameter("submit") != null)
+                if (request.getParameter("submit") != null && email.contentEquals(""))
                 {
-                  String email = request.getParameter("email");
+                  email = request.getParameter("email");
                   kunId = getKundenIdByMail(email);
                   if(kunId == -1){
                     %><p style="color: red">Die eingegebene Mail ist nicht im System.</p><%
+                }else if(request.getParameter("submit") != null && !email.contentEquals("")){
+                    kunId = getKundenIdByMail(email);
                   }
-                }
+              }
 
                 // Das email eingabe formular
             %>
@@ -102,15 +112,15 @@
             <table style="width: 90%" align="center">
               <tr><th align="left">Buchungs-Nummer</th><th align="left">Abhol-Datum</th><th align="left">Abgabe-Datum</th>
                 <th align="left">Buchungs-Status</th><th align="left">Strornieren</th></tr>
-              <tr>
+
             <%
                 while(buchungsDaten.next()){
                   // Datum prüfen
                   Date abholdatum = buchungsDaten.getDate(2);
                   Date now = new java.sql.Date(System.currentTimeMillis());
             %>
-
-            <td align="left"><%= buchungsDaten.getString(1)%></td>
+              <tr>
+            <td align="left"><%= buchungsDaten.getString(4)%></td>
             <td align="left"><%= buchungsDaten.getString(2)%></td>
             <td align="left"><%= buchungsDaten.getString(3)%></td>
             <td align="left"><%= buchungsDaten.getString(5)%></td>
@@ -120,18 +130,19 @@
                 if (abholdatum.after(now) && buchungsDaten.getString(5).contentEquals("ausstehend")){
               %>
             <form name="storno" action="buchungStorno" method="post">
-              <input type="hidden" name="buchungsID" value="<%= buchungsDaten.getString(1)%>"/>
+              <input type="hidden" name="buchungsID" value="<%= buchungsDaten.getString(4)%>"/>
               <input type="hidden" name="aendern" value="storniert"/>
+              <input type="hidden" name="email" value="<%= email%>"/>
               <button name="storno" type="submit">stornieren</button>
             </form>
               <%
                 }
               %>
-            </td>
+            </td></tr>
 
             <%
               }%>
-            </tr></table><br/>
+            </table><br/>
             <%
               db.disconnectDatabase();
               }
