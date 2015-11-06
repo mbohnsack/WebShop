@@ -120,7 +120,7 @@ else {
                       </td>
             <%
                     cheacked=true;
-
+                    db4.disconnectDatabase();
                   }
 
                   }
@@ -163,6 +163,7 @@ else {
 <%
     db2.disconnectDatabase();
     db3.disconnectDatabase();
+
   }
 %>
 </body>
