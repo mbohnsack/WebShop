@@ -116,7 +116,7 @@ public class DatabaseHelper{
     public ResultSet getAllProducts(){
         ResultSet rs=null;
         try{
-            rs=stmt.executeQuery("SELECT * FROM tbl_produkt ORDER BY prod_kategorie");
+            rs=stmt.executeQuery("SELECT * FROM tbl_produkt WHERE NOT prod_hersteller = 'Paket' ORDER BY prod_kategorie");
         }catch(Exception e){
             e.printStackTrace();
         }

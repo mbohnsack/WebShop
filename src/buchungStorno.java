@@ -12,6 +12,7 @@ import java.io.IOException;
 public class buchungStorno extends HttpServlet{
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        String email = request.getParameter("email");
         String neuStatus = request.getParameter("aendern");
         int buchungsID = Integer.parseInt(request.getParameter("buchungsID"));
         String message = "Storno erfolgreich.";
@@ -23,9 +24,8 @@ public class buchungStorno extends HttpServlet{
         db.disconnectDatabase();
 
         request.setAttribute("message", message);
+        request.setAttribute("perMail", email);
         request.getRequestDispatcher("/buchungenKunde.jsp").forward(request, response);
-
-        //TODO mail zurückgeben und wieder zur anzeige der buchungen nutzen
 
     }
 }
