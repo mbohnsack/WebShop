@@ -34,7 +34,7 @@
         });
     });
 </script>
-<img src = "facebook_button.png" id = "share_button">
+
 <div id="main_container">
     <div id="header">
         <jsp:include page="header.jsp" />
@@ -51,6 +51,7 @@
             <jsp:include page="content.jsp" />
         </div>
         <div id="navigation_right" class="navigation_right">
+            <img src = "images/facebook_button.png" id = "share_button">
             <jsp:include page="navigation_right.jsp" />
         </div>
         <div id="footer" class="footer">
