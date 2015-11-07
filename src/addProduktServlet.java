@@ -33,6 +33,7 @@ public class addProduktServlet extends HttpServlet {
         String kategorie = null;
         String hersteller = null;
         double preis=0.0;
+        Boolean bild=false;
 
         DatabaseHelper db = new DatabaseHelper();
         if (ServletFileUpload.isMultipartContent(request)) {
@@ -66,7 +67,7 @@ public class addProduktServlet extends HttpServlet {
                     // saves the file on disk
                     try {
                         item.write(storeFile);
-
+                        bild=true;
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -102,7 +103,9 @@ public class addProduktServlet extends HttpServlet {
             }
             try {
                 int prodid=db.addProduct(kategorie, hersteller, preis, produktbeschreibung, details, produktname, produktname2);
-                db.saveBildProdukt(storeFile,prodid);
+                if(bild) {
+                    db.saveBildProdukt(storeFile, prodid);
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
