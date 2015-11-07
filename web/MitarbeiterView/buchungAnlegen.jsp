@@ -8,74 +8,97 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%int anzahl=0;%>
+<%int anzahl = 0;%>
 <%
-  loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
+    loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
 %>
 <html lang="de">
 <head>
 
-  <link rel="stylesheet" type="text/css" href="style.css" />
-  <link rel="stylesheet" type="text/css" href="metro.css" />
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="stylesheet" type="text/css" href="metro.css"/>
 </head>
 <body>
 
-<%if (loginDaten == null) {
+<%
+    if (loginDaten == null) {
 %>
 No Cookie found with the name
 <%
-}
-else {
+} else {
 %>
 
 <div id="seite">
-  <div id="kopfbereich">
-    <div align="center">VerwaltungsApp</div>
-  </div>
+    <div id="kopfbereich">
+        <div align="center">VerwaltungsApp</div>
+    </div>
 
-  <div id="steuerung">
-    <jsp:include page="default/navigation.jsp" />
-  </div>
+    <div id="steuerung">
+        <jsp:include page="default/navigation.jsp"/>
+    </div>
 
-  <div id="rightdiv">
-    <form name="buchungform" method="post" action="../createBuchung">
-      Kundenmail: <input type="text" name="kunde" /><br/>
-      Abholdatum: <input type="date" name="abholung"/><br/>
-      Abgabedatum: <input type="date" name="abgabe" /><br/>
-      <%
-        project.DatabaseHelper db = new project.DatabaseHelper();
-        try{
-          ResultSet rs= db.getAllProducts();
-          int id;
-          String bezeichnung;
+    <div id="rightdiv">
+        <br><br>
+        <table border="0" style="margin-left: 38%">
+            <form id="form" name="buchungform" method="post" action="../createBuchung">
+                <tr>
+                    <th><h2>Buchung anlegen</h2></th>
+                </tr>
+                <tr>
+                    <td>Kunden E-Mail</td>
+                    <td><input type="text" name="kunde"/></td>
+                </tr>
+                <tr>
+                    <td>Abholdatum</td>
+                    <td><input type="date" name="abholung"/></td>
+                <tr>
+                    <td>Abgabedatum</td>
+                    <td><input type="date" name="abgabe"/></td>
+                </tr>
+                <tr>
+                    <%
+                        project.DatabaseHelper db = new project.DatabaseHelper();
+                        try {
+                            ResultSet rs = db.getAllProductsSortedByName();
+                            int id;
+                            String bezeichnung;
+                            String hersteller;
 
-      %>
-      Produkte: <br/>
-      <%
-        while(rs.next())
-        {
-          id= rs.getInt("prod_id");
-          bezeichnung=rs.getString("prod_bezeichn");
-      %>
-      <input type="checkbox"  name="produkte" value=<%=id %>/><%=bezeichnung %><br/>
-      <%
-        }
-      %>
-    </select>
+                    %>
 
-      <%
-        }
-        catch(Exception e){}
-      %>
-      <input type="submit" name="submit" value="pruefen"/> <<input type="submit" name="submit" value="Buchen"/>
-    </form>
+                    <td>Produkte </td>
+                    <td>
+                        <div class="scroll" style="max-width:100%">
+                            <%
+                                while (rs.next()) {
+                                    id = rs.getInt("prod_id");
+                                    bezeichnung = rs.getString("prod_bezeichn");
+                                    hersteller = rs.getString("prod_hersteller");
+                            %>
+                            <input type="checkbox" name="produkte" value=<%=id %>/><%=hersteller %> <%=bezeichnung %><br/>
+                            <%
+                                }
+                            %></div>
+                    </td>
+                </tr>
+                </select>
 
-  </div>
+                <%
+                    } catch (Exception e) {
+                    }
+                %>
+                <td>
+                <td><input type="submit" name="submit" value="pruefen"/><input type="submit" name="submit"
+                                                                               value="Buchen"/></td>
+                </tr>
+            </form>
+        </table>
+    </div>
 
 </div>
 <%
-    db.disconnectDatabase();
-  }
+        db.disconnectDatabase();
+    }
 %>
 </body>
 </html>

@@ -16,17 +16,17 @@
 <html lang="de">
 <head>
 
-    <link rel="stylesheet" type="text/css" href="style.css" />
-    <link rel="stylesheet" type="text/css" href="metro.css" />
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="stylesheet" type="text/css" href="metro.css"/>
 </head>
 <body>
 
-<%if (loginDaten == null) {
+<%
+    if (loginDaten == null) {
 %>
 No Cookie found with the name
 <%
-}
-else {
+} else {
 %>
 
 <div id="seite">
@@ -35,33 +35,54 @@ else {
     </div>
 
     <div id="steuerung">
-        <jsp:include page="default/navigation.jsp" />
+        <jsp:include page="default/navigation.jsp"/>
     </div>
 
     <div id="rightdiv">
-        <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post" enctype="multipart/form-data" action="../addKategorieServlet"><div ><h2>Produkt anlegen</h2></div>
-            <div ><label >Kategorie Name</label><input  type="text" name="kategorieName" /></div>
-            <div ><label >Übergeordenete Kategorie</label><div ><select name="ueberKategorie" >
-                <%
-                    DatabaseHelper db2 = new DatabaseHelper();
-                    ResultSet allKategories = db2.getAllKategories();
-                %>
-                <option value=""></option>
-                <%
-                    while (allKategories.next()){
-                %>
+        <br><br>
+        <table border="0" style="margin-left: 38%">
+            <form id="form" method="post" enctype="multipart/form-data" action="../addKategorieServlet">
+                <tr>
+                    <th><h2>Kategorie anlegen</h2></th>
+                </tr>
+                <tr>
+                    <td><label>Kategorie Name</label></td>
+                    <td><input type="text" name="kategorieName"/></td>
+                </tr>
+                <tr>
+                    <td><label>Übergeordenete Kategorie</label></td>
+                    <td><select name="ueberKategorie">
+                        <%
+                            DatabaseHelper db2 = new DatabaseHelper();
+                            ResultSet allKategories = db2.getAllKategories();
+                        %>
+                        <option value=""></option>
+                        <%
+                            while (allKategories.next()) {
+                        %>
 
-                <option value="<%=allKategories.getString(1)%>"><%=allKategories.getString(1)%></option>
-                <%
-                    }
-                %>
-            </select>
-            </div>
-            </div>
-            <div ><label >Bild hochladen</label><label><div >Datei auswählen</div><input type="file"  name="file" /><div>No file selected</div></label></div>
-            <div class="submit"><input type="submit" value="Speichern"/></div>
-        </form>
+                        <option value="<%=allKategories.getString(1)%>"><%=allKategories.getString(1)%>
+                        </option>
+                        <%
+                            }
+                        %>
+                    </select>
+                    </td>
+                </tr>
 
+                <tr>
+                    <td><label>Bild hochladen</label></td>
+                    <td><label>
+                        <div>Datei auswählen</div>
+                        <input type="file" name="file"/></label></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="submit"><input type="submit" value="Speichern"/></div>
+                    </td>
+                </tr>
+            </form>
+        </table>
     </div>
 
 </div>

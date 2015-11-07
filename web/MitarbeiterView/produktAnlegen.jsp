@@ -38,8 +38,9 @@ No Cookie found with the name
     </div>
 
     <div id="rightdiv">
-        <table border="0" style="margin-left: 15%">
-            <form method="post" enctype="multipart/form-data" action="../addProduktServlet">
+        <br><br>
+        <table border="0" style="margin-left: 38%">
+            <form id="form" method="post" enctype="multipart/form-data" action="../addProduktServlet">
                 <tr>
                     <th><h2>Produkt anlegen</h2></th>
                 </tr>
@@ -53,11 +54,11 @@ No Cookie found with the name
                 </tr>
                 <tr>
                     <td><label>Produktbeschreibung</label></td>
-                    <td><textarea class="medium" name="produktbeschreibung" cols="20" rows="5"></textarea></td>
+                    <td><textarea class="medium" name="produktbeschreibung" cols="40" rows="5"></textarea></td>
                 </tr>
                 <tr>
                     <td><label>Technische Details</label></td>
-                    <td><textarea class="medium" name="details" cols="20" rows="5"></textarea></td>
+                    <td><textarea class="medium" name="details" cols="40" rows="5"></textarea></td>
                 </tr>
                 <tr>
                     <td><label>Kategorie</label></td>
