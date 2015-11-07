@@ -68,14 +68,14 @@ No Cookie found with the name
 
                     <td>Produkte </td>
                     <td>
-                        <div class="scroll" style="max-width:100%">
+                        <div class="scroll">
                             <%
                                 while (rs.next()) {
                                     id = rs.getInt("prod_id");
                                     bezeichnung = rs.getString("prod_bezeichn");
                                     hersteller = rs.getString("prod_hersteller");
                             %>
-                            <input type="checkbox" name="produkte" value=<%=id %>/><%=hersteller %> <%=bezeichnung %><br/>
+                            <input type="checkbox" name="produkte" value="<%=id %>"/><%=hersteller %> <%=bezeichnung %><br/>
                             <%
                                 }
                             %></div>
@@ -88,8 +88,7 @@ No Cookie found with the name
                     }
                 %>
                 <td>
-                <td><input type="submit" name="submit" value="pruefen"/><input type="submit" name="submit"
-                                                                               value="Buchen"/></td>
+                <td><input type="submit" name="submit" value="pruefen"/><input type="submit" name="submit" value="Buchen"/></td>
                 </tr>
             </form>
         </table>
