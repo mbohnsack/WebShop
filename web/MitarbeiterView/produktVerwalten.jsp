@@ -18,7 +18,7 @@
 %>
 <html lang="de">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="style.css" />
   <link rel="stylesheet" type="text/css" href="metro.css" />
 </head>
@@ -49,11 +49,11 @@ else {
             <td>ProduktID</td>
             <td>Kategorie</td>
             <td>Hersteller</td>
-            <td>Preis</td>
+            <td>Mietzins in &euro;/24h</td>
             <td>Beschreibung</td>
-            <td>Details</td>
+            <td>Technische Details</td>
             <td>Produktname</td>
-            <td>Beschreibung</td>
+            <td>Informelle Beschreibung</td>
             <td>Anzahl der Buchungen</td>
             <td></td>
           </tr>
