@@ -45,7 +45,7 @@ else {
     <div class="scrollVerwaltenTabelle">
       <h2>Pakete Verwalten</h2>
       <table class="tableRightdiv">
-        <tr>
+        <tr class="underline">
 
           <th>ProduktID</th>
           <th>Kategorie</th>
@@ -56,7 +56,7 @@ else {
           <th>Produktname</th>
           <th>Beschreibung</th>
           <th>Anzahl der Buchungen</th>
-          <th></th>
+          <td></td>
         </tr>
         <%
           DatabaseHelper db = new DatabaseHelper();

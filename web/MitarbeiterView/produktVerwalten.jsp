@@ -45,7 +45,7 @@ else {
     <div class="scrollVerwaltenTabelle">
         <h2>Produkte Verwalten</h2>
         <table class="tableRightdiv">
-          <tr>
+          <tr class="underline">
 
             <th>ProduktID</th>
             <th>Kategorie</th>

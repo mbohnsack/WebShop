@@ -43,11 +43,11 @@ else {
     <div class="scrollVerwaltenTabelle">
       <h2>Kategorien Verwalten</h2>
       <table class="tableRightdiv">
-        <tr>
+        <tr class="underline">
           <th>Kategorie Name</th>
           <th>Übergeordnete Kategorie</th>
           <th>Bild</th>
-          <th></th>
+          <td></td>
         </tr>
         <%
           DatabaseHelper db = new DatabaseHelper();

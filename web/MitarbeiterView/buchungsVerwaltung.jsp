@@ -43,13 +43,13 @@ else {
     <div class="scrollVerwaltenTabelle">
       <h2>Buchung verwalten</h2>
       <table class="tableRightdiv">
-        <tr>
+        <tr class="underline">
           <th>Kunden ID </th>
           <th>Abholungsdatum</th>
           <th>Rückgabedatum</th>
           <th>Buchungs ID</th>
           <th>Status</th>
-          <th></th>
+          <td></td>
         </tr>
         <%
           DatabaseHelper db = new DatabaseHelper();

@@ -47,12 +47,12 @@ else {
     <div class="scrollVerwaltenTabelle">
       <h2>Mitarbeiter Verwalten</h2>
       <table class="tableRightdiv">
-        <tr>
+        <tr class="underline">
 
           <th>Mitarbeiter Username</th>
           <th>Rolle</th>
           <th></th>
-          <th></th>
+          <td></td>
         </tr>
         <%
           DatabaseHelper db = new DatabaseHelper();
