@@ -371,6 +371,14 @@ public class DatabaseHelper{
         }
     }
 
+    public void deleteProduct(Integer id){
+        try {
+            stmt.executeUpdate("DELETE FROM tbl_produkt WHERE prod_id = "+ id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void addKategorie(String name, String uebergeordnet, File bild){
         try {
             ResultSet rs = stmt.executeQuery("SELECT kat_name FROM tbl_kategorie WHERE kat_name = '"+ name +"'");
