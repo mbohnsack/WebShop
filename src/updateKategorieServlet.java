@@ -79,7 +79,7 @@ public class updateKategorieServlet extends HttpServlet {
                 }
 
             }
-            db.updateKategorie(kategorieName, ueberKategorie, storeFile);
+            /*db.updateKategorie(kategorieName, ueberKategorie, storeFile);*/
 
         }
         String url = "/MitarbeiterView/kategorieVerwalten.jsp";
