@@ -1,4 +1,3 @@
-
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="project.DatabaseHelper" %>
 <%@ page import="project.loginCookie" %>
@@ -39,30 +38,29 @@ else {
   </div>
 
   <div id="rightdiv">
-    <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post" enctype="multipart/form-data" action="../addProduktServlet"><div >
+    <form   method="post"  action="../addProduktServlet"><div >
       <h2>Produkt anlegen</h2></div>
       <div ><label >Produkt Name</label><input  type="text" name="produktname" /></div>
       <div ><label >Produkt Name2</label><input  type="text" name="produktname2" /></div>
       <div ><label >Produktbeschreibung</label><textarea class="medium" name="produktbeschreibung" cols="20" rows="5" ></textarea></div>
       <div ><label >Technische Daten</label><textarea class="medium" name="details" cols="20" rows="5" ></textarea></div>
       <div ><label >Kategorie</label><div ><select name="kategorie" >
-          <%
-              DatabaseHelper db2 = new DatabaseHelper();
-              ResultSet allKategories = db2.getAllKategories();
-
-              while (allKategories.next()){
-                %>
-                   <option value="<%=allKategories.getString(1)%>"><%=allKategories.getString(1)%></option>
-                <%
-              }
-          %>
+        <%
+          DatabaseHelper db2 = new DatabaseHelper();
+          ResultSet allKategories = db2.getAllKategories();
+          while (allKategories.next()){
+        %>
+        <option value="<%=allKategories.getString(1)%>"><%=allKategories.getString(1)%></option>
+        <%
+          }
+        %>
       </select>
       </div>
-      <div ><label >Hersteller</label><input  type="text" name="hersteller" /></div>
-      <div ><label >Preis</label><input  type="text" name="preis" /></div>
-      <div ><label >Bild hochladen</label><label><div >Datei auswählen</div><input type="file"  name="file" /></label></div>
-      <div class="submit"><input type="submit" value="Speichern"/></div>
-    </div>
+        <div ><label >Hersteller</label><input  type="text" name="hersteller" /></div>
+        <div ><label >Preis</label><input  type="text" name="preis" /></div>
+        <div ><label >Bild hochladen</label><label><div >Datei auswählen</div><input type="file"  name="file" /></label></div>
+        <div class="submit"><input type="submit" value="Speichern"/></div>
+      </div>
     </form>
 
   </div>

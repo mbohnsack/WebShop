@@ -11,13 +11,13 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-  loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
+    loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
 %>
 <html lang="de">
 <head>
 
-  <link rel="stylesheet" type="text/css" href="style.css" />
-  <link rel="stylesheet" type="text/css" href="metro.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="metro.css" />
 </head>
 <body>
 
@@ -30,45 +30,44 @@ else {
 %>
 
 <div id="seite">
-  <div id="kopfbereich">
-    <div align="center">VerwaltungsApp</div>
-  </div>
+    <div id="kopfbereich">
+        <div align="center">VerwaltungsApp</div>
+    </div>
 
-  <div id="steuerung">
-    <jsp:include page="default/navigation.jsp" />
-  </div>
+    <div id="steuerung">
+        <jsp:include page="default/navigation.jsp" />
+    </div>
 
-  <div id="rightdiv">
-    <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post" enctype="multipart/form-data" action="../addKategorieServlet"><div ><h2>Produkt anlegen</h2></div>
-        <div ><label >Kategorie Name</label><input  type="text" name="kategorieName" /></div>
-        <div ><label >Übergeordenete Kategorie</label><div ><select name="ueberKategorie" >
-          <%
-            DatabaseHelper db2 = new DatabaseHelper();
-            ResultSet allKategories = db2.getAllKategories();
+    <div id="rightdiv">
+        <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post" enctype="multipart/form-data" action="../addKategorieServlet"><div ><h2>Produkt anlegen</h2></div>
+            <div ><label >Kategorie Name</label><input  type="text" name="kategorieName" /></div>
+            <div ><label >Übergeordenete Kategorie</label><div ><select name="ueberKategorie" >
+                <%
+                    DatabaseHelper db2 = new DatabaseHelper();
+                    ResultSet allKategories = db2.getAllKategories();
+                %>
+                <option value=""></option>
+                <%
+                    while (allKategories.next()){
+                %>
 
-            %>
-          <option value=""></option>
-          <%
-            while (allKategories.next()){
-          %>
+                <option value="<%=allKategories.getString(1)%>"><%=allKategories.getString(1)%></option>
+                <%
+                    }
+                %>
+            </select>
+            </div>
+            </div>
+            <div ><label >Bild hochladen</label><label><div >Datei auswählen</div><input type="file"  name="file" /><div>No file selected</div></label></div>
+            <div class="submit"><input type="submit" value="Speichern"/></div>
+        </form>
 
-          <option value="<%=allKategories.getString(1)%>"><%=allKategories.getString(1)%></option>
-          <%
-            }
-          %>
-        </select>
-        </div>
-        </div>
-        <div ><label >Bild hochladen</label><label><div >Datei auswählen</div><input type="file"  name="file" /><div>No file selected</div></label></div>
-        <div class="submit"><input type="submit" value="Speichern"/></div>
-    </form>
-
-  </div>
+    </div>
 
 </div>
 <%
-    db2.disconnectDatabase();
-  }
+        db2.disconnectDatabase();
+    }
 %>
 </body>
 </html>
