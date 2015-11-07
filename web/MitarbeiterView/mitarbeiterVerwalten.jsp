@@ -45,7 +45,8 @@ else {
 
   <div id="rightdiv">
     <div>
-      <table border="1" class="tableRightdiv">
+      <h2>Mitarbeiter Verwalten</h2>
+      <table class="tableRightdiv">
         <tr>
 
           <td>Mitarbeiter Username</td>

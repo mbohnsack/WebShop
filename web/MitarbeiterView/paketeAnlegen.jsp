@@ -41,7 +41,7 @@ No Cookie found with the name
     <div class="rightdiv">
         <br><br>
         <table border="0" style="margin-left: 18%">
-            <tr id="form" method="post" action="../addPaketServlet">
+            <form id="form" method="post" action="../addPaketServlet">
             <tr>
                 <th><h2>Paket anlegen</h2></th>
             </tr>
@@ -129,7 +129,7 @@ No Cookie found with the name
             %>
             <tr>
                 <td>
-                    <input class="submit" type="submit" name="anlegen" value="Anlegen"/>
+                    <div class="submit"><input  type="submit" value="Anlegen"/></div>
 
             </td></tr>
             </form>

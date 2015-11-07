@@ -41,7 +41,8 @@ else {
 
   <div id="rightdiv">
     <div>
-      <table border="1" class="tableRightdiv">
+      <h2>Kategorien Verwalten</h2>
+      <table class="tableRightdiv">
         <tr>
           <td>Kategorie Name</td>
           <td>Übergeordnete Kategorie</td>

@@ -50,7 +50,8 @@ else {
       ResultSet paket = db.getProductsById(paketID);
       paket.next();
     %>
-    <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post" action="../updatePaketServlet"><div ><h2>Produkt aendern</h2></div>
+    <form id="form" method="post" action="../updatePaketServlet"><div >
+      <h2>Paket aendern</h2></div>
       <div ><label >Produkt Name</label><input  type="text" name="paketname" value="<%=paket.getString(7)%>"/></div>
       <div ><label >Produkt Name2</label><input  type="text" name="paketname2" value="<%=paket.getString(8)%>" /></div>
       <div ><label >Produktbeschreibung</label><textarea class="medium" name="paketbeschreibung" cols="20" rows="5"  ><%=paket.getString(5)%></textarea></div>
