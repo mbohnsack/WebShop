@@ -80,7 +80,20 @@ tr.underline td{
     max-height:90%;
     min-height:20%;
 }
+#login{
+    background-color: white;
+    border:1px solid black;
+    margin:20% auto;
+    max-width:40%;
+    min-width:20%;
 
+}
+#login label{
+    font-size: 140%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+
+}
 
 h2{
     text-align: center;
