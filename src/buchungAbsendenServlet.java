@@ -1,6 +1,6 @@
-import de.jollyday.Holiday;
+/*import de.jollyday.Holiday;
 import de.jollyday.HolidayCalendar;
-import de.jollyday.HolidayManager;
+import de.jollyday.HolidayManager;*/
 import project.DatabaseHelper;
 import project.cart;
 import project.loginCookie;
@@ -146,7 +146,7 @@ public class buchungAbsendenServlet
                 eingabeFehler = true;
                 message = "Das Abgabedatum liegt vor dem Abholdatum!";
             }
-
+/*
             // Prüft ob ein Datum auf einen Feirtag fällt
             HolidayManager manager = HolidayManager.getInstance(HolidayCalendar.GERMANY);
             if (!eingabeFehler) {
@@ -166,7 +166,7 @@ public class buchungAbsendenServlet
                     eingabeFehler = true;
                     message = "Das Abgabedatum liegt an einem Feiertag.";
                 }
-            }
+            }*/
 
             if (!eingabeFehler) {
                 //Produktliste ausm cart holen
