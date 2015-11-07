@@ -26,7 +26,25 @@ body {
 }
 .tableRightdiv{
     font-size: 80%;
+    table-layout: auto;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    border-collapse: collapse;
+    min-width: 60%;
 }
+
+th{
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+}
+
+tr.underline td{
+    border-right: 1px solid black;
+    border-bottom: 1px solid rgba(38,90,37, 0.5);
+    border-spacing:40px;
+}
+
 
 #steuerung {
     background-color: gray;
@@ -53,5 +71,16 @@ body {
     max-width:60%;
     min-width:20%;
 }
+.scrollVerwaltenTabelle{
+    overflow: scroll;
+    height: 90%;
+    width: 75%;
+    max-height:90%;
+    min-height:30%;
+}
 
+
+h2{
+    text-align: center;
+}
 -->

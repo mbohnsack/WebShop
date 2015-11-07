@@ -40,14 +40,14 @@ else {
   </div>
 
   <div id="rightdiv">
-    <div>
+    <div class="scrollVerwaltenTabelle">
       <h2>Kategorien Verwalten</h2>
       <table class="tableRightdiv">
         <tr>
-          <td>Kategorie Name</td>
-          <td>Übergeordnete Kategorie</td>
-          <td>Bild</td>
-          <td></td>
+          <th>Kategorie Name</th>
+          <th>Übergeordnete Kategorie</th>
+          <th>Bild</th>
+          <th></th>
         </tr>
         <%
           DatabaseHelper db = new DatabaseHelper();
@@ -59,14 +59,14 @@ else {
 
             while (allKategories.next()){
         %>
-        <tr>
+        <tr class="underline">
             <%
                   for (int i = 1; i <= columnCount ; i++){
                     %>
           <td><%=allKategories.getString(i)%></td>
             <%}%>
-          <td><form method="post" action="kategorieAendern.jsp"><button name="aendern" type="submit" value="<%=allKategories.getString(1)%>">Ändern</button></form>	</td>
-        <tr>
+          <td><form method="post" action="kategorieAendern.jsp"><br/><button  name="aendern" type="submit" value="<%=allKategories.getString(1)%>">Ändern</button></form>	</td>
+        <tr class="csstd">
             <%
 
               }

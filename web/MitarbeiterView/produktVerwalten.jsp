@@ -42,21 +42,21 @@ else {
   </div>
 
   <div id="rightdiv">
-    <div>
+    <div class="scrollVerwaltenTabelle">
         <h2>Produkte Verwalten</h2>
         <table class="tableRightdiv">
           <tr>
 
-            <td>ProduktID</td>
-            <td>Kategorie</td>
-            <td>Hersteller</td>
-            <td>Mietzins in &euro;/24h</td>
-            <td>Beschreibung</td>
-            <td>Technische Details</td>
-            <td>Produktname</td>
-            <td>Informelle Beschreibung</td>
-            <td>Anzahl der Buchungen</td>
-            <td></td>
+            <th>ProduktID</th>
+            <th>Kategorie</th>
+            <th>Hersteller</th>
+            <th>Mietzins in &euro;/24h</th>
+            <th>Beschreibung</th>
+            <th>Technische Details</th>
+            <th>Produktname</th>
+            <th>Informelle Beschreibung</th>
+            <th>Anzahl der Buchungen</th>
+            <th></th>
           </tr>
           <%
             DatabaseHelper db = new DatabaseHelper();
@@ -67,13 +67,13 @@ else {
 
                 while (allProducts.next()){
           %>
-            <tr>
+            <tr class="underline">
                 <%
                   for (int i = 1; i <= columnCount ; i++){
                     %>
                 <td><%=allProducts.getString(i)%></td>
             <%}%>
-            <td><form method="post" action="produktAendern.jsp"><button name="aendern" type="submit" value="<%=allProducts.getString(1)%>">Ändern</button></form>
+            <td><form method="post" action="produktAendern.jsp"><br/><button name="aendern" type="submit" value="<%=allProducts.getString(1)%>">Ändern</button></form>
                   <form method="post" action="../deleteProduktServlet"><button name="loeschen" type="submit" value="<%=allProducts.getString(1)%>">Löschen</button></form>
             </td>
           <tr>

@@ -44,15 +44,15 @@ else {
   </div>
 
   <div id="rightdiv">
-    <div>
+    <div class="scrollVerwaltenTabelle">
       <h2>Mitarbeiter Verwalten</h2>
       <table class="tableRightdiv">
         <tr>
 
-          <td>Mitarbeiter Username</td>
-          <td>Rolle</td>
-          <td></td>
-          <td></td>
+          <th>Mitarbeiter Username</th>
+          <th>Rolle</th>
+          <th></th>
+          <th></th>
         </tr>
         <%
           DatabaseHelper db = new DatabaseHelper();
@@ -60,11 +60,11 @@ else {
             ResultSet allMitarbeiter = db.getAllMitarbeiter();
             while (allMitarbeiter.next()){
         %>
-        <tr>
+        <tr class="underline">
           <td><%=allMitarbeiter.getString(2)%></td>
           <td><%=allMitarbeiter.getString(1)%></td>
-          <td><form method="post" action="mitarbeiterAendern.jsp"><button name="aendern" type="submit" value="<%=allMitarbeiter.getString(2)%>">Ändern</button></form>	</td>
-          <td><form method="post" action="../deleteMitarbeiterServelt"><button name="loeschen" type="submit" value="<%=allMitarbeiter.getString(2)%>">Löschen</button></form>	</td>
+          <td><form method="post" action="mitarbeiterAendern.jsp"><br/><button name="aendern" type="submit" value="<%=allMitarbeiter.getString(2)%>">Ändern</button></form>	</td>
+          <td><form method="post" action="../deleteMitarbeiterServelt"><br/><button name="loeschen" type="submit" value="<%=allMitarbeiter.getString(2)%>">Löschen</button></form>	</td>
         <tr>
             <%
 

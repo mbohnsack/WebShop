@@ -40,15 +40,16 @@ else {
   </div>
 
   <div id="rightdiv">
-    <div>
-      <table border="1" class="tableRightdiv">
+    <div class="scrollVerwaltenTabelle">
+      <h2>Buchung verwalten</h2>
+      <table class="tableRightdiv">
         <tr>
-          <td>Kunden ID </td>
-          <td>Abholungsdatum</td>
-          <td>Rückgabedatum</td>
-          <td>Buchungs ID</td>
-          <td>Status</td>
-          <td></td>
+          <th>Kunden ID </th>
+          <th>Abholungsdatum</th>
+          <th>Rückgabedatum</th>
+          <th>Buchungs ID</th>
+          <th>Status</th>
+          <th></th>
         </tr>
         <%
           DatabaseHelper db = new DatabaseHelper();
@@ -60,20 +61,20 @@ else {
 
             while (austehendeBuchungen.next()){
         %>
-        <tr>
+        <tr class="underline">
             <%
                   for (int i = 1; i <= columnCount ; i++){
                     %>
           <td><%=austehendeBuchungen.getString(i)%></td>
             <%}%>
-          <td>
+          <td class="underline">
             <form method="post" action="../updateBuchungStatusServlet">
               <input type="hidden" name="buchungsID" value="<%=austehendeBuchungen.getString(4)%>">
-              <button name="aendern" type="submit" value="angenommen">Annehmen</button>
+              <br/><button name="aendern" type="submit" value="angenommen">Annehmen</button>
               <button name="aendern" type="submit" value="abgelehnt">Ablehnen</button>
             </form>
           </td>
-        <tr>
+        <tr class="underline">
             <%
 
               }

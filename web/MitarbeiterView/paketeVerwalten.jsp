@@ -42,21 +42,21 @@ else {
   </div>
 
   <div id="rightdiv">
-    <div>
+    <div class="scrollVerwaltenTabelle">
       <h2>Pakete Verwalten</h2>
       <table class="tableRightdiv">
         <tr>
 
-          <td>ProduktID</td>
-          <td>Kategorie</td>
-          <td>Hersteller</td>
-          <td>Preis</td>
-          <td>Beschreibung</td>
-          <td>Details</td>
-          <td>Produktname</td>
-          <td>Beschreibung</td>
-          <td>Anzahl der Buchungen</td>
-          <td></td>
+          <th>ProduktID</th>
+          <th>Kategorie</th>
+          <th>Hersteller</th>
+          <th>Preis</th>
+          <th>Beschreibung</th>
+          <th>Details</th>
+          <th>Produktname</th>
+          <th>Beschreibung</th>
+          <th>Anzahl der Buchungen</th>
+          <th></th>
         </tr>
         <%
           DatabaseHelper db = new DatabaseHelper();
@@ -67,14 +67,14 @@ else {
 
             while (allPakete.next()){
         %>
-        <tr>
+        <tr class="underline">
             <%
                   for (int i = 1; i <= columnCount ; i++){
                     %>
           <td><%=allPakete.getString(i)%></td>
             <%}%>
-          <td><form method="post" action="paketeAendern.jsp"><button name="aendern" type="submit" value="<%=allPakete.getString(1)%>">Ändern</button></form>	</td>
-        <tr>
+          <td><form method="post" action="paketeAendern.jsp"><br/><button name="aendern" type="submit" value="<%=allPakete.getString(1)%>">Ändern</button></form>	</td>
+        <tr class="underline">
             <%
 
               }
