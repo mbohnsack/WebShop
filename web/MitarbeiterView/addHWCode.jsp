@@ -40,7 +40,7 @@ else {
 
   <div id="rightdiv">
    <div>
-     <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post" action="../addHWCodetServlet">
+     <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post" action="../addHWCodeServlet">
        <select name="produkt" >
          <%
            DatabaseHelper db2 = new DatabaseHelper();

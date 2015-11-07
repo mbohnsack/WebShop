@@ -10,6 +10,7 @@
 <ul class="menu">
     <li><a href="index.jsp" id="startseite" class="nav1">Startseite</a></li>
     <li><a href="produkte.jsp" id="produkte" class="nav2">Produkte</a></li>
+    <li><a href="pakete.jsp" id="pakete" class="nav2">Pakete</a></li>
     <li><a href="contact.jsp" id="kontakt" class="nav3">Kontakt</a></li>
     <li><a href="buchungenKunde.jsp" id="buchungen" class="nav3">Buchungen</a></li>
 
