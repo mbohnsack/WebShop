@@ -831,6 +831,15 @@ public class DatabaseHelper{
         }
     }
 
+    public void deletePaketKomponenten(Integer id){
+        try {
+            stmt.executeUpdate("DELETE FROM tbl_paketinhalte WHERE inhalt_id = "+ id);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
     public ResultSet getProdukteOfPaket(Integer paketid){
         ResultSet rs = null;
 
