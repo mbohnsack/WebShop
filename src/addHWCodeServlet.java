@@ -19,6 +19,9 @@ public class addHWCodeServlet extends HttpServlet {
         int produktid=Integer.parseInt(produkt);
         DatabaseHelper db=new DatabaseHelper();
         db.addHWCode(produktid,hwcode);
+
+        String url = "/MitarbeiterView/produktVerwalten.jsp";
+        response.sendRedirect(url);
         db.disconnectDatabase();
     }
 }

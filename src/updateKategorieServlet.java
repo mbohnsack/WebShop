@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -79,7 +80,11 @@ public class updateKategorieServlet extends HttpServlet {
                 }
 
             }
-            db.updateKategorie(kategorieName, ueberKategorie, storeFile);
+            try {
+                db.updateKategorie(kategorieName, ueberKategorie, storeFile);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
         }
         String url = "/MitarbeiterView/kategorieVerwalten.jsp";
