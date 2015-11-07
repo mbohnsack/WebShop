@@ -15,8 +15,14 @@ body {
     font-size:45px;
 }
 
-#rightdiv {
+.rightdiv {
     margin-left: 25%;
+}
+
+#form{
+   margin:0 auto;
+   max-width:60%;
+   min-width:20%;
 }
 .tableRightdiv{
     font-size: 80%;
@@ -42,5 +48,9 @@ body {
 }
 .scroll{
     overflow: scroll;
+    height: 50%;
+    width: 100%;
+    max-width:60%;
+    min-width:20%;
 }
 -->

@@ -38,32 +38,25 @@ else {
     <jsp:include page="default/navigation.jsp" />
   </div>
 
-  <div id="rightdiv">
+  <div class="rightdiv">
     <div>
-      <form  style="margin:0 auto;max-width:60%;min-width:20%"  method="post" action="../addPaketServlet">
+      <form id="form" method="post" action="../addPaketServlet">
         <div ><label >Paketname</label><input  type="text" name="paketname" /></div>
         <div ><label >Paketname 2</label><input  type="text" name="paketname2" /></div>
         <div ><label >Paketbeschreibung</label><textarea class="medium" name="paketbeschreibung" cols="20" rows="5" ></textarea></div>
         <div ><label >Technische Daten</label><textarea class="medium" name="details" cols="20" rows="5" ></textarea></div>
         <div ><label >Kategorie</label>
           <select name="kategorie" >
-          <%
-            DatabaseHelper db2 = new DatabaseHelper();
-            ResultSet allKategories = db2.getAllKategories();
 
-            while (allKategories.next()){
-          %>
-          <option value="<%=allKategories.getString(1)%>"><%=allKategories.getString(1)%></option>
-          <%
-            }
-            db2.disconnectDatabase();
-          %>
+          <option value="Paket">Paket</option>
+
         </select>
         </div>
           <div ><label >Hersteller</label><input  type="text" name="hersteller" value="Paket" readonly/></div>
           <div ><label >Preis</label><input  type="text" name="preis" /></div>
 
         <label >Produkte</label>
+        <div class="scroll">
           <table border="1">
             <tr>
               <td>Produktname</td>
@@ -98,6 +91,7 @@ else {
                   }
                 %>
           </table>
+          </div>
         <%
           }
           catch(Exception e){}

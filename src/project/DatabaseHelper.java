@@ -833,7 +833,7 @@ public class DatabaseHelper{
 
     public void deletePaketKomponenten(Integer id){
         try {
-            stmt.executeUpdate("DELETE FROM tbl_paketinhalte WHERE inhalt_id = "+ id);
+            stmt.executeUpdate("DELETE FROM tbl_paketinhalte WHERE pak_id = "+ id);
         }catch(Exception e){
             e.printStackTrace();
         }

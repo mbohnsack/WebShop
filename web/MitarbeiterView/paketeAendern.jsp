@@ -12,7 +12,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
   loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
-  int inthalt_id = 0;
+  int inhaltid = 0;
 
 %>
 <html lang="de">
@@ -49,12 +49,11 @@ else {
       DatabaseHelper db = new DatabaseHelper();
       ResultSet paket = db.getProductsById(paketID);
       paket.next();
-      System.out.println(paket.getString(1));
     %>
     <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post" action="../updatePaketServlet"><div ><h2>Produkt aendern</h2></div>
-      <div ><label >Produkt Name</label><input  type="text" name="produktname" value="<%=paket.getString(7)%>"/></div>
-      <div ><label >Produkt Name2</label><input  type="text" name="produktname2" value="<%=paket.getString(8)%>" /></div>
-      <div ><label >Produktbeschreibung</label><textarea class="medium" name="produktbeschreibung" cols="20" rows="5"  ><%=paket.getString(5)%></textarea></div>
+      <div ><label >Produkt Name</label><input  type="text" name="paketname" value="<%=paket.getString(7)%>"/></div>
+      <div ><label >Produkt Name2</label><input  type="text" name="paketname2" value="<%=paket.getString(8)%>" /></div>
+      <div ><label >Produktbeschreibung</label><textarea class="medium" name="paketbeschreibung" cols="20" rows="5"  ><%=paket.getString(5)%></textarea></div>
       <div ><label >Technische Daten</label><textarea class="medium" name="details" cols="20" rows="5" ><%=paket.getString(6)%></textarea></div>
 
       <div ><label >Kategorie</label><select  name="kategorie">
@@ -94,7 +93,7 @@ else {
                 while(rsPaketProdukte.next())
                 {
                   int idPaketPordukt= rsPaketProdukte.getInt(4);
-                  inthalt_id = rsPaketProdukte.getInt(5);
+                  inhaltid = rsPaketProdukte.getInt(5);
 
                   int prio = rsPaketProdukte.getInt(3);
 
@@ -146,7 +145,7 @@ else {
       %>
 
       <div class="submit"><button type="submit" name=paketid value="<%=paketID%>">Ändern</button></div>
-      <input type="hidden" name="inhaltid" value="<%=inthalt_id%>"/>
+      <input type="hidden" name="inhaltid" value="<%=inhaltid%>"/>
     </form>
 
   </div>

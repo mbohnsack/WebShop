@@ -23,6 +23,7 @@ public class updatePaketServlet extends HttpServlet {
 
         int paketid =  Integer.parseInt(request.getParameter("paketid"));
         int inhaltid =  Integer.parseInt(request.getParameter("inhaltid"));
+        System.out.println(inhaltid +"inhaltID" );
         String paketname =  request.getParameter("paketname");
         String paketname2 = request.getParameter("paketname2");
         String paketbeschreibung = request.getParameter("paketbeschreibung");
@@ -56,7 +57,7 @@ public class updatePaketServlet extends HttpServlet {
             //Paketinhalte in die Pakettabelle schreiben
             int  anzahlProdukte = produkte.length;
             for(int counterP =0;counterP<anzahlProdukte;counterP++){
-                db.deletePaketKomponenten(inhaltid);
+                db.deletePaketKomponenten(paketid);
                 db.addPaket(paketid,kategorie,prioList.get(counterP),Integer.parseInt( produkte[counterP].substring(0, produkte[counterP].length() - 1)));
 
 
