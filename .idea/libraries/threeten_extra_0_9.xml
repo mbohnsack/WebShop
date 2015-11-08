@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="threeten-extra-0.9">
     <CLASSES>
-      <root url="jar://$USER_HOME$/Desktop/threeten-extra-0.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/threeten-extra-0.9.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

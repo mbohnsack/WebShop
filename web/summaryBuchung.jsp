@@ -5,6 +5,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="project.loginCookie" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Date" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -92,29 +93,75 @@
               </tr>
               <%
                 }
+
+                // gesamtpreis parameter aus vorhergehender formularstruktur
+                double mietzinsTag = gesamtpreis;
+
+                // 40% Rabatt nach dauer berechnen
+                Date abholdatum = (Date) request.getAttribute("abholdatum");
+                Date abgabedatum = (Date) request.getAttribute("abgabedatum");
+
+                long startTime = abholdatum.getTime();
+                long endTime = abgabedatum.getTime();
+                long diffTime = endTime - startTime;
+                long diffDays = diffTime / (1000 * 60 * 60 * 24);
+
+                // tage * mietzins -> preis ohne rabatt
+                double summeOhneRabatt = diffDays * mietzinsTag;
+                double rabattVierzig = 0;
+
+                //ab dem zweiten tag gibts 40% rabatt
+                double summeVierzig = summeOhneRabatt;
+                if (diffDays > 1){
+                  summeVierzig = (mietzinsTag * (diffDays - 1)) *0.6 + mietzinsTag;
+                  rabattVierzig = summeOhneRabatt - summeVierzig;
+                }
+
+                double endsumme =  summeOhneRabatt - rabattVierzig;
+                double summeZwanzig = 0;
+
+                // 20% Rabatt nach anzahl kundenbestellungen berechnen
+                String nutzerName = (String) request.getAttribute("nutzerName");
+                String userName = (String) request.getAttribute("userName");
+                Integer buchungenKunde = db.getBuchungsZahlByLogin(nutzerName);
+                Integer buchungenKunde2 = db.getBuchungsZahlByLogin(userName);
+                System.out.println(buchungenKunde);
+                System.out.println(buchungenKunde2);
+                int anzahl = 0;
+                if (buchungenKunde >= buchungenKunde2){
+                  anzahl = buchungenKunde;
+                }else{
+                  anzahl = buchungenKunde2;
+                }
+
+                if(anzahl >= 3){
+                  summeZwanzig = endsumme * 0.2;
+                  endsumme = endsumme - summeZwanzig;
+                }
+
               %>
 
-              <tr><td align="left"><strong>Gesamtpreis</strong></td><td align="left"><strong><%= gesamtpreis%>&euro;</strong></td></tr>
-              <tr><td align="left">Rabatt</td><td align="left">nix&euro;</td></tr>
-              <tr><td align="left"><strong>Endsumme</strong></td><td align="left"><strong><%= gesamtpreis%>&euro;</strong></td> </tr>
+              <tr><td align="left"><strong>Mietzins/Tag</strong></td><td align="left"><strong><%= mietzinsTag%>&euro;</strong></td></tr>
+              <tr></tr>
+              <tr><td align="left">Mietdauer</td><td align="left"><%= diffDays%> Tage</td></tr>
+              <tr><td align="left">Summe ohne Rabatt</td><td align="left"><%= summeOhneRabatt%>&euro;</td></tr>
+              <tr><td align="left">- Rabatt 40% ab Tag 2</td><td align="left">- <%= rabattVierzig%>&euro;</td></tr>
+              <tr><td align="left">- 20% Treuebonus</td><td align="left">-<%= summeZwanzig%> &euro;</td></tr>
+              <tr><td align="left"><strong>Endsumme</strong></td><td align="left"><strong><%= endsumme%>&euro;</strong></td> </tr>
             </table>
             <%
               db.disconnectDatabase();
               shoppingCart.clearCart();
-              //TODO Rabatt
+
             %>
 
             <br/><br/>
-            <form name="facebook" method="post" action="">
+            <form name="facebook" method="post" action="postToFacebook.jsp">
               <button>Buchung auf Facebook publizieren</button>
             </form>
             <form name="shoppen" method="post" action="index.jsp">
               <button>weiter shoppen</button>
             </form>
-            <%
-              //TODO facebook
-            %>
-
 
           </div>
           <div class="bottom_prod_box_big"></div>

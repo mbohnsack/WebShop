@@ -82,17 +82,13 @@
                             }
                             %>
 
-                        <tr><td align="left"><strong>Gesamtpreis</strong></td>
+                        <tr><td align="left"><strong>Mietzins pro Tag</strong></td>
                             <td align="left"><strong><%= gesamtpreis%>&euro;</strong></td> </tr>
-                        <tr><td align="left">Rabatt</td>
-                                <td align="left">nix&euro;</td> </tr>
-                        <tr><td align="left"><strong>Endsumme</strong></td>
-                            <td align="left"><strong><%= gesamtpreis%>&euro;</strong></td> </tr>
+                        <tr><td align="left">Der gewährte Rabatt wird Ihnen auf der nächsten Seite angezeigt.</td>
+                                 </tr>
                         </table>
                             <%
                                 db.disconnectDatabase();
-                                //TODO Rabatt
-                                //TODO Buchungszeitraum !!! Feiertage
 
                             %>
 
