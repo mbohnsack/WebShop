@@ -76,7 +76,7 @@
                 <input type="hidden" name="produktID" value="<%= rs.getString(1) %>"/>
                 <input type="hidden" name="sourcepage" value="produkte.jsp"/>
                 <button name="addtocart" type="submit" value="add"><img src="images/cart.gif" alt="" border="0"
-                                                                        class="left_bt"/></button>
+                                                                        class="left_bt"/>Zum Warenkorb hinzufügen</button>
               </form>
 
              <!-- <a href="#" class="addtocart">add to cart</a> --></div>
