@@ -159,6 +159,7 @@ public class buchungAbsendenServlet
                 message = "Das Abgabedatum liegt vor dem Abholdatum!";
             }
 
+            /*
             // Prüft ob ein Datum auf einen Feirtag fällt
             HolidayManager manager = HolidayManager.getInstance(HolidayCalendar.GERMANY);
             if (!eingabeFehler) {
@@ -178,7 +179,7 @@ public class buchungAbsendenServlet
                     eingabeFehler = true;
                     message = "Das Abgabedatum liegt an einem Feiertag.";
                 }
-            }
+            }*/
 
             if (!eingabeFehler) {
                 //Produktliste ausm cart holen
