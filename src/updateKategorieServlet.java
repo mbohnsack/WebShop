@@ -28,6 +28,7 @@ public class updateKategorieServlet extends HttpServlet {
         String kategorieName = null;
         String ueberKategorie = null;
         File storeFile=null;
+        Boolean bild=false;
 
         DatabaseHelper db = new DatabaseHelper();
         if (ServletFileUpload.isMultipartContent(request)) {
@@ -61,7 +62,7 @@ public class updateKategorieServlet extends HttpServlet {
                     // saves the file on disk
                     try {
                         item.write(storeFile);
-
+                        bild=true;
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -81,7 +82,11 @@ public class updateKategorieServlet extends HttpServlet {
 
             }
             try {
-                db.updateKategorie(kategorieName, ueberKategorie, storeFile);
+                if(bild) {
+                    db.updateKategorie(kategorieName, ueberKategorie, storeFile);
+                }else{
+                    db.updateKategorie(kategorieName, ueberKategorie);
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }

@@ -29,6 +29,7 @@ public class addKategorieServlet extends HttpServlet {
         String kategorieName = null;
         String ueberKategorie = null;
         File storeFile=null;
+        Boolean bild=false;
 
         DatabaseHelper db = new DatabaseHelper();
         if (ServletFileUpload.isMultipartContent(request)) {
@@ -61,7 +62,7 @@ public class addKategorieServlet extends HttpServlet {
                     // saves the file on disk
                     try {
                         item.write(storeFile);
-
+                        bild=true;
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -81,7 +82,11 @@ public class addKategorieServlet extends HttpServlet {
 
             }
             try {
-                db.addKategorie(kategorieName, ueberKategorie,storeFile);
+                if(bild) {
+                    db.addKategorie(kategorieName, ueberKategorie, storeFile);
+                }else{
+                    db.addKategorie(kategorieName, ueberKategorie);
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }

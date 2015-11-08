@@ -5,6 +5,8 @@ package project; /**
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Properties;
 public class SendMailSSL {
@@ -130,8 +132,10 @@ public class SendMailSSL {
             modKunde=0.8;
         }
         for(Double preis:preise){
-            gesamtPreis+=Math.round((((preis+(tage-1.0)*preis*0.6))*modKunde)*100)/100.0d;
+            gesamtPreis+=((preis+(tage-1.0)*preis*0.6))*modKunde;
         }
+        DecimalFormat df=new DecimalFormat("#.00");
+        df.setRoundingMode(RoundingMode.CEILING);
         for(int i=0;i<produkte.size();i++){
             gebuchteProdukte+="\n"+produkte.get(i)+" ("+ preise.get(i)+"\u20ac pro Tag)";
         }
@@ -145,7 +149,7 @@ public class SendMailSSL {
             message.setText("Sehr geeherter Kunde,"
                     + "\n\n Ihre Bestellung wurde in unser System aufgenommen." +
                     "\n Folgende Produkte wurden bestellt:" + gebuchteProdukte +
-                    "\n Der Preis betr\u00e4gt: "+gesamtPreis+"\u20ac"+
+                    "\n Der Preis betr\u00e4gt: "+df.format(gesamtPreis)+"\u20ac"+
                     "\n Der Buchunszeitraum ist: "+dauer+
                     "\n Ein Mitarbeiter wird sich schnellstm\u00f6glich um Ihre Bestellung k\u00fcmmern.)" +
                     "\n Sie erhalten eine weitere Mail, sobald die Bestellung verbindlich angenommen wurde." +
