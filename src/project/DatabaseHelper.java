@@ -375,7 +375,7 @@ public class DatabaseHelper{
     public void deleteProduct(Integer id){
         try {
             stmt.executeUpdate("DELETE FROM tbl_bild WHERE prod_id ="+ id);
-            stmt.executeUpdate("DELETE FROM tbl_produkt WHERE prod_id = "+ id);
+            stmt.executeUpdate("DELETE FROM tbl_produkt WHERE prod_id = " + id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -397,9 +397,10 @@ public class DatabaseHelper{
     public void updateKategorie(String name, String uebergeordnet, File bild) throws IOException, SQLException {
 
         FileInputStream fis = new FileInputStream(bild);
-        PreparedStatement ps = c.prepareStatement("UPDATE tbl_kategorie SET (?, ?)) WHERE kat_name ='"+ name +"'");
+        PreparedStatement ps = c.prepareStatement("UPDATE tbl_kategorie SET kat_uebergeordnet = ?, kat_bild = ? WHERE kat_name = ?");
         ps.setString(1, uebergeordnet);
         ps.setBinaryStream(2, fis, bild.length());
+        ps.setString(3, name);
         ps.executeUpdate();
         ps.close();
         fis.close();
