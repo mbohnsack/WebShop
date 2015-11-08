@@ -46,7 +46,7 @@
               <div class="product_title_big"><%= rs.getString(8) %></div>
               <div class="product_description"><%= rs.getString(5) %><br><br>
                 Details: <span class="blue"><%= rs.getString(6) %></span><br /> </div><br>
-              <div class="specifications"> Verfügbarkeit(Anzahl): <span class="blue">Verfügbar (<%= rs.getString(9) %>)</span><br />
+              <div class="specifications"> Buchungen(Anzahl): <span class="blue"><%= rs.getString(9) %></span><br />
               </div>
               <div class="prod_price_big"><span class="price"><%= rs.getString(4) %>€</span></div>
               <form id="cart" action="addToCartServlet" method="post">
