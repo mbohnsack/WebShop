@@ -49,23 +49,52 @@ else {
       ResultSet paket = db.getProductsById(paketID);
       paket.next();
     %>
-    <form id="form" method="post" action="../updatePaketServlet"><div >
-      <h2>Paket aendern</h2></div>
-      <div ><label >Produkt Name</label><input  type="text" name="paketname" value="<%=paket.getString(7)%>"/></div>
-      <div ><label >Produkt Name2</label><input  type="text" name="paketname2" value="<%=paket.getString(8)%>" /></div>
-      <div ><label >Produktbeschreibung</label><textarea class="medium" name="paketbeschreibung" cols="20" rows="5"  ><%=paket.getString(5)%></textarea></div>
-      <div ><label >Technische Daten</label><textarea class="medium" name="details" cols="20" rows="5" ><%=paket.getString(6)%></textarea></div>
-
-      <div ><label >Kategorie</label><select  name="kategorie">
+    <br><br>
+    <table border="0" style="margin-left: 32%">
+    <form id="form" method="post" action="../updatePaketServlet">
+      <tr>
+        <th><h2>Paket ändern</h2></th>
+      </tr>
+      <tr>
+        <td><label >Paket Name</label></td>
+        <td><input  type="text" name="paketname" value="<%=paket.getString(7)%>"/></td>
+      </tr>
+      <tr>
+        <td><label >Informelle Bezeichnung</label></td>
+        <td><input  type="text" name="paketname2" value="<%=paket.getString(8)%>" /></td>
+      </tr>
+      <tr>
+        <td><label >Paketbeschreibung</label></td>
+        <td><textarea class="medium" name="paketbeschreibung" cols="40" rows="5"  ><%=paket.getString(5)%></textarea></td>
+      </tr>
+      <tr>
+        <td><label >Technische Daten</label></td>
+        <td><textarea class="medium" name="details" cols="40" rows="5" ><%=paket.getString(6)%></textarea></td>
+      </tr>
+      <tr>
+        <td><label >Kategorie</label></td>
+        <td><select  name="kategorie">
 
                 <option selected value="Paket">Paket</option>
 
-      </select>
-      </div>
-      <div ><label >Hersteller</label><input  type="text" name="hersteller" value="<%=paket.getString(3)%>" /></div>
-      <div ><label >Preis</label><input  type="text" name="preis" value="<%=paket.getString(4)%>"/></div>
-      <div ><label >Anzahl der Buchungen</label><input  type="text" name="anzahlMBuchungen" value="<%=paket.getString(9)%>" /></div>
-      <label >Produkte</label>
+      </select></td>
+        </tr>
+      <tr>
+        <td><label >Hersteller</label></td>
+        <td><input  type="text" name="hersteller" value="<%=paket.getString(3)%>" /></td>
+      </tr>
+      <tr>
+        <td><label >Mietzins in &euro;/24h</label></td>
+        <td><input  type="text" name="preis" value="<%=paket.getString(4)%>"/></td>
+      </tr>
+      <tr>
+        <td><label >Anzahl der Buchungen</label></td>
+        <td><input  type="text" name="anzahlMBuchungen" value="<%=paket.getString(9)%>" /></td>
+      </tr>
+      <tr>
+        <td><label >Produkte</label></td>
+        <td>
+          <div class="scroll" style="max-width:100%">
       <table border="1">
         <tr>
           <td>Produktname</td>
@@ -74,13 +103,15 @@ else {
         <%
           DatabaseHelper db3 = new project.DatabaseHelper();
           try{
-            ResultSet rs= db3.getAllProducts();
+            ResultSet rs= db3.getAllProductsSortedByName();
             int id;
             String bezeichnung;
+            String hersteller;
             while(rs.next())
             {
               id= rs.getInt("prod_id");
               bezeichnung=rs.getString("prod_bezeichn");
+              hersteller=rs.getString("prod_hersteller");
 
               boolean checked = false;
         %>
@@ -99,7 +130,7 @@ else {
 
                   if(idPaketPordukt==id){
             %>
-                      <input type="checkbox"  checked name="produkte" value="<%=id%>"/><%=bezeichnung %><br/>
+                      <input type="checkbox"  checked name="produkte" value="<%=id%>"/><%=hersteller %> <%=bezeichnung %><br/>
                       </td>
                       <td>
                         <select name="<%=id%>" value="<%=prio%>" >
@@ -116,7 +147,7 @@ else {
                   }
               if (checked==false){
             %>
-                        <input type="checkbox"  name="produkte" value=<%=id%>/><%=bezeichnung %><br/>
+                        <input type="checkbox"  name="produkte" value=<%=id%>/><%=hersteller %> <%=bezeichnung %><br/>
                       </td>
                       <td>
                         <select name="<%=id%>" >
@@ -134,7 +165,7 @@ else {
             %>
 
         </tr>
-      </table>
+      </table></div></td></tr>
       <%
 
 
@@ -143,11 +174,12 @@ else {
         }
 
       %>
-
+      <tr>
+        <td>
       <div class="submit"><button type="submit" name=paketid value="<%=paketID%>">Ändern</button></div>
-      <input type="hidden" name="inhaltid" value="<%=inhaltid%>"/>
+      <input type="hidden" name="inhaltid" value="<%=inhaltid%>"/></td></tr>
     </form>
-
+    </table>
   </div>
 
 </div>

@@ -25,7 +25,7 @@
         </form>
         <div class="product_img"><a href="details.jsp"><img style="width:92px; height: 92px" src="/produktBild?prodid=<%= request.getAttribute("id")%>&&number=1" alt=""
                                                             border="0"/></a></div>
-        <div class="prod_price"><span class="price"><%= request.getAttribute("preis") %> &euro;</span></div>
+        <div class="prod_price"><span class="price"><%= request.getAttribute("preis") %> &euro;/24h</span></div>
 
     </div>
     <div class="bottom_prod_box"></div>
