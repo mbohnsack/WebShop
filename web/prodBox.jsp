@@ -23,8 +23,8 @@
                 </div>
             </button>
         </form>
-        <div class="product_img"><a href="details.jsp"><img style="width:92px; height: 92px" src="/produktBild?prodid=<%= request.getAttribute("id")%>&&number=1" alt=""
-                                                            border="0"/></a></div>
+        <div class="product_img"><img style="width:92px; height: 92px" src="/produktBild?prodid=<%= request.getAttribute("id")%>&&number=1" alt=""
+                                                            border="0"/></div>
         <div class="prod_price"><span class="price"><%= request.getAttribute("preis") %> &euro;</span></div>
 
     </div>
@@ -35,7 +35,7 @@
             <input type="hidden" name="produktID" value="<%= request.getAttribute("id") %>"/>
             <input type="hidden" name="sourcepage" value="produkte.jsp"/>
             <button name="addtocart" type="submit" value="add"><img src="images/cart.gif" alt="" border="0"
-                                                                    class="left_bt"/></button>
+                                                                    class="left_bt"/>Zum Warenkorb hinzufügen</button>
         </form>
     </div>
 </div>

@@ -120,7 +120,7 @@ public class SendMailSSL {
         List<String> produkte=db.getGebuchteProdukte(buchung);
         List<Double> preise=db.getGebuchteProduktePreis(buchung);
         int anzahl=db.getBuchungsZahlByMail(mail);
-        int tage=db.getBuchungsdauerById(buchung);
+        double tage=db.getBuchungsdauerById(buchung);
         String dauer=db.getZeitraum(buchung);
         db.disconnectDatabase();
         String gebuchteProdukte="";
@@ -130,10 +130,10 @@ public class SendMailSSL {
             modKunde=0.8;
         }
         for(Double preis:preise){
-            gesamtPreis+=(preis+(tage-1*preis*0.6))*modKunde;
+            gesamtPreis+=Math.round((((preis+(tage-1.0)*preis*0.6))*modKunde)*100)/100.0d;
         }
         for(int i=0;i<produkte.size();i++){
-            gebuchteProdukte+="\n"+produkte.get(i)+" ("+ preise.get(i)+"\u20ac)";
+            gebuchteProdukte+="\n"+produkte.get(i)+" ("+ preise.get(i)+"\u20ac pro Tag)";
         }
         try {
 
@@ -192,7 +192,7 @@ public class SendMailSSL {
             message.setFrom(new InternetAddress("hipsterrentalcorp@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(mail));
-            message.setSubject("Bestellung erfasst");
+            message.setSubject("Bestellung "+status);
             message.setText("Sehr geeherter Kunde,"
                     + "\n\n Ihre Bestellung wurde " + status+"."+
                     "\n\n Mit freundlichen Gr\u00fc\u00dfen" +

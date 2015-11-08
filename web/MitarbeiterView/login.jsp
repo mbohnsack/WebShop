@@ -9,16 +9,32 @@
 
 <html lang="de">
 <head>
-  <title></title>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <title>Login</title>
 </head>
-<body>
-<form name="loginForm" method="post" action="../loginServlet">
-  Username: <input type="text" name="username"/> <br/>
-  Password: <input type="password" name="password"/> <br/>
-  <input type="submit" value="Login" />
-  <input type="hidden" name="targetpage" value="MitarbeiterView/main.jsp"/> <br/>
-  <input type="hidden" name="sourcepage" value="../MitarbeiterView/login.jsp"/> <br/>
+<body bgcolor="#a9a9a9">
+<div>
+  <div id="login" align="center">
+    <label>Mitarbeiter Verwaltungs Application </label><br/><br/><br/>
+    <form name="loginForm" method="post" action="../loginServlet">
+      <table align="center">
+        <tr>
+          <td>Username:</td>
+          <td><input type="text" name="username"/></td>
+        </tr>
+        <tr>
+          <td>Password:</td>
+          <td><input type="password" name="password"/></td>
+        </tr>
+        <tr>
+          <td align="right" colspan="2"> <input type="submit" value="Login" /></td>
+        </tr>
+      </table>
+      <input  type="hidden" name="targetpage" value="MitarbeiterView/main.jsp"/> <br/>
+      <input type="hidden" name="sourcepage" value="../MitarbeiterView/login.jsp"/> <br/>
 
-</form>
+    </form>
+  </div>
+</div>
 </body>
 </html>

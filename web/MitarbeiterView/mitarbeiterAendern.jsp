@@ -11,61 +11,76 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-  loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
+    loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
 %>
 <html lang="de">
 <head>
 
-  <link rel="stylesheet" type="text/css" href="style.css" />
-  <link rel="stylesheet" type="text/css" href="metro.css" />
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="stylesheet" type="text/css" href="metro.css"/>
 </head>
 <body>
 
-<%if (loginDaten == null) {
-%>
-No Cookie found with the name
 <%
-}
-else {
+    if (loginDaten == null) {
+        String url = "/MitarbeiterView/login.jsp";
+        response.sendRedirect(url);
+    } else {
 %>
 
 <div id="seite">
-  <div id="kopfbereich">
-    <div align="center">VerwaltungsApp</div>
-  </div>
+    <div id="kopfbereich">
+        <div align="center">VerwaltungsApp</div>
+    </div>
 
-  <div id="steuerung">
-    <jsp:include page="default/navigation.jsp" />
-  </div>
+    <div id="steuerung">
+        <jsp:include page="default/navigation.jsp"/>
+    </div>
 
-  <div id="rightdiv">
-    <%
+    <div id="rightdiv">
+        <%
 
-      String username = request.getParameter("aendern");
+            String username = request.getParameter("aendern");
 
 
-      DatabaseHelper db = new DatabaseHelper();
-      String mitarbeiterRolle = db.getMitarbeiterRolle(username);
+            DatabaseHelper db = new DatabaseHelper();
+            String mitarbeiterRolle = db.getMitarbeiterRolle(username);
 
-    %>
-    <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post" action="../updateMitarbeiterServlet"><div ><h2>Mitarbeitern ändern</h2></div>
-      <div ><label >Username</label><input readonly type="text" name="username" value="<%=username%>" /></div>
-      <div ><label >Rolle</label><select name="rolle" selected="<%=mitarbeiterRolle%>">
-        <option value="mitarbeiter">Mitarbeiter</option>
-        <option value="admin">Administrator</option>
+        %>
+        <br><br>
+        <table border="0" style="margin-left: 32%">
+            <form style="margin:0 auto;max-width:60%;min-width:20%" method="post" action="../updateMitarbeiterServlet">
+                <tr>
+                    <th><h2>Mitarbeiter ändern</h2></th>
+                </tr>
+                <tr>
+                    <td><label>Username</label></td>
+                    <td><input disabled type="text" name="username" value="<%=username%>"/></td>
+                </tr>
+                <tr>
+                    <td><label>Rolle</label></td>
+                    <td><select name="rolle" selected="<%=mitarbeiterRolle%>">
+                        <option value="mitarbeiter">Mitarbeiter</option>
+                        <option value="admin">Administrator</option>
 
-      </select>
-      </div>
-      <div class="submit"><button type="submit">Speichern</button></div>
+                    </select></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="submit">
+                            <button type="submit">Speichern</button>
+                        </div>
+                    </td>
+                </tr>
 
-    </form>
-
-  </div>
+            </form>
+        </table>
+    </div>
 
 </div>
 <%
-    db.disconnectDatabase();
-  }
+        db.disconnectDatabase();
+    }
 %>
 </body>
 </html>

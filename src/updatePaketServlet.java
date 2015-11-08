@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,6 @@ public class updatePaketServlet extends HttpServlet {
 
         int paketid =  Integer.parseInt(request.getParameter("paketid"));
         int inhaltid =  Integer.parseInt(request.getParameter("inhaltid"));
-        System.out.println(inhaltid +"inhaltID" );
         String paketname =  request.getParameter("paketname");
         String paketname2 = request.getParameter("paketname2");
         String paketbeschreibung = request.getParameter("paketbeschreibung");
@@ -34,43 +34,45 @@ public class updatePaketServlet extends HttpServlet {
         int anzahlMBuchungen = Integer.parseInt(request.getParameter("anzahlMBuchungen"));
 
         if(produkte!=null){
-        for (String produktId : produkte) {
-            Integer prio = Integer.parseInt(request.getParameter(produktId.substring(0, produktId.length() - 1)));
-            prioList.add(prio);
-        }
-        }
-
-        int i = produkte.length;
-        int counter = 0;
-        while (counter < i) {
-            System.out.println(produkte[counter] + " " + prioList.get(counter));
-            counter++;
-        }
-
-        DatabaseHelper db = new DatabaseHelper();
-
-        try{
-
-            //Paket als Produkt anlegen
-            db.updateProduct(paketid, kategorie, hersteller, preis, paketbeschreibung, details, paketname, paketname2, anzahlMBuchungen);
-
-            //Paketinhalte in die Pakettabelle schreiben
-            int  anzahlProdukte = produkte.length;
-            for(int counterP =0;counterP<anzahlProdukte;counterP++){
-                db.deletePaketKomponenten(paketid);
-                db.addPaket(paketid,kategorie,prioList.get(counterP),Integer.parseInt( produkte[counterP].substring(0, produkte[counterP].length() - 1)));
-
-
+            for (String produktId : produkte) {
+                System.out.println(produktId);
+                Integer prio = Integer.parseInt(request.getParameter(produktId.substring(0, produktId.length() - 1)));
+                prioList.add(prio);
             }
 
+            DatabaseHelper db = new DatabaseHelper();
 
-        }catch (Exception e){
-            e.printStackTrace();
+            try{
+
+                //Paket als Produkt anlegen
+                db.updateProduct(paketid, kategorie, hersteller, preis, paketbeschreibung, details, paketname, paketname2, anzahlMBuchungen);
+
+                //Paketinhalte in die Pakettabelle schreiben
+                int  anzahlProdukte = produkte.length;
+                db.deletePaketKomponenten(paketid);
+                int counterP=0;
+                while(counterP<anzahlProdukte){
+                    System.out.println(counterP);
+                    System.out.println(prioList.get(counterP));
+                    System.out.println(produkte[counterP]);
+                    db.addPaket(paketid,kategorie,prioList.get(counterP),Integer.parseInt( produkte[counterP].substring(0, produkte[counterP].length() - 1)));
+                    counterP++;
+                }
+
+                db.disconnectDatabase();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            String url = "/MitarbeiterView/paketeVerwalten.jsp";
+            response.sendRedirect( url );
         }
 
-        String url = "/MitarbeiterView/paketeVerwalten.jsp";
-        response.sendRedirect( url );
-        db.disconnectDatabase();
+
+
+
+
+
+
 
     }
 }

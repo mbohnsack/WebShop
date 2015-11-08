@@ -67,8 +67,9 @@
             }
         %>
 
-        <tr><td align="left"><strong>Gesamtpreis</strong></td>
+        <tr><td align="left"><strong>Mietzins/Tag</strong></td>
             <td align="left"><strong><%= gesamtpreis%>&euro;</strong></td> </tr>
+        <tr><td align="left">ohne Rabatt</td></tr>
     </table>
     <%
         db.disconnectDatabase();

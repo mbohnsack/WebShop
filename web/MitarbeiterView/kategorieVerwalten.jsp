@@ -23,9 +23,8 @@
 <body>
 
 <%if (loginDaten == null) {
-%>
-No Cookie found with the name
-<%
+  String url = "/MitarbeiterView/login.jsp";
+  response.sendRedirect( url );
 }
 else {
 %>
@@ -46,7 +45,6 @@ else {
         <tr class="underline">
           <th>Kategorie Name</th>
           <th>Übergeordnete Kategorie</th>
-          <th>Bild</th>
           <td></td>
         </tr>
         <%
@@ -61,7 +59,7 @@ else {
         %>
         <tr class="underline">
             <%
-                  for (int i = 1; i <= columnCount ; i++){
+                  for (int i = 1; i <= columnCount-1 ; i++){
                     %>
           <td><%=allKategories.getString(i)%></td>
             <%}%>

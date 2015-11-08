@@ -149,6 +149,7 @@ public class DatabaseHelper{
         }
         return frei;
     }
+
     public boolean loginKunde(String name, String password) {
         Boolean loginstate = false;
         try {
@@ -953,6 +954,19 @@ public class DatabaseHelper{
         ResultSet rs=null;
         try {
             rs=stmt.executeQuery("SELECT COUNT(kun_id) AS anzahl FROM tbl_buchungsliste WHERE kun_id=(SELECT kun_nummer FROM tbl_kunde WHERE kun_email='"+mail+"')");
+            rs.next();
+            anzahl=rs.getInt("anzahl");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return anzahl;
+    }
+
+    public int getBuchungsZahlByLogin(String login){
+        int anzahl=0;
+        ResultSet rs=null;
+        try {
+            rs=stmt.executeQuery("SELECT COUNT(kun_id) AS anzahl FROM tbl_buchungsliste WHERE kun_id=(SELECT kun_nummer FROM tbl_kunde WHERE kun_benutzer='"+login+"')");
             rs.next();
             anzahl=rs.getInt("anzahl");
         } catch (SQLException e) {

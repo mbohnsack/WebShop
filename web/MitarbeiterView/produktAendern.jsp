@@ -25,9 +25,8 @@
 
 <%
     if (loginDaten == null) {
-%>
-No Cookie found with the name
-<%
+        String url = "/MitarbeiterView/login.jsp";
+        response.sendRedirect( url );
 } else {
 %>
 

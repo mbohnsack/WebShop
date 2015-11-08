@@ -1,6 +1,8 @@
 /*import de.jollyday.Holiday;
 import de.jollyday.HolidayCalendar;
 import de.jollyday.HolidayManager;*/
+import de.jollyday.HolidayCalendar;
+import de.jollyday.HolidayManager;
 import project.DatabaseHelper;
 import project.cart;
 import project.loginCookie;
@@ -30,7 +32,10 @@ public class buchungAbsendenServlet
         DatabaseHelper db = new DatabaseHelper();
         String email = "";
         String message = ""; //gibt erfolgs oder fehlermeldung aus
+        String benutzername = "";
         boolean eingabeFehler = false;
+        Date abholdatum  = null;
+        Date abgabedatum = null;
 
         int plz_int = 0;
         int mobil_int = 0;
@@ -72,8 +77,8 @@ public class buchungAbsendenServlet
             String orga = request.getParameter("orga");
 
 
-            //erzeugt random user wegen primarykey und weil der  %&#%&&$*+& KD sich ja nich anmelden will
-            String benutzername = "";
+            //erzeugt random user wegen primarykey und weil der  KD sich ja nich anmelden will
+
             String passwort = "h4x0r"; //;-P
 
             do {
@@ -125,8 +130,7 @@ public class buchungAbsendenServlet
 
         if (!eingabeFehler) {
             // Datum auslesen und parsen
-            Date abholdatum  = null;
-            Date abgabedatum = null;
+
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             String abholungTemp = request.getParameter("abholung");
             String abgabeTemp = request.getParameter("abgabe");
@@ -141,12 +145,20 @@ public class buchungAbsendenServlet
                 e.printStackTrace();
             }
 
+            // Daten für die Rabatt Berechnung
+            request.setAttribute("nutzerName", benutzername);
+            request.setAttribute("userName", user);
+            System.out.println(benutzername);
+            System.out.println(user);
+            request.setAttribute("abholdatum", abholdatum);
+            request.setAttribute("abgabedatum", abgabedatum);
+
             // wenn abgabe vor abhol
             if(abgabedatum.before(abholdatum)){
                 eingabeFehler = true;
                 message = "Das Abgabedatum liegt vor dem Abholdatum!";
             }
-/*
+
             // Prüft ob ein Datum auf einen Feirtag fällt
             HolidayManager manager = HolidayManager.getInstance(HolidayCalendar.GERMANY);
             if (!eingabeFehler) {
@@ -166,7 +178,7 @@ public class buchungAbsendenServlet
                     eingabeFehler = true;
                     message = "Das Abgabedatum liegt an einem Feiertag.";
                 }
-            }*/
+            }
 
             if (!eingabeFehler) {
                 //Produktliste ausm cart holen
@@ -197,6 +209,8 @@ public class buchungAbsendenServlet
 
         request.setAttribute("message", message);
         request.getRequestDispatcher("/buchungAbsenden.jsp").forward(request, response);
+
+
 
     }
 }

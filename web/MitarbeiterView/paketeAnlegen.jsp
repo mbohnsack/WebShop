@@ -23,9 +23,8 @@
 
 <%
     if (loginDaten == null) {
-%>
-No Cookie found with the name
-<%
+        String url = "/MitarbeiterView/login.jsp";
+        response.sendRedirect( url );
 } else {
 %>
 
@@ -40,7 +39,7 @@ No Cookie found with the name
 
     <div class="rightdiv">
         <br><br>
-        <table border="0" style="margin-left: 18%">
+        <table border="0" style="margin-left: 32%">
             <form id="form" method="post" action="../addPaketServlet">
             <tr>
                 <th><h2>Paket anlegen</h2></th>

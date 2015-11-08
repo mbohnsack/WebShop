@@ -21,9 +21,10 @@
 <body>
 
   <%if (loginDaten == null) {
-    %>
-    Bitte loggen Sie sich ein!
-    <%
+
+    String url = "/MitarbeiterView/login.jsp";
+    response.sendRedirect( url );
+
   }
   else {
   %>

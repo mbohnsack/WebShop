@@ -28,7 +28,7 @@ public class createBuchung extends HttpServlet {
         List<Integer> products=new ArrayList<Integer>();
         if(produkte!=null) {
             for (String produkt : produkte) {
-                products.add(Integer.parseInt(produkt.substring(0,produkt.length()-1)));
+                products.add(Integer.parseInt(produkt));
             }
         }
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -51,11 +51,8 @@ public class createBuchung extends HttpServlet {
             Integer success = null;
             success=db.createBuchung(mail, abholung, abgabe, products);
             if(success>0){
-                SendMailSSL.sendBuchungMail(mail,success);
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/MitarbeiterView/buchungAnlegen.jsp");
-                PrintWriter out = response.getWriter();
-                out.println("<font color=red>Buchung erfolgreich.</font>");
-                rd.include(request, response);
+                SendMailSSL.sendBuchungMail(mail, success);
+                response.sendRedirect("/MitarbeiterView/buchungsVerwaltung.jsp");
             }else{
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/MitarbeiterView/buchungAnlegen.jsp");
                 PrintWriter out = response.getWriter();
@@ -69,7 +66,7 @@ public class createBuchung extends HttpServlet {
             if(products!=null) {
                 for (int product:products){
                     Double preisTemp = db.getPrice(product);
-                    gesamtpreis+=((abgabe.getTime()-abholung.getTime())/1000/3600/24)*preisTemp;
+                    gesamtpreis+=((((abgabe.getTime()-abholung.getTime())/1000/3600/24)-1)*preisTemp)*0.8+preisTemp;
                     if(db.produktVerfuegbar(product, abholung, abgabe)){
                         verfuegbareProdukte.add("Das Produkt " + db.getBezeichnung(product)+" ist verfügbar.");
                     }else{
@@ -81,7 +78,7 @@ public class createBuchung extends HttpServlet {
                 for(int i=0;i<verfuegbareProdukte.size();i++){
                     out.println("<font color=red>"+verfuegbareProdukte.get(i)+"</font><br/>");
                 }
-                out.println("<font color=red>Der Preis beträgt "+gesamtpreis+"€.</font>");
+                out.println("<font color=red>Der Preis (ohne Kundenrabatte) beträgt "+gesamtpreis+"€.</font>");
                 rd.include(request, response);
             }
         }

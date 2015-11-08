@@ -2,6 +2,7 @@
 <%@ page import="project.DatabaseHelper" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.sql.ResultSetMetaData" %>
+<%@ page import="java.util.List" %>
 <%--
   Created by IntelliJ IDEA.
   User: Chris
@@ -23,9 +24,8 @@
 <body>
 
 <%if (loginDaten == null) {
-%>
-No Cookie found with the name
-<%
+  String url = "/MitarbeiterView/login.jsp";
+  response.sendRedirect( url );
 }
 else {
 %>
@@ -49,6 +49,7 @@ else {
           <th>Rückgabedatum</th>
           <th>Buchungs ID</th>
           <th>Status</th>
+          <th>gebuchte Produkte</th>
           <td></td>
         </tr>
         <%
@@ -59,7 +60,9 @@ else {
             ResultSetMetaData rsmd = austehendeBuchungen.getMetaData();
             int columnCount = rsmd.getColumnCount();
 
+
             while (austehendeBuchungen.next()){
+              int id = austehendeBuchungen.getInt(4);
         %>
         <tr class="underline">
             <%
@@ -67,6 +70,14 @@ else {
                     %>
           <td><%=austehendeBuchungen.getString(i)%></td>
             <%}%>
+          <td class="underline" style="word-wrap:break-word;max-width:200px;">
+            <%DatabaseHelper db2 = new DatabaseHelper();
+              List<String> gebucht = db2.getGebuchteProdukte(id);
+              for (String s : gebucht) { %>
+            <%= s %><br>
+            <%    } db2.disconnectDatabase();
+            %>
+          </td>
           <td class="underline">
             <form method="post" action="../updateBuchungStatusServlet">
               <input type="hidden" name="buchungsID" value="<%=austehendeBuchungen.getString(4)%>">
@@ -74,10 +85,11 @@ else {
               <button name="aendern" type="submit" value="abgelehnt">Ablehnen</button>
             </form>
           </td>
-        <tr class="underline">
+
+          </tr>
             <%
 
-              }
+                }
                austehendeBuchungen.close();
                db.disconnectDatabase();
             } catch (Exception e) {
