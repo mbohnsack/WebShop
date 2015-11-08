@@ -43,7 +43,7 @@ public class updatePaketServlet extends HttpServlet {
             DatabaseHelper db = new DatabaseHelper();
 
             try{
-
+                //BlaBla
                 //Paket als Produkt anlegen
                 db.updateProduct(paketid, kategorie, hersteller, preis, paketbeschreibung, details, paketname, paketname2, anzahlMBuchungen);
 
