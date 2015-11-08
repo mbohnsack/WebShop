@@ -13,6 +13,7 @@
 </head>
 <body>
 <%
+  String test = "test";
   DatabaseHelper datab = new DatabaseHelper();
   List<Integer> prodid = new ArrayList<Integer>();
   cart shopcart;
@@ -31,7 +32,7 @@
 <div id="fb-root"></div>
 <script>
   window.fbAsyncInit = function() {
-    FB.init({appId: '972427932819205', status: true, cookie: true,
+    FB.init({appId: '971763672885631', status: true, cookie: true,
       xfbml: true});
   };
   (function() {
@@ -50,11 +51,10 @@
               {
                 method: 'feed',
                 name: 'Hipster Rental Corp.',
-                link: ' http://localhost:8080/index.jsp?<%
-                  for (String s : jedProd) { %>prod_bezeichn=<%= s%><%}%>',
+                link: ' http://localhost:8080/index.jsp?',
                 picture: 'http://is4.mzstatic.com/image/thumb/Purple6/v4/f9/0f/a7/f90fa75f-fdfb-f494-95b5-ffe2b0d6f4b6/source/1024x1024sr.jpg',
                 caption: 'Alles rund um Musik. Jetzt anfragen!',
-                description: 'Hi Leute, ich habe gerade folgende Artikel bei Hipster Rental Corp. gebucht: ',
+                description: '<%= test%>',
                 message: ''
               });
     });
