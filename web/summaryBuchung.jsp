@@ -51,12 +51,11 @@
               {
                 method: 'feed',
                 name: 'Hipster Rental Corp.',
-                link: ' http://localhost:8080/facebookShare.jsp?<%
-                  for (String s : jedProd) { %>prod_bezeichn=<%=s%><%}%>',
+                link: ' http://localhost:8080/index.jsp',
                 picture: 'http://is4.mzstatic.com/image/thumb/Purple6/v4/f9/0f/a7/f90fa75f-fdfb-f494-95b5-ffe2b0d6f4b6/source/1024x1024sr.jpg',
                 caption: 'Alles rund um Musik. Jetzt anfragen!',
-                description: '<%= test%>',
-                message: ''
+                description: 'Ich habe soeben bei Hipster folgende Artikel gebucht: <% for (String s : jedProd){%> <%= s%><% } %>',
+                message: '<%= test%>'
               });
     });
   });
