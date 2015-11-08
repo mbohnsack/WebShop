@@ -72,7 +72,10 @@ else {
                     %>
           <td><%=allPakete.getString(i)%></td>
             <%}%>
-          <td><form method="post" action="paketeAendern.jsp"><br/><button name="aendern" type="submit" value="<%=allPakete.getString(1)%>">Ändern</button></form>	</td>
+          <td><form method="post" action="paketeAendern.jsp"><br/><button name="aendern" type="submit" value="<%=allPakete.getString(1)%>">Ändern</button></form>
+            <form method="post" action="../deletePaket"><button name="loeschen" type="submit" value="<%=allPakete.getString(1)%>">Löschen</button></form>
+
+          </td>
         <tr class="underline">
             <%
 
