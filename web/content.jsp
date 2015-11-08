@@ -17,6 +17,7 @@
             request.setAttribute("herst", rs.getString(3));
             request.setAttribute("preis", rs.getString(4));
             request.setAttribute("bezeichn", rs.getString(7));
+            request.setAttribute("sourcepage","index.jsp");
 
 
     %><jsp:include page="prodBox.jsp" /><%

@@ -34,6 +34,7 @@
           request.setAttribute("herst", rs.getString(3));
           request.setAttribute("preis", rs.getString(4));
           request.setAttribute("bezeichn", rs.getString(7));
+          request.setAttribute("sourcepage","pakete.jsp");
       %>
       <jsp:include page="prodBox.jsp"/>
       <% }
@@ -48,6 +49,7 @@
     <div id="footer" class="footer">
       <jsp:include page="footer.jsp"/>
     </div>
+
   </div>
 </div>
 </body>

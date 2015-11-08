@@ -13,6 +13,7 @@
     <jsp:include page="head.html"/>
 </head>
 <body>
+
 <div class="prod_box">
     <div class="top_prod_box"></div>
     <div class="center_prod_box">
@@ -33,11 +34,18 @@
 
         <form id="cart" action="addToCartServlet" method="post">
             <input type="hidden" name="produktID" value="<%= request.getAttribute("id") %>"/>
-            <input type="hidden" name="sourcepage" value="produkte.jsp"/>
+            <%
+                String sourcepage = (String) request.getAttribute("sourcepage");
+                System.out.println(sourcepage);
+                request.setAttribute("sourcepage", sourcepage);
+
+            %>
+            <input type="hidden" name="sourcepage" value="<%= sourcepage%>"/>
             <button name="addtocart" type="submit" value="add"><img src="images/cart.gif" alt="" border="0"
                                                                     class="left_bt"/>Zum Warenkorb hinzufügen</button>
         </form>
     </div>
 </div>
+
 </body>
 </html>
