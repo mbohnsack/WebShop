@@ -394,6 +394,12 @@ public class DatabaseHelper{
 
     }
 
+    public void addKategorie(String name, String uebergeordnet) throws IOException, SQLException {
+
+        stmt.executeUpdate("INSERT INTO tbl_kategorie (kat_name, kat_uebergeordnet) VALUES ('"+ name +"', '"+ uebergeordnet +"')");
+
+    }
+
     public void updateKategorie(String name, String uebergeordnet, File bild) throws IOException, SQLException {
 
         FileInputStream fis = new FileInputStream(bild);
@@ -404,6 +410,12 @@ public class DatabaseHelper{
         ps.executeUpdate();
         ps.close();
         fis.close();
+
+    }
+
+    public void updateKategorie(String name, String uebergeordnet) throws IOException, SQLException {
+
+        stmt.executeUpdate("UPDATE tbl_kategorie SET kat_uebergeordnet = '"+ uebergeordnet +"' WHERE kat_name = '"+ name +"'");
 
     }
 
