@@ -25,7 +25,6 @@
             String produktCat = request.getParameter("category");
             ResultSet rs = null;
             int anzahl = db.getAnzahlProdukteInKategorie(produktCat);
-            System.out.println(db.getUnterkategorie(produktCat));
         %>
         <div id="navigation_top">
             <jsp:include page="navigation_top.jsp"/>

@@ -4,37 +4,6 @@
     <jsp:include page="head.html" />
 </head>
 <body>
-<div id="fb-root"></div>
-<script type="text/javascript">
-    window.fbAsyncInit = function() {
-        FB.init({appId: '971763672885631', status: true, cookie: true,
-            xfbml: true});
-    };
-    (function() {
-        var e = document.createElement('script'); e.async = true;
-        e.src = document.location.protocol +
-                '//connect.facebook.net/en_US/all.js';
-        document.getElementById('fb-root').appendChild(e);
-    }());
-</script>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('#share_button').click(function(e){
-            e.preventDefault();
-            FB.ui(
-                    {
-                        method: 'feed',
-                        name: 'Hipster Rental Corp.',
-                        link: ' http://localhost:8080/index.jsp',
-                        picture: 'http://is4.mzstatic.com/image/thumb/Purple6/v4/f9/0f/a7/f90fa75f-fdfb-f494-95b5-ffe2b0d6f4b6/source/1024x1024sr.jpg',
-                        caption: 'Alles rund um Musik. Jetzt anfragen!',
-                        description: 'Sie brauchen für eine bestimmte Zeit professionelles DJ-Equipment, Mikrofone oder einfach eine fette Anlage?',
-                        message: ''
-                    });
-        });
-    });
-</script>
-
 <div id="main_container">
     <div id="header">
         <jsp:include page="header.jsp" />

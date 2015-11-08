@@ -6,7 +6,6 @@
 </head>
 <body>
 <div class="left_footer">
-    <img src = "images/facebook_button.png" id = "share_button" style="cursor:pointer">
 </div>
 <div class="center_footer"> Hipster Rental Corp. All Rights Reserved 2015<br />
     <img src="images/payment.gif" alt="" /> </div>

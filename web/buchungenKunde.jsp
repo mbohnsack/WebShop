@@ -111,7 +111,7 @@
             %>
             <table style="width: 90%" align="center">
               <tr><th align="left">Buchungs-Nummer</th><th align="left">Abhol-Datum</th><th align="left">Abgabe-Datum</th>
-                <th align="left">Buchungs-Status</th><th align="left">Strornieren</th></tr>
+                <th align="left">Buchungs-Status</th><th align="left">Stornieren</th></tr>
 
             <%
                 while(buchungsDaten.next()){
