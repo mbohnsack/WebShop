@@ -14,12 +14,12 @@ import java.io.IOException;
 public class deletePaket extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
-        String katName = request.getParameter("loeschen");
+        int pakID = Integer.parseInt(request.getParameter("loeschen"));
 
         DatabaseHelper db = new DatabaseHelper();
-        db.deleteKategorie(katName);
+        db.deletePaket(pakID);
 
-        String url = "/MitarbeiterView/kategorieVerwalten.jsp";
+        String url = "/MitarbeiterView/paketeVerwalten.jsp";
         response.sendRedirect( url );
         db.disconnectDatabase();
     }

@@ -17,7 +17,13 @@
 </head>
 <body>
 <div id="main_container">
-
+  <%
+    DatabaseHelper db = new DatabaseHelper();
+    Integer id = Integer.parseInt(request.getParameter("details"));
+    ResultSet rs = db.getProductsById(id);
+    List<Integer> i = new ArrayList();
+    rs.next();
+  %>
   <div id="header">
     <jsp:include page="header.jsp" />
   </div>
@@ -25,19 +31,12 @@
     <div id="navigation_top">
       <jsp:include page="navigation_top.jsp" />
     </div>
-    <div class="crumb_navigation"> Navigation: <span class="current"></span> </div>
+    <div class="crumb_navigation"> Navigation: <span class="current"><%= rs.getString(2) %> / <%= rs.getString(3) %> <%= rs.getString(7) %></span> </div>
     <div class="navigation_left">
       <jsp:include page="navigation_left.jsp" />
     </div>
     <div class="content">
       <div class="center_content">
-        <%
-          DatabaseHelper db = new DatabaseHelper();
-          Integer id = Integer.parseInt(request.getParameter("details"));
-          ResultSet rs = db.getProductsById(id);
-          List<Integer> i = new ArrayList();
-          while (rs.next()) {
-        %>
         <%
         if (rs.getString(3).equals("Paket")) {
             ResultSet rs3 = db.getProdukteOfPaket(rs.getInt(1));
@@ -85,7 +84,7 @@
           <div class="bottom_prod_box_big"></div>
         </div><% } %>
         </div>
-      <% } db.disconnectDatabase(); %>
+      <%  db.disconnectDatabase(); %>
     </div>
       <div id="navigation_right" class="navigation_right">
         <jsp:include page="navigation_right.jsp" />
