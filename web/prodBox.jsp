@@ -36,7 +36,6 @@
             <input type="hidden" name="produktID" value="<%= request.getAttribute("id") %>"/>
             <%
                 String sourcepage = (String) request.getAttribute("sourcepage");
-                System.out.println(sourcepage);
                 request.setAttribute("sourcepage", sourcepage);
 
             %>
