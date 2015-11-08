@@ -76,7 +76,6 @@ else {
         <td><select  name="kategorie">
 
                 <option selected value="Paket">Paket</option>
-
       </select></td>
         </tr>
       <tr>
