@@ -47,7 +47,7 @@ else {
           <tr class="underline">
 
             <th>ProduktID</th>
-            <th>Kategorie</th>
+            <th>Kategorie &darr;</th>
             <th>Hersteller</th>
             <th>Mietzins in &euro;/24h</th>
             <th>Beschreibung</th>

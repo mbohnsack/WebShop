@@ -39,12 +39,19 @@ else {
   </div>
 
   <div id="rightdiv">
+    <br><br>
+    <table border="0" style="margin-left: 38%">
     <div>
       <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post" enctype="multipart/form-data" action="../produktFotoServlet">
-        <select name="kategorie" >
+        <tr>
+          <th><h2>Foto zum Produkt hinzufügen</h2></th>
+        </tr>
+        <tr>
+          <td><label>Produkt auswählen</label></td>
+          <td><select name="kategorie" >
           <%
             DatabaseHelper db2 = new DatabaseHelper();
-            ResultSet allKategories = db2.getAllProducts();
+            ResultSet allKategories = db2.getAllProductsSortedByName();
 
           %>
           <option value=""></option>
@@ -52,15 +59,23 @@ else {
             while (allKategories.next()){
           %>
 
-          <option value="<%=allKategories.getString(1)%>"><%=allKategories.getString(7)%></option>
+          <option value="<%=allKategories.getString(1)%>"><%=allKategories.getString(3)%> <%=allKategories.getString(7)%></option>
           <%
             }
           %>
-        </select>
-        <div ><label >Bild hochladen</label><label><div >Datei auswählen</div><input type="file"  name="file" /><div>No file selected</div></label></div>
-        <div class="submit"><input type="submit" value="Hochladen"/></div>
+        </select></td></tr>
+        <tr><td><label>
+          <div>Datei auswählen</div></label></td>
+          <td>
+        <div ><label><input type="file"  name="file" /></label></div></td></tr>
+        <tr>
+          <td>
+        <div class="submit"><input type="submit" value="Hochladen"/></div></td>
+        </tr>
       </form>
+
     </div>
+    </table>
 
   </div>
 

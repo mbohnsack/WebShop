@@ -39,12 +39,20 @@ else {
   </div>
 
   <div id="rightdiv">
+    <br><br>
+    <table border="0" style="margin-left: 38%">
    <div>
      <form style="margin:0 auto;max-width:60%;min-width:20%"  method="post" action="../addHWCodeServlet">
+       <tr>
+         <th><h2>Hardwarecode hinzufügen</h2></th>
+       </tr>
+       <tr>
+         <td><label>Produkt auswählen</label></td>
+         <td>
        <select name="produkt" >
          <%
            DatabaseHelper db2 = new DatabaseHelper();
-           ResultSet allKategories = db2.getAllProducts();
+           ResultSet allKategories = db2.getAllProductsSortedByName();
 
          %>
          <option value=""></option>
@@ -52,15 +60,20 @@ else {
            while (allKategories.next()){
          %>
 
-         <option value="<%=allKategories.getString(1)%>"><%=allKategories.getString(7)%></option>
+         <option value="<%=allKategories.getString(1)%>"><%=allKategories.getString(3)%> <%=allKategories.getString(7)%></option>
          <%
            }
          %>
-       </select>
-       <input type="text" name="hwcode">
-       <div class="submit"><input type="submit" value="Hinzufügen"/></div>
-     </form>
-   </div>
+       </select></td></tr>
+       <tr><td><label>Hardwarecode</label></td>
+         <td>
+       <input type="text" name="hwcode"></td></tr>
+       <tr><td>
+       <div class="submit"><input type="submit" value="Hinzufügen"/></div></td></tr>
+      </form>
+
+  </div>
+  </table>
   </div>
 
 </div>
