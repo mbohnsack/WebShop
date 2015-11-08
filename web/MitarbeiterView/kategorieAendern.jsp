@@ -50,7 +50,7 @@
         %>
         <br><br>
         <table border="0" style="margin-left: 32%">
-            <form style="margin:0 auto;max-width:60%;min-width:20%" method="post" action="../updateKategorieServlet">
+            <form style="margin:0 auto;max-width:60%;min-width:20%" method="post" enctype="multipart/form-data" action="../updateKategorieServlet">
                 <tr>
                     <th><h2>Kategorie ändern</h2></th>
                 </tr>
