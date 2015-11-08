@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,13 +63,15 @@ public class updatePaketServlet extends HttpServlet {
             }catch (Exception e){
                 e.printStackTrace();
             }
+            String url = "/MitarbeiterView/paketeVerwalten.jsp";
+            response.sendRedirect( url );
         }
 
 
 
 
-        String url = "/MitarbeiterView/paketeVerwalten.jsp";
-        response.sendRedirect( url );
+
+
 
 
     }
