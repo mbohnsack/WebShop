@@ -619,6 +619,7 @@ public class DatabaseHelper{
 
     public void deletePaket(Integer id){
         try {
+            stmt.executeUpdate("DELETE FROM tbl_bild WHERE prod_id"+ id);
             stmt.executeUpdate("DELETE FROM tbl_paketinhalte WHERE pak_id = "+ id +";");
             stmt.executeUpdate("DELETE FROM tbl_produkt WHERE prod_id = "+ id +";");
         } catch (SQLException e) {
