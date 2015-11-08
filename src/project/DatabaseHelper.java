@@ -397,10 +397,9 @@ public class DatabaseHelper{
     public void updateKategorie(String name, String uebergeordnet, File bild) throws IOException, SQLException {
 
         FileInputStream fis = new FileInputStream(bild);
-        PreparedStatement ps = c.prepareStatement("UPDATE tbl_kategorie SET kat_name = ? , kat_uebergeordnet = ?, kat_bild = ? ");
-        ps.setString(1, name);
-        ps.setString(2, uebergeordnet);
-        ps.setBinaryStream(3, fis, bild.length());
+        PreparedStatement ps = c.prepareStatement("UPDATE tbl_kategorie SET kat_uebergeordnet = ?, kat_bild = ? WHERE kat_name ="+ name);
+        ps.setString(1, uebergeordnet);
+        ps.setBinaryStream(2, fis, bild.length());
         ps.executeUpdate();
         ps.close();
         fis.close();
