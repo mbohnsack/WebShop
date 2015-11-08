@@ -374,6 +374,7 @@ public class DatabaseHelper{
 
     public void deleteProduct(Integer id){
         try {
+            stmt.executeUpdate("DELETE FROM tbl_bild WHERE prod_id ="+ id);
             stmt.executeUpdate("DELETE FROM tbl_produkt WHERE prod_id = "+ id);
         } catch (SQLException e) {
             e.printStackTrace();
