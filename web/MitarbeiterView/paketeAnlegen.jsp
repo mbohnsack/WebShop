@@ -82,7 +82,7 @@
                 <td>
                     <label>Produkte</label>
                 <td>
-                    <div class="scroll" style="max-width:100%">
+
                         <table border="1">
                             <tr>
                                 <td>Produktname</td>

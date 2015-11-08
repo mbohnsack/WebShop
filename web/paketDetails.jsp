@@ -1,7 +1,5 @@
 <%@ page import="project.DatabaseHelper" %>
 <%@ page import="java.sql.ResultSet" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
 <%--
   Created by IntelliJ IDEA.
   User: filip
@@ -17,7 +15,12 @@
 </head>
 <body>
 <div id="main_container">
-
+  <%
+    DatabaseHelper db = new DatabaseHelper();
+    Integer id = Integer.parseInt(request.getParameter("details"));
+    ResultSet rs = db.getProductsById(id);
+    while(rs.next()){
+  %>
   <div id="header">
     <jsp:include page="header.jsp" />
   </div>
@@ -25,40 +28,13 @@
     <div id="navigation_top">
       <jsp:include page="navigation_top.jsp" />
     </div>
-    <div class="crumb_navigation"> Navigation: <span class="current"></span> </div>
+    <div class="crumb_navigation"> Navigation: <span class="current"><%= rs.getString(2) %> / <%= rs.getString(3) %> <%= rs.getString(7) %></span> </div>
     <div class="navigation_left">
       <jsp:include page="navigation_left.jsp" />
     </div>
     <div class="content">
       <div class="center_content">
-        <%
-          DatabaseHelper db = new DatabaseHelper();
-          Integer id = Integer.parseInt(request.getParameter("details"));
-          ResultSet rs = db.getProductsById(id);
-          List<Integer> i = new ArrayList();
-          while (rs.next()) {
-        %>
-        <%
-        if (rs.getString(3).equals("Paket")) {
-            ResultSet rs3 = db.getProdukteOfPaket(rs.getInt(1));
-            while (rs3.next()) {
-              i.add(rs3.getInt(4));
-            }
-          System.out.println(i);
-              for (int g : i) {
-              ResultSet rs2 = db.getProductsById(g);
-                while (rs2.next()) {
-        request.setAttribute("id", rs2.getString(1));
-        request.setAttribute("herst", rs2.getString(3));
-        request.setAttribute("preis", rs2.getString(4));
-        request.setAttribute("bezeichn", rs2.getString(7));
-        request.setAttribute("sourcepage","cathegories.jsp");
-        %>
-        <jsp:include page="prodBox.jsp"/>
-        <% }
-        }
-        } else {
-        %>
+
         <div class="center_title_bar"><%= rs.getString(3) %> <%= rs.getString(7) %> (ID: <%= rs.getString(1) %>)</div>
         <div class="prod_box_big">
           <div class="top_prod_box_big"></div>
@@ -80,21 +56,20 @@
                                                                         class="left_bt"/></button>
               </form>
 
-             <!-- <a href="#" class="addtocart">add to cart</a> --></div>
+              <!-- <a href="#" class="addtocart">add to cart</a> --></div>
           </div>
           <div class="bottom_prod_box_big"></div>
-        </div><% } %>
         </div>
-      <% } db.disconnectDatabase(); %>
-    </div>
-      <div id="navigation_right" class="navigation_right">
-        <jsp:include page="navigation_right.jsp" />
       </div>
-      <div id="footer" class="footer">
-        <jsp:include page="footer.jsp" />
-      </div>
+      <% } db.disconnectDatabase();%>
     </div>
-
+    <div id="navigation_right" class="navigation_right">
+      <jsp:include page="navigation_right.jsp" />
+    </div>
+    <div id="footer" class="footer">
+      <jsp:include page="footer.jsp" />
+    </div>
   </div>
+</div>
 </body>
 </html>

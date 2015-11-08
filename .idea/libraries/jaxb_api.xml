@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="jollyday-0.5.11">
+  <library name="jaxb-api">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/jollyday-0.5.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jaxb-api.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

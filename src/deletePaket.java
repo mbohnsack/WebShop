@@ -8,18 +8,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by Chris on 07.11.2015.
+ * Created by filip on 08.11.2015.
  */
-@WebServlet("/deleteProduktServlet")
-public class deleteProduktServlet extends HttpServlet {
+@WebServlet("/deletePaket")
+public class deletePaket extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
-        int pakID = Integer.parseInt(request.getParameter("loeschen"));
+        String katName = request.getParameter("loeschen");
 
         DatabaseHelper db = new DatabaseHelper();
-        db.deleteProduct(pakID);
+        db.deleteKategorie(katName);
 
-        String url = "/MitarbeiterView/produktVerwalten.jsp";
+        String url = "/MitarbeiterView/kategorieVerwalten.jsp";
         response.sendRedirect( url );
         db.disconnectDatabase();
     }

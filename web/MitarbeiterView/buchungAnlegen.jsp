@@ -68,7 +68,7 @@ No Cookie found with the name
 
                     <td>Produkte </td>
                     <td>
-                        <div class="scroll">
+
                             <%
                                 while (rs.next()) {
                                     id = rs.getInt("prod_id");
@@ -78,7 +78,7 @@ No Cookie found with the name
                             <input type="checkbox" name="produkte" value="<%=id %>"/><%=hersteller %> <%=bezeichnung %><br/>
                             <%
                                 }
-                            %></div>
+                            %>
                     </td>
                 </tr>
                 </select>
@@ -87,8 +87,7 @@ No Cookie found with the name
                     } catch (Exception e) {
                     }
                 %>
-                <td>
-                <td><input type="submit" name="submit" value="pruefen"/><input type="submit" name="submit" value="Buchen"/></td>
+                <td><input type="submit" name="submit" value="pruefen"/>&nbsp;<input type="submit" name="submit" value="Buchen"/></td>
                 </tr>
             </form>
         </table>
