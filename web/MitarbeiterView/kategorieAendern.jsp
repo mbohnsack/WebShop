@@ -68,8 +68,7 @@
                             while (allKategories.next()) {
                                 if (allKategories.getString(1).equals(kategorie.getString(2))) {
                         %>
-                        <option value="<%=allKategories.getString(1)%>"
-                                selected="selected"><%=allKategories.getString(1)%>
+                        <option value="<%=allKategories.getString(1)%>" selected="selected"><%=allKategories.getString(1)%>
                         </option>
                         <%
                         } else {

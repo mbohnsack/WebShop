@@ -67,10 +67,11 @@ tr.underline td{
 }
 .scroll{
     overflow: scroll;
-    height: 60%;
+    position: fixed;
+    height: 50%;
     width: 100%;
-    max-width:100%;
-    min-width:10%;
+    max-height:50%;
+    min-height:20%;
 
 }
 .scrollVerwaltenTabelle{

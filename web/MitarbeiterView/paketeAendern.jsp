@@ -81,7 +81,7 @@ else {
         </tr>
       <tr>
         <td><label >Hersteller</label></td>
-        <td><input  type="text" name="hersteller" value="<%=paket.getString(3)%>" /></td>
+        <td><input readonly type="text" name="hersteller" value="<%=paket.getString(3)%>" /></td>
       </tr>
       <tr>
         <td><label >Mietzins in &euro;/24h</label></td>
@@ -94,7 +94,7 @@ else {
       <tr>
         <td><label >Produkte</label></td>
         <td>
-          <div class="scroll" style="max-width:100%">
+          <div >
       <table border="1">
         <tr>
           <td>Produktname</td>
@@ -130,7 +130,7 @@ else {
 
                   if(idPaketPordukt==id){
             %>
-                      <input type="checkbox"  checked name="produkte" value="<%=id%>"/><%=hersteller %> <%=bezeichnung %><br/>
+                      <input type="checkbox"  checked name="produkte" value=<%=id%>/><%=hersteller %> <%=bezeichnung %><br/>
                       </td>
                       <td>
                         <select name="<%=id%>" value="<%=prio%>" >
@@ -158,6 +158,7 @@ else {
                       </td>
             <%
                   }
+                db4.disconnectDatabase();
                 }
 
 
@@ -165,7 +166,8 @@ else {
             %>
 
         </tr>
-      </table></div></td></tr>
+      </table></div>
+        </td></tr>
       <%
 
 
@@ -177,13 +179,16 @@ else {
       <tr>
         <td>
       <div class="submit"><button type="submit" name=paketid value="<%=paketID%>">Ändern</button></div>
-      <input type="hidden" name="inhaltid" value="<%=inhaltid%>"/></td></tr>
+      <input type="hidden" name="inhaltid" value="<%=inhaltid%>"/>
+        </td>
+      </tr>
     </form>
     </table>
   </div>
 
 </div>
 <%
+    db.disconnectDatabase();
     db3.disconnectDatabase();
 
   }
