@@ -227,7 +227,7 @@ public class DatabaseHelper{
                     if(produktVerfuegbar(produkt, abholdatum, abgabedatum)){
                         rs = stmt.executeQuery("SELECT prod_code FROM tbl_lagerliste WHERE prod_id = "+ produkt);
                         if(rs.next()){
-                            stmt.executeUpdate("UPDATE tbl_produkt SET buch_anzahl =(SELECT max(buch_anzahl)+1) WHERE prod_id = "+ produkt);
+                            stmt.executeUpdate("UPDATE tbl_produkt SET buch_anzahl =(SELECT max(buch_anzahl)+1 FROM tbl_produkt) WHERE prod_id = "+ produkt);
                             String prodcode = rs.getString("prod_code");
                             hwcodes.add(prodcode);
                         } else{
