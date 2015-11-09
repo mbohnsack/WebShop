@@ -125,14 +125,12 @@ else {
                 ResultSet rsPaketProdukte= db4.getSingleProductOfPaket(paketID);
                 while(rsPaketProdukte.next())
                 {
-                  int idPaketPordukt= rsPaketProdukte.getInt(1);
-                  System.out.println(idPaketPordukt);
-                  System.out.println(id);
+                  int idPaketPordukt= rsPaketProdukte.getInt("prod_id");
 
                   DatabaseHelper db5 = new project.DatabaseHelper();
-                  ResultSet paketProdukt= db5.getPaketInhaltByProdukt(idPaketPordukt);
+                  ResultSet paketProdukt= db5.getPaketInhaltByProdukt(idPaketPordukt, paketID);
                   paketProdukt.next();
-                  int prio =  paketProdukt.getInt(4);
+                  int prio =  paketProdukt.getInt("pak_priorisierung");
 
                   int anzahl = db5.anzahlProduktImPaket(idPaketPordukt,paketID);
 

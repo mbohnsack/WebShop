@@ -66,11 +66,12 @@ public class updatePaketServlet extends HttpServlet {
                 db.deletePaketKomponenten(paketid);
                 int counterP=0;
                 while(counterP<anzahlProdukte){
-
+                        System.out.println(prioList.get(counterP)+ "Hier musst gucken");
                         int temp=Integer.parseInt(produkte[counterP].substring(0,produkte[counterP].length()-1));
                         int counter2=werte.indexOf(temp);
                         int anzahlInt = Integer.parseInt(anzahl[counter2]);
                         for (int i2 = 0; i2 < anzahlInt; i2++) {
+
                             db.addPaket(paketid, kategorie, prioList.get(counterP), Integer.parseInt(produkte[counterP].substring(0, produkte[counterP].length() - 1)));
 
                         }
@@ -84,7 +85,7 @@ public class updatePaketServlet extends HttpServlet {
                 e.printStackTrace();
             }
             String url = "/MitarbeiterView/paketeVerwalten.jsp";
-            response.sendRedirect( url );
+            response.sendRedirect(url);
         }
 
 
