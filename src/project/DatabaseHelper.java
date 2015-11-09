@@ -1041,9 +1041,15 @@ public class DatabaseHelper{
         int anzahl=0;
         ResultSet rs=null;
         try {
-            rs=stmt.executeQuery("SELECT COUNT(kun_id) AS anzahl FROM tbl_buchungsliste WHERE kun_id=(SELECT kun_nummer FROM tbl_kunde WHERE kun_email='"+mail+"')");
-            rs.next();
-            anzahl=rs.getInt("anzahl");
+            ResultSet rs2 = c.createStatement().executeQuery("SELECT kun_nummer FROM tbl_kunde WHERE kun_email='"+ mail +"'");
+            while(rs2.next()){
+                rs=stmt.executeQuery("SELECT COUNT(kun_id) AS anzahl FROM tbl_buchungsliste WHERE kun_id = ");
+                rs.next();
+                int anzahlTemp=rs.getInt("anzahl");
+                if(anzahlTemp > anzahl){
+                    anzahl = anzahlTemp;
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

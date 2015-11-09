@@ -4,6 +4,7 @@ import de.jollyday.HolidayManager;*/
 import de.jollyday.HolidayCalendar;
 import de.jollyday.HolidayManager;
 import project.DatabaseHelper;
+import project.SendMailSSL;
 import project.cart;
 import project.loginCookie;
 
@@ -196,6 +197,7 @@ public class buchungAbsendenServlet
 
                 if(buchungsCode != -1){
                     //Buchung erfolgreich
+                    SendMailSSL.sendBuchungMail(email, buchungsCode);
                     request.setAttribute("buchCode", buchungsCode);
                     request.getRequestDispatcher("/summaryBuchung.jsp").forward(request, response);
                 }
