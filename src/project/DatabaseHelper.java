@@ -1135,7 +1135,7 @@ public class DatabaseHelper{
         ResultSet rs = null;
 
         try {
-            rs = stmt.executeQuery("SELECT * FROM tbl_paketinhalte WHERE pak_id = "+ paketid +" GROUP BY pak_id, prod_id");
+            rs = stmt.executeQuery("SELECT prod_id FROM tbl_paketinhalte WHERE pak_id = "+ paketid +" GROUP BY prod_id");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -1143,4 +1143,16 @@ public class DatabaseHelper{
         return rs;
     }
 
+    //gibt die Produkte des Paketes zurück
+    public ResultSet getPaketInhaltByProdukt(Integer prodid){
+        ResultSet rs = null;
+
+        try {
+            rs = stmt.executeQuery("SELECT * FROM tbl_paketinhalte WHERE prod_id = "+ prodid);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return rs;
+    }
 }
