@@ -50,6 +50,7 @@ public class updatePaketServlet extends HttpServlet {
 
                 //Paketinhalte in die Pakettabelle schreiben
                 int  anzahlProdukte = produkte.length;
+
                 db.deletePaketKomponenten(paketid);
                 int counterP=0;
                 while(counterP<anzahlProdukte){

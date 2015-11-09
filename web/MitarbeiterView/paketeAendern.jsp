@@ -134,7 +134,7 @@ else {
                   paketProdukt.next();
                   int prio =  paketProdukt.getInt(4);
 
-                  int anzahl = db5.anzahlProduktImPaket(idPaketPordukt);
+                  int anzahl = db5.anzahlProduktImPaket(idPaketPordukt,paketID);
 
                   if(idPaketPordukt==id){
             %>
