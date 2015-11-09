@@ -33,6 +33,7 @@ public class updateKategorieServlet extends HttpServlet {
 
         DatabaseHelper db = new DatabaseHelper();
         if (ServletFileUpload.isMultipartContent(request)) {
+
             DiskFileItemFactory factory = new DiskFileItemFactory();
             factory.setSizeThreshold(THRESHOLD_SIZE);
             factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
@@ -56,6 +57,7 @@ public class updateKategorieServlet extends HttpServlet {
             for (FileItem item: formItems) {
                 // processes only fields that are not form fields
                 if (!item.isFormField()) {
+
                     String fileName = new File(item.getName()).getName();
                     String filePath = uploadPath + File.separator + fileName;
                     storeFile = new File(filePath);
@@ -69,10 +71,12 @@ public class updateKategorieServlet extends HttpServlet {
                     }
                 }else{
                     String name=item.getFieldName();
+
                     if(name!=null) {
                         switch (name) {
                             case "kategorieName":
                                 kategorieName = item.getString();
+                                System.out.println(kategorieName);
                                 break;
                             case "ueberKategorie":
                                 ueberKategorie = item.getString();
@@ -93,8 +97,9 @@ public class updateKategorieServlet extends HttpServlet {
             }
 
         }
+        db.disconnectDatabase();
         String url = "/MitarbeiterView/kategorieVerwalten.jsp";
         response.sendRedirect( url );
-        db.disconnectDatabase();
+
     }
 }

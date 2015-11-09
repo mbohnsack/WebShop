@@ -12,35 +12,6 @@
 </head>
 <body>
 <%!
-    public static List<String> checkUntKat (String kategorie) {
-        try {
-            // Ergbnis ist jetzt eine Liste mit der Unterkategorie der Kategorie, Unterkategorie der Unterkategorie usw. bis
-            // es keine unterkategorie mehr gibt
-            String unterKategorie = kategorie;
-            List<String> li = new ArrayList();
-            DatabaseHelper datab = new DatabaseHelper();
-            //schleife l�uft solange unterkategorie nicht null ist
-            while(unterKategorie!=null) {
-
-                ResultSet results = datab.getUnterkategorieRS(unterKategorie);
-                if (!results.isBeforeFirst()) {
-                    unterKategorie = null;
-                } else {
-
-                results.next();
-                unterKategorie = results.getString(1);      //holt sich den kategoriename
-                li.add(unterKategorie);                     // schreib den Kategorienamen in die list li
-                results.close();
-            }
-            }
-            datab.disconnectDatabase();
-            //gibt die liste mit allen unterkategorien zur�ck
-            return li;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
 
 %>
@@ -49,8 +20,7 @@
 
         <%
             DatabaseHelper db = new DatabaseHelper();
-            DatabaseHelper db2 = new DatabaseHelper();
-            ResultSet rs = db2.getAllKategories();
+            ResultSet rs = db.getAllKategories();
 
             while(rs.next()){
                 String kate = rs.getString(1);
@@ -62,10 +32,10 @@
                     <button style="cursor:pointer;" name="category" type="submit" value="<%= kate%>"><%= kate%></button>
         </form>
         </li>
-               <% if (!db.getUnterkategorie(kate).isEmpty()) {
+               <% /*if (!db.getUnterkategorie(kate).isEmpty()) {
                    List<String> liste = checkUntKat(kate);
                    for (String s : liste) {
-
+                       System.out.println("bla");
                %>
                        <li class="even">
                        <form id="category2" style="margin-bottom: 0" method="post" action="categories.jsp">
@@ -73,13 +43,11 @@
         </form>
         </li>
                        <%
-                   }
-               }
+                      }
+                    }
 
-                   }
+                   }*/
                            }
-                           db.disconnectDatabase();
-                           db2.disconnectDatabase();
 
                  %>
 
