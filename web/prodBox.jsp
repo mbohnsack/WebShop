@@ -1,11 +1,8 @@
 <%@ page import="project.DatabaseHelper" %>
 <%@ page import="java.sql.ResultSet" %>
 <%--
-  Created by IntelliJ IDEA.
-  User: filip
-  Date: 04.11.2015
-  Time: 09:19
-  To change this template use File | Settings | File Templates.
+    Anzeige der Box eines Produkts, dass die jeweiligen Infos enthält.
+    Erhält die Parameter vom jeweiligen Klick.
 --%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -13,7 +10,6 @@
     <jsp:include page="head.html"/>
 </head>
 <body>
-
 <div class="prod_box">
     <div class="top_prod_box"></div>
     <div class="center_prod_box">
@@ -24,10 +20,10 @@
                 </div>
             </button>
         </form>
-        <div class="product_img"><img style="width:92px; height: 92px" src="/produktBild?prodid=<%= request.getAttribute("id")%>&&number=1" alt=""
-                                                            border="0"/></div>
+        <div class="product_img"><img style="width:92px; height: 92px"
+                                      src="/produktBild?prodid=<%= request.getAttribute("id")%>&&number=1" alt=""
+                                      border="0"/></div>
         <div class="prod_price"><span class="price"><%= request.getAttribute("preis") %> &euro;</span></div>
-
     </div>
     <div class="bottom_prod_box"></div>
     <div class="prod_details_tab">
@@ -37,14 +33,13 @@
             <%
                 String sourcepage = (String) request.getAttribute("sourcepage");
                 request.setAttribute("sourcepage", sourcepage);
-
             %>
             <input type="hidden" name="sourcepage" value="<%= sourcepage%>"/>
-            <button name="addtocart" type="submit" value="add"><img src="images/cart.gif" alt="" border="0"
-                                                                    class="left_bt"/>Zum Warenkorb hinzufügen</button>
+            <button  style="border: 0;cursor: pointer;border-radius: 5px;" name="addtocart" type="submit" value="add"><img src="images/cart.gif" alt="" border="0"
+                                                                    class="left_bt"/>Zum Warenkorb hinzufügen
+            </button>
         </form>
     </div>
 </div>
-
 </body>
 </html>

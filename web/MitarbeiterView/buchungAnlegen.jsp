@@ -66,19 +66,19 @@ No Cookie found with the name
 
                     %>
 
-                    <td>Produkte </td>
+                    <td>Produkte</td>
                     <td>
 
-                            <%
-                                while (rs.next()) {
-                                    id = rs.getInt("prod_id");
-                                    bezeichnung = rs.getString("prod_bezeichn");
-                                    hersteller = rs.getString("prod_hersteller");
-                            %>
-                            <input type="checkbox" name="produkte" value="<%=id %>"/><%=hersteller %> <%=bezeichnung %><br/>
-                            <%
-                                }
-                            %>
+                        <%
+                            while (rs.next()) {
+                                id = rs.getInt("prod_id");
+                                bezeichnung = rs.getString("prod_bezeichn");
+                                hersteller = rs.getString("prod_hersteller");
+                        %>
+                        <input type="checkbox" name="produkte" value="<%=id %>"/><%=hersteller %> <%=bezeichnung %><br/>
+                        <%
+                            }
+                        %>
                     </td>
                 </tr>
                 </select>
@@ -87,7 +87,8 @@ No Cookie found with the name
                     } catch (Exception e) {
                     }
                 %>
-                <td><input type="submit" name="submit" value="pruefen"/>&nbsp;<input type="submit" name="submit" value="Buchen"/></td>
+                <td><input type="submit" name="submit" value="pruefen"/>&nbsp;<input type="submit" name="submit"
+                                                                                     value="Buchen"/></td>
                 </tr>
             </form>
         </table>

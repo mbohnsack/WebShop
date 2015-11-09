@@ -3,12 +3,10 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.sql.SQLException" %>
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title></title>
-
+    <jsp:include page="head.html" />
 </head>
 <body>
 <%!
@@ -76,6 +74,7 @@
                    }
                }
 
+
                    }
                            }
                            db.disconnectDatabase();
@@ -85,11 +84,11 @@
 
 
     </ul>
-    <div class="title_box">Paket</div>
+    <div class="title_box">Special!!!!</div>
     <div class="border_box">
-        <div class="product_title"><a href="details.html">Motorola 156 MX-VL</a></div>
-        <div class="product_img"><a href="details.html"><img src="images/platzhalter.jpg" alt="" border="0" /></a></div>
-        <div class="prod_price"><span class="reduce">350$</span> <span class="price">270$</span></div>
+        <div class="product_title"></div>
+        <div class="product_img"><img width="120px" height="120px" src="images/rabatt40.jpg" alt="" border="0" /></div>
+        <div class="prod_price"></div>
     </div>
 </div>
 </body>

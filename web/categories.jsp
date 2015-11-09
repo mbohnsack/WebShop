@@ -1,15 +1,11 @@
 <%@ page import="project.DatabaseHelper" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: filip
-  Date: 28.10.2015
-  Time: 12:01
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.sql.SQLException" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!--
+Zeigt den Inhalt der Kategorien an.
+-->
 <html>
 <head>
     <jsp:include page="head.html"/>
@@ -34,25 +30,31 @@
             <jsp:include page="navigation_left.jsp"/>
         </div>
         <div id="content" class="content">
-            <%
+            <% // Wenn das Angeklickte nicht nur Produkte sondern auch Unterkategorien enthält
                 if (!db.getUnterkategorie(produktCat).isEmpty()) {
 
                     List<String> ukat;
                     ukat = db.getUnterkategorie(produktCat);
-
+                    // Fuer jedes Produkt in der Unterkategorie eine ProdBox darstellen mit den Infos
                     for (String temp : ukat) {
                         request.setAttribute("herst", temp);
             %>
             <jsp:include page="prodBox.jsp"/>
-            <% }}
-                  rs = db.getProductsByKategorie(produktCat);
-                    for (int i = 0; i < anzahl; i++) {
-                        while (rs.next()) {
+            <% }
+            }   // Stellt die Produkte einer Kategorie in einer ProdBox dar
+                rs = db.getProductsByKategorie(produktCat);
+                for (int i = 0; i < anzahl; i++) {
+                    while (rs.next()) {
+                        try {
                             request.setAttribute("id", rs.getString(1));
                             request.setAttribute("herst", rs.getString(3));
                             request.setAttribute("preis", rs.getString(4));
                             request.setAttribute("bezeichn", rs.getString(7));
-                            request.setAttribute("sourcepage","cathegories.jsp");
+                            request.setAttribute("sourcepage", "cathegories.jsp");
+
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
             %>
             <jsp:include page="prodBox.jsp"/>
             <% }

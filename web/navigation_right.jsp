@@ -5,25 +5,27 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-
-<!DOCTYPE html>
+<!--
+Warenkorb Anzeige
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title></title>
+    <jsp:include page="head.html"/>
 </head>
 <body>
 
 <div class="shopping_cart">
-    <div class="cart_title">Warenkorb</div><br/>
+    <div class="cart_title">Warenkorb</div>
+    <br/>
 
     <%
         double gesamtpreis = 0;
         cart shoppingCart;
         shoppingCart = (cart) session.getAttribute("cart");
         List<Integer> produktids = new ArrayList<Integer>();
-        if(shoppingCart != null){
+        if (shoppingCart != null) {
             //unchecked
             produktids = shoppingCart.getCartItems();
         }
@@ -33,7 +35,9 @@
 
     %>
     <table style="width: 98%" style="background-color: #a6847d" align="center">
-        <th align="left">Artikel</th><th align="left">Preis</th><th align="left">Entf</th>
+        <th align="left">Artikel</th>
+        <th align="left">Preis</th>
+        <th align="left">Entf</th>
         <%
 
             for (Integer produkt : produktids) {
@@ -46,7 +50,8 @@
                     while (produktDaten.next()) {
                         gesamtpreis = gesamtpreis + Double.parseDouble(produktDaten.getString("prod_preis"));
             %>
-            <td align="left"><%= produktDaten.getString("prod_bezeichn")%></td>
+            <td align="left"><%= produktDaten.getString("prod_bezeichn")%>
+            </td>
             <td align="left"><%= produktDaten.getString("prod_preis")%>&euro;</td>
             <td align="left">
                 <form id="cart" action="removeFromCart" method="post">
@@ -67,9 +72,13 @@
             }
         %>
 
-        <tr><td align="left"><strong>Mietzins/Tag</strong></td>
-            <td align="left"><strong><%= gesamtpreis%>&euro;</strong></td> </tr>
-        <tr><td align="left">ohne Rabatt</td></tr>
+        <tr>
+            <td align="left"><strong>Mietzins/Tag</strong></td>
+            <td align="left"><strong><%= gesamtpreis%>&euro;</strong></td>
+        </tr>
+        <tr>
+            <td align="left">ohne Rabatt</td>
+        </tr>
     </table>
     <%
         db.disconnectDatabase();
@@ -92,9 +101,6 @@
         </tr>
 
     </table>
-
-
-
 
 
 </div>

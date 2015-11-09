@@ -33,6 +33,7 @@ public class updateKategorieServlet extends HttpServlet {
 
         DatabaseHelper db = new DatabaseHelper();
         if (ServletFileUpload.isMultipartContent(request)) {
+
             DiskFileItemFactory factory = new DiskFileItemFactory();
             factory.setSizeThreshold(THRESHOLD_SIZE);
             factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
@@ -56,27 +57,30 @@ public class updateKategorieServlet extends HttpServlet {
             for (FileItem item: formItems) {
                 // processes only fields that are not form fields
                 if (!item.isFormField()) {
+
                     String fileName = new File(item.getName()).getName();
                     String filePath = uploadPath + File.separator + fileName;
                     storeFile = new File(filePath);
-
                     // saves the file on disk
-                    try {
-                        item.write(storeFile);
-                        bild=true;
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    if(item.getSize()!=0) {
+                        try {
+                            item.write(storeFile);
+                            bild = true;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }else{
                     String name=item.getFieldName();
                     if(name!=null) {
                         switch (name) {
-                            case "kategorieName":
+                            case "produktid":
                                 kategorieName = item.getString();
                                 break;
                             case "ueberKategorie":
                                 ueberKategorie = item.getString();
                                 break;
+
                         }
                     }
                 }
@@ -84,6 +88,7 @@ public class updateKategorieServlet extends HttpServlet {
             }
             try {
                 if(bild) {
+
                     db.updateKategorie(kategorieName, ueberKategorie, storeFile);
                 }else{
                     db.updateKategorie(kategorieName, ueberKategorie);
@@ -93,8 +98,9 @@ public class updateKategorieServlet extends HttpServlet {
             }
 
         }
-        String url = "/MitarbeiterView/kategorieVerwalten.jsp";
-        response.sendRedirect( url );
         db.disconnectDatabase();
+        String url = "/MitarbeiterView/kategorieVerwalten.jsp";
+        response.sendRedirect(url);
+
     }
 }

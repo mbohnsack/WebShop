@@ -69,12 +69,12 @@
                 </tr>
                 <tr>
                     <td><label>Produktbeschreibung</label>
-                    <td><textarea class="medium" name="produktbeschreibung" cols="40"
+                    <td><textarea class="medium" name="produktbeschreibung" cols="80"
                                   rows="5"><%=product.getString(5)%></textarea></td>
                 </tr>
                 <tr>
                     <td><label>Technische Details</label>
-                    <td><textarea class="medium" name="details" cols="40" rows="5"><%=product.getString(6)%></textarea>
+                    <td><textarea class="medium" name="details" cols="80" rows="5"><%=product.getString(6)%></textarea>
                     </td>
                 <tr>
                     <td><label>Kategorie</label></td>

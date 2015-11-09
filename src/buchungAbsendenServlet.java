@@ -1,6 +1,3 @@
-/*import de.jollyday.Holiday;
-import de.jollyday.HolidayCalendar;
-import de.jollyday.HolidayManager;*/
 import de.jollyday.HolidayCalendar;
 import de.jollyday.HolidayManager;
 import project.DatabaseHelper;
@@ -42,7 +39,6 @@ public class buchungAbsendenServlet
         int mobil_int = 0;
         int telefon_int = 0;
 
-
         // wenn KD angemeldet ist, brauch er nix anzugeben + den loginname des angemeldeten Nutzers auslesen
         String user = "";
         HttpSession session = request.getSession();
@@ -53,7 +49,6 @@ public class buchungAbsendenServlet
                 user = loginDaten.getUsername();
 
                 ResultSet rs = db.getKundenDatenByLogin(user);
-
                 try{
                     rs.next();
                     email = rs.getString(12);
@@ -79,9 +74,7 @@ public class buchungAbsendenServlet
 
 
             //erzeugt random user wegen primarykey und weil der  KD sich ja nich anmelden will
-
             String passwort = "h4x0r"; //;-P
-
             do {
                 int zahl = (int)(Math.random() * 100000);
                 benutzername = "x" + String.valueOf(zahl);
@@ -146,13 +139,17 @@ public class buchungAbsendenServlet
                 e.printStackTrace();
             }
 
-            // Daten für die Rabatt Berechnung
+            // Daten für die Rabatt Berechnung holen
             request.setAttribute("nutzerName", benutzername);
             request.setAttribute("userName", user);
-            System.out.println(benutzername);
-            System.out.println(user);
             request.setAttribute("abholdatum", abholdatum);
             request.setAttribute("abgabedatum", abgabedatum);
+
+            System.out.println("nutzer" + benutzername);
+            System.out.println("user" + user);
+            System.out.println("abhol" + abholdatum);
+            System.out.println("abgab" + abgabedatum);
+
 
             // wenn abgabe vor abhol
             if(abgabedatum.before(abholdatum)){
@@ -160,13 +157,12 @@ public class buchungAbsendenServlet
                 message = "Das Abgabedatum liegt vor dem Abholdatum!";
             }
 
-            /*
+
             // Prüft ob ein Datum auf einen Feirtag fällt
             HolidayManager manager = HolidayManager.getInstance(HolidayCalendar.GERMANY);
             if (!eingabeFehler) {
                 Calendar abholFeier = GregorianCalendar.getInstance();
                 abholFeier.setTime(abholdatum);
-                System.out.println(manager.isHoliday(abholFeier, "bw"));
                 if (manager.isHoliday(abholFeier, "bw")) {
                     eingabeFehler = true;
                     message = "Das Abholdatum liegt an einem Feiertag.";
@@ -175,12 +171,11 @@ public class buchungAbsendenServlet
             if (!eingabeFehler) {
                 Calendar abgabeFeier = GregorianCalendar.getInstance();
                 abgabeFeier.setTime(abgabedatum);
-                System.out.println(manager.isHoliday(abgabeFeier, "bw"));
                 if(manager.isHoliday(abgabeFeier, "bw")){
                     eingabeFehler = true;
                     message = "Das Abgabedatum liegt an einem Feiertag.";
                 }
-            }*/
+            }
 
             if (!eingabeFehler) {
                 //Produktliste ausm cart holen
@@ -194,16 +189,19 @@ public class buchungAbsendenServlet
                 }
 
                 Integer buchungsCode = db.createBuchung(email, abholdatum, abgabedatum, produktids);
-
+                System.out.println("Bcode: " + buchungsCode);
                 if(buchungsCode != -1){
                     //Buchung erfolgreich
                     SendMailSSL.sendBuchungMail(email, buchungsCode);
                     request.setAttribute("buchCode", buchungsCode);
                     request.getRequestDispatcher("/summaryBuchung.jsp").forward(request, response);
+                    System.out.println("hier");
+                    return;
                 }
                 else{
                     //Buchung fehlgeschlagen
                     message = "Buchung fehlgeschlagen bitte erneut versuchen. (Serverfehler)";
+                    System.out.println("da");
                 }
             }
         }
@@ -212,8 +210,5 @@ public class buchungAbsendenServlet
 
         request.setAttribute("message", message);
         request.getRequestDispatcher("/buchungAbsenden.jsp").forward(request, response);
-
-
-
     }
 }

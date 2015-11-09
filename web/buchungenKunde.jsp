@@ -3,8 +3,6 @@
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.sql.SQLException" %>
 <%@ page import="java.util.Date" %>
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -49,19 +47,14 @@
             <p style="color: red">${message}</p>
 
             <%
-              // wenn der KD sich nicht anmelden will gibt es mehrere KundenID's mit der gleichen mail also nur eine buchung pro ID
-              // abfrage muss über mail erfolgen geht aber  nicht weil mail nicht in der Buchungstabelle enthalten ist
               DatabaseHelper db = new DatabaseHelper();
               int kunId = -2;
               String user = "";
 
-              // damit das dokument wieder richtig geladen wird wenn der KD seine mail schon angegeben hatte
+              // damit das dokument wieder richtig geladen wird wenn der KD seine mail schon angegeben hatte wird die email wieder eingelesen
               String email = "";
               email = (String)request.getAttribute("perMail");
               if (email == null){ email = "";}
-              System.out.println("email "+email);
-
-
 
               loginCookie loginDaten = (loginCookie) session.getAttribute("loginCookie");
 
@@ -104,7 +97,7 @@
             <%
               }
 
-              // Tabelle mit den Buchungen (wird nur angezeigt wenn die KD nummer abgefragt wurde
+              // Tabelle mit den Buchungen (wird nur angezeigt wenn die KD nummer abgefragt wurde)
               if(kunId != -1 && kunId != -2){
                 ResultSet buchungsDaten = db.getBuchungenByKunId(kunId);
 
@@ -126,7 +119,7 @@
             <td align="left"><%= buchungsDaten.getString(5)%></td>
             <td align="left">
               <%
-                //storno knopf nur anzeigen, wenn das datum in der zukunft liegt
+                //storno knopf nur anzeigen, wenn das datum in der zukunft liegt und die Buchung noch offen ist
                 if (abholdatum.after(now) && buchungsDaten.getString(5).contentEquals("ausstehend")){
               %>
             <form name="storno" action="buchungStorno" method="post">

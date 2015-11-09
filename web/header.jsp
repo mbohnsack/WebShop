@@ -5,7 +5,6 @@
     <div class="top_bar">
     </div>
     <div id="header">
-        <div id="logo"> </div>
-        <!-- end of oferte_content-->
+        <div id="logo"></div>
     </div>
 </div>
