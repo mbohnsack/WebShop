@@ -59,6 +59,7 @@ No Cookie found with the name
                     <%
                         project.DatabaseHelper db = new project.DatabaseHelper();
                         try {
+
                             ResultSet rs = db.getAllProductsSortedByName();
                             int id;
                             String bezeichnung;
