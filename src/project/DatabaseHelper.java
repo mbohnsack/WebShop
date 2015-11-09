@@ -1144,11 +1144,11 @@ public class DatabaseHelper{
     }
 
     //gibt die Produkte des Paketes zurück
-    public ResultSet getPaketInhaltByProdukt(Integer prodid){
+    public ResultSet getPaketInhaltByProdukt(Integer prodid, Integer paketid){
         ResultSet rs = null;
 
         try {
-            rs = stmt.executeQuery("SELECT * FROM tbl_paketinhalte WHERE prod_id = "+ prodid);
+            rs = stmt.executeQuery("SELECT * FROM tbl_paketinhalte WHERE prod_id = "+ prodid + " AND pak_id = "+ paketid);
         } catch (SQLException e) {
             e.printStackTrace();
         }
