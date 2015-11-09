@@ -3,6 +3,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.sql.SQLException" %>
+<%@ page import="javax.xml.crypto.Data" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -17,6 +18,7 @@
             String unterKategorie = kategorie;
 
             DatabaseHelper datab = new DatabaseHelper();
+            DatabaseHelper datab2=new DatabaseHelper();
             //schleife l�uft solange unterkategorie nicht null ist
            // while(unterKategorie!=null) {
 
@@ -27,21 +29,26 @@
 
                 while(results.next()) {
                     unterKategorie = results.getString(1);      //holt sich den kategoriename
-                    try{
-                        String einruecken="";
-                       for(int ez=0; ez<ebene-1;ez++) {
-                           einruecken+="&nbsp;&nbsp;";
-                       }
-                    myOut.println("<li class='even'> <form id='category2' style='margin-bottom: 0' method='post' action='categories.jsp'> <button style='cursor:pointer;' name='category' type='submit' value="+ unterKategorie
-                            + ">"+einruecken + unterKategorie + " </button></form></li>");
+                    if (datab.besitztProdukt(unterKategorie)) {
+                    }
+                    try {
+                        String einruecken = "";
+                        for (int ez = 0; ez < ebene - 1; ez++) {
+                            einruecken += "&nbsp;&nbsp;";
+                        }
+                        myOut.println("<li class='even'> <form id='category2' style='margin-bottom: 0' method='post' action='categories.jsp'> <button style='cursor:pointer;' name='category' type='submit' value=" + unterKategorie
+                                + ">" + einruecken + unterKategorie + " </button></form></li>");
 
-                    }catch (Exception e){
+                    } catch (Exception e) {
 
                     }
+                }
                     checkUntKat(unterKategorie,myOut,ebene+1);
                 }
-            }
-          //  }
+            } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+        //  }
             datab.disconnectDatabase();
             //gibt die liste mit allen unterkategorien zur�ck
 
