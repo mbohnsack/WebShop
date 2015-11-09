@@ -1131,7 +1131,7 @@ public class DatabaseHelper{
     }
 
     //gibt den jeweiligen Paketinhalt zurück wobei jedes Produkt nur einmal aufgelistet wird
-    public ResultSet getSinglieProductOfPaket(Integer paketid){
+    public ResultSet getSingleProductOfPaket(Integer paketid){
         ResultSet rs = null;
 
         try {
