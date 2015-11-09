@@ -18,17 +18,18 @@
             // es keine unterkategorie mehr gibt
             String unterKategorie = kategorie;
             List<String> li = new ArrayList();
-
+            DatabaseHelper datab = new DatabaseHelper();
             //schleife läuft solange unterkategorie nicht null ist
             while(unterKategorie!=null){
-                DatabaseHelper datab = new DatabaseHelper();
+
                 ResultSet results = datab.getUnterkategorieRS(unterKategorie);
 
                 results.next();
                 unterKategorie = results.getString(1);      //holt sich den kategoriename
                 li.add(unterKategorie);                     // schreib den Kategorienamen in die list li
-                datab.disconnectDatabase();
+               results.close();
             }
+            datab.disconnectDatabase();
             //gibt die liste mit allen unterkategorien zurück
             return li;
         } catch (SQLException e) {
