@@ -38,7 +38,8 @@
 
         <%
             DatabaseHelper db = new DatabaseHelper();
-            ResultSet rs = db.getAllKategories();
+            DatabaseHelper db2 = new DatabaseHelper();
+            ResultSet rs = db2.getAllKategories();
 
             while(rs.next()){
                 String kate = rs.getString(1);
@@ -66,7 +67,9 @@
                }
 
                    }
-                           }db.disconnectDatabase();
+                           }
+                           db.disconnectDatabase();
+                           db2.disconnectDatabase();
 
                  %>
 
