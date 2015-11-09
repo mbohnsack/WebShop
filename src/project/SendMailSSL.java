@@ -140,7 +140,6 @@ public class SendMailSSL {
             gebuchteProdukte+="\n"+produkte.get(i)+" ("+ preise.get(i)+"\u20ac pro Tag)";
         }
         try {
-
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("hipsterrentalcorp@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
@@ -161,7 +160,6 @@ public class SendMailSSL {
             transport.connect("smtp.gmail.com", username, password);
             transport.sendMessage(message, message.getAllRecipients());
             transport.close();
-
 
         } catch (Exception e) {
             e.printStackTrace();
