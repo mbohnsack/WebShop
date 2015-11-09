@@ -45,16 +45,13 @@
                 }
                     checkUntKat(unterKategorie,myOut,ebene+1);
                 }
+            datab.disconnectDatabase();
+            datab2.disconnectDatabase();
             } catch (SQLException e1) {
             e1.printStackTrace();
         }
-        //  }
-            datab.disconnectDatabase();
             //gibt die liste mit allen unterkategorien zur�ck
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
     }
 
