@@ -1091,8 +1091,8 @@ public class DatabaseHelper{
         ResultSet rs2 = null;
 
         try {
-            Statement stmt2 = c.createStatement();
             rs = stmt.executeQuery("SELECT prod_id FROM tbl_produkt WHERE prod_kategorie ='"+ katName +"'");
+            Statement stmt2 = c.createStatement();
             rs2 = stmt2.executeQuery("SELECT kat_name FROM tbl_kategorie WHERE kat_uebergeordnet ='" + katName + "'");
             if(rs.next()){
                 vorhanden = true;
