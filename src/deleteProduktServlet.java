@@ -12,6 +12,7 @@ import java.io.IOException;
  */
 @WebServlet("/deleteProduktServlet")
 public class deleteProduktServlet extends HttpServlet {
+    //Löschen eines Produktes incl. Bilder
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
         int pakID = Integer.parseInt(request.getParameter("loeschen"));

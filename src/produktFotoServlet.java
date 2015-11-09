@@ -23,7 +23,7 @@ public class produktFotoServlet extends HttpServlet {
     private final int THRESHOLD_SIZE = 1024 * 1024 * 10; // 10MB
     private final int MAX_FILE_SIZE = 1024 * 1024 * 40; // 40MB
     private final int MAX_REQUEST_SIZE = 1024 * 1024 * 50; // 50MB
-
+    //Einem Produkt ein Bild hinzufügen
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 

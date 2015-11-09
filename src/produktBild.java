@@ -12,8 +12,8 @@ import java.io.IOException;
  */
 @WebServlet("/produktBild")
 public class produktBild extends HttpServlet{
+    //Ausgeben eines Bildes für die Nutzung in <img>
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 
         DatabaseHelper db = new DatabaseHelper();
 

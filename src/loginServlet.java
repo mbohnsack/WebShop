@@ -15,11 +15,10 @@ import java.io.PrintWriter;
 
 @WebServlet("/loginServlet")
 public class loginServlet extends HttpServlet {
-
+   //Login überprüfen
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
-        // code to process the form...
         String user = request.getParameter("username");
         String pwd = request.getParameter("password");
         String targetPage = request.getParameter("targetpage");

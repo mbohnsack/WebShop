@@ -12,6 +12,7 @@ import java.io.IOException;
  */
 @WebServlet("/deletePaket")
 public class deletePaket extends HttpServlet {
+    //Löschen eines Paketes inkl. Bilder
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
         int pakID = Integer.parseInt(request.getParameter("loeschen"));

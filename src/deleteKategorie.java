@@ -12,6 +12,7 @@ import java.io.IOException;
  */
 @WebServlet("/deleteKategorie")
 public class deleteKategorie extends HttpServlet {
+    //Löschen einer Kategorie
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
         String katName = request.getParameter("loeschen");

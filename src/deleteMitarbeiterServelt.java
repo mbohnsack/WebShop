@@ -12,6 +12,7 @@ import java.io.IOException;
  */
 @WebServlet("/deleteMitarbeiterServelt")
 public class deleteMitarbeiterServelt extends HttpServlet {
+    //Löschen eines Mitarbeiters
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
         String mitarbeiterUsername = request.getParameter("loeschen");

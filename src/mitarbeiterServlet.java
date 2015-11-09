@@ -12,7 +12,7 @@ import java.io.PrintWriter;
 /**
  * Created by wesley.rubio.cueva on 22.10.2015.
  */
-
+@Deprecated
 @WebServlet("/mitarbeiterServlet")
 public class mitarbeiterServlet extends HttpServlet{
     protected void doPost(HttpServletRequest request,
