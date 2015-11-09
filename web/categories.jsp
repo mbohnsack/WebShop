@@ -38,8 +38,9 @@ Zeigt den Inhalt der Kategorien an.
                     // Fuer jedes Produkt in der Unterkategorie eine ProdBox darstellen mit den Infos
                     for (String temp : ukat) {
                         request.setAttribute("herst", temp);
+
             %>
-            <jsp:include page="prodBox.jsp"/>
+            <jsp:include page="catBox.jsp"/>
             <% }
             }   // Stellt die Produkte einer Kategorie in einer ProdBox dar
                 rs = db.getProductsByKategorie(produktCat);
@@ -50,7 +51,7 @@ Zeigt den Inhalt der Kategorien an.
                             request.setAttribute("herst", rs.getString(3));
                             request.setAttribute("preis", rs.getString(4));
                             request.setAttribute("bezeichn", rs.getString(7));
-                            request.setAttribute("sourcepage", "cathegories.jsp");
+                            request.setAttribute("sourcepage", "categories.jsp");
 
                         } catch (SQLException e) {
                             e.printStackTrace();
