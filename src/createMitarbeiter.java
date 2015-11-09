@@ -14,6 +14,7 @@ import java.io.PrintWriter;
  */
 @WebServlet("/createMitarbeiter")
 public class createMitarbeiter extends HttpServlet {
+    //Neuen Mitarbeiter oder Admin anlegen
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
         DatabaseHelper db=new DatabaseHelper();
@@ -22,10 +23,7 @@ public class createMitarbeiter extends HttpServlet {
         String typ=request.getParameter("typ");
         if(db.mitarbeiterFrei(user)) {
             db.createMitarbeiter(user, pwd, typ);
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/MitarbeiterView/mitarbeiterAnlegen.jsp");
-            PrintWriter out = response.getWriter();
-            out.println("<font color=red>Mitarbeiter erfolgreich angelegt.</font>");
-            rd.include(request, response);
+            response.sendRedirect("/MitarbeiterView/mitarbeiterVerwalten.jsp");
         }else{
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/MitarbeiterView/mitarbeiterAnlegen.jsp");
             PrintWriter out = response.getWriter();

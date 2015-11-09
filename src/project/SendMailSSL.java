@@ -10,7 +10,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Properties;
 public class SendMailSSL {
-    public static void sendMail() {
+    public static void sendMail() { //Testmethode
 
         final String username = "hipsterrentalcorp@gmail.com";
         final String password = "YXCVBNM;";
@@ -53,7 +53,7 @@ public class SendMailSSL {
         }
     }
 
-    public static void sendSubmitMail(String produkt, String datum){
+    public static void sendSubmitMail(String produkt, String datum){ //Versenden einer Mail bei Buchungseingang
         final String username = "hipsterrentalcorp@gmail.com";
         final String password = "YXCVBNM;";
 
@@ -100,7 +100,7 @@ public class SendMailSSL {
         }
     }
 
-    public static void sendBuchungMail(String mail,int buchung){
+    public static void sendBuchungMail(String mail,int buchung){  //Versenden einer Mail bei Buchungsannahme/-ablehnung
         final String username = "hipsterrentalcorp@gmail.com";
         final String password = "YXCVBNM;";
 

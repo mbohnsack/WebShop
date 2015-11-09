@@ -12,6 +12,7 @@ import java.io.IOException;
  */
 @WebServlet("/addHWCodeServlet")
 public class addHWCodeServlet extends HttpServlet {
+    //Ein physisches Gerät (HardwareCode) einem Produkt zuordnen
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
         String produkt=request.getParameter("produkt");

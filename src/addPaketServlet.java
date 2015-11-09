@@ -15,6 +15,7 @@ import java.util.List;
  */
 @WebServlet("/addPaketServlet")
 public class addPaketServlet extends HttpServlet {
+    //Ein neues Paket anlegen
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 

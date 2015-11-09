@@ -20,6 +20,7 @@ import java.util.List;
  */
 @WebServlet("/createBuchung")
 public class createBuchung extends HttpServlet {
+    //Erstellen einer neuen Buchung, inkl. senden einer Erfassungsmail
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
