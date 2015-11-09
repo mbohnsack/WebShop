@@ -1083,4 +1083,31 @@ public class DatabaseHelper{
         return rs;
     }
 
+    public Boolean besitztProdukt(String katName){
+        Boolean vorhanden = false;
+        String unterKat = null;
+        ResultSet rs = null;
+        ResultSet rs2 = null;
+
+        try {
+            rs = stmt.executeQuery("SELECT prod_id FROM tbl_produkt WHERE prod_kategorie ='"+ katName +"'");
+            rs2 = stmt.executeQuery("SELECT kat_name FROM tbl_kategorie WHERE kat_uebergeordnet ='" + katName + "'");
+            if(rs.next()){
+                vorhanden = true;
+            } else if(rs2.isBeforeFirst()){
+                while(rs2.next()){
+                    unterKat = rs2.getString("kat_name");
+                    besitztProdukt(unterKat);
+                }
+            } else{
+                vorhanden = false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return vorhanden;
+    }
+
 }
