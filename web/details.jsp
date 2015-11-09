@@ -15,7 +15,7 @@
 <div id="main_container">
     <%
         DatabaseHelper db = new DatabaseHelper();
-        // Ruft den Parameter ID ab
+        // Ruft den Parameter ID ab.
         Integer id = Integer.parseInt(request.getParameter("details"));
         ResultSet rs = db.getProductsById(id);
         List<Integer> i = new ArrayList();
