@@ -1043,7 +1043,7 @@ public class DatabaseHelper{
         try {
             ResultSet rs2 = c.createStatement().executeQuery("SELECT kun_nummer FROM tbl_kunde WHERE kun_email='"+ mail +"'");
             while(rs2.next()){
-                rs=stmt.executeQuery("SELECT COUNT(kun_id) AS anzahl FROM tbl_buchungsliste WHERE kun_id = ");
+                rs=stmt.executeQuery("SELECT COUNT(kun_id) AS anzahl FROM tbl_buchungsliste WHERE kun_id = "+ rs2.getInt("kun_nummer"));
                 rs.next();
                 int anzahlTemp=rs.getInt("anzahl");
                 if(anzahlTemp > anzahl){
