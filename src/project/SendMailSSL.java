@@ -151,7 +151,7 @@ public class SendMailSSL {
                     "\n Folgende Produkte wurden bestellt:" + gebuchteProdukte +
                     "\n Der Preis betr\u00e4gt: "+df.format(gesamtPreis)+"\u20ac"+
                     "\n Der Buchunszeitraum ist: "+dauer+
-                    "\n Ein Mitarbeiter wird sich schnellstm\u00f6glich um Ihre Bestellung k\u00fcmmern.)" +
+                    "\n Ein Mitarbeiter wird sich schnellstm\u00f6glich um Ihre Bestellung k\u00fcmmern." +
                     "\n Sie erhalten eine weitere Mail, sobald die Bestellung verbindlich angenommen wurde." +
                     "\n\n Mit freundlichen Gr\u00fc\u00dfen" +
                     "\n Ihr Team von Hipster Rental Corp" +
