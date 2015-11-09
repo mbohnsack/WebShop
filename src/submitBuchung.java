@@ -9,13 +9,13 @@ import java.io.IOException;
 /**
  * Created by Malte on 21.10.2015.
  */
+@Deprecated
 @WebServlet("/submitBuchung")
 public class submitBuchung {
 
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
-        // code to process the form...
         DatabaseHelper db = new DatabaseHelper();
         String buchungen[] = request.getParameterValues("buchung");
         if (buchungen != null) {

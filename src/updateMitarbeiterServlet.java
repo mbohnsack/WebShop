@@ -12,6 +12,7 @@ import java.io.IOException;
  */
 @WebServlet("/updateMitarbeiterServlet")
 public class updateMitarbeiterServlet extends HttpServlet{
+    //Ändern der Rolle eines Mitarbeiters/Admins
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
         String mitarbeiterUsername = request.getParameter("username");

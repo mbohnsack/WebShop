@@ -12,6 +12,7 @@ import java.io.IOException;
  */
 @WebServlet("/updateProduktServlet")
 public class updateProduktServlet extends HttpServlet {
+    //Daten eines Produktes ändern/updaten
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
         int produktid = Integer.parseInt(request.getParameter("produktid"));

@@ -13,6 +13,7 @@ import java.io.IOException;
  */
 @WebServlet("/updateBuchungStatusServlet")
 public class updateBuchungStatusServlet extends HttpServlet {
+    //Ändern des Buchungsstatus in angenommen oder abgelehnt
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
