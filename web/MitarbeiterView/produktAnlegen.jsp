@@ -53,11 +53,11 @@
                 </tr>
                 <tr>
                     <td><label>Produktbeschreibung</label></td>
-                    <td><textarea class="medium" name="produktbeschreibung" cols="40" rows="5"></textarea></td>
+                    <td><textarea class="medium" name="produktbeschreibung" cols="80" rows="5"></textarea></td>
                 </tr>
                 <tr>
                     <td><label>Technische Details</label></td>
-                    <td><textarea class="medium" name="details" cols="40" rows="5"></textarea></td>
+                    <td><textarea class="medium" name="details" cols="80" rows="5"></textarea></td>
                 </tr>
                 <tr>
                     <td><label>Kategorie</label></td>
