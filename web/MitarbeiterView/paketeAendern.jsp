@@ -99,6 +99,7 @@ else {
         <tr>
           <td>Produktname</td>
           <td>Prio</td>
+          <td>Anzahl</td>
         </tr>
         <%
           DatabaseHelper db3 = new project.DatabaseHelper();
@@ -119,6 +120,7 @@ else {
         <tr>
           <td>
             <%
+
                 DatabaseHelper db4 = new project.DatabaseHelper();
                 ResultSet rsPaketProdukte= db4.getSingleProductOfPaket(paketID);
                 while(rsPaketProdukte.next())
@@ -128,25 +130,28 @@ else {
                   System.out.println(id);
 
                   DatabaseHelper db5 = new project.DatabaseHelper();
-                  ResultSet paketProdukt= db5.getProdukteOfPaket(id);
-                  System.out.println(paketProdukt.getInt(4));
+                  ResultSet paketProdukt= db5.getPaketInhaltByProdukt(id);
+                  paketProdukt.next();
+                  int prio =  paketProdukt.getInt(4);
 
                   if(idPaketPordukt==id){
             %>
                       <input type="checkbox"  checked name="produkte" value=<%=id%>/><%=hersteller %> <%=bezeichnung %><br/>
                       </td>
                       <td>
-                        <select name="<%=id%>" value="" >
+                        <select name="<%=id%>" value="<%=prio%>" >
                           <option value="1">1</option>
                           <option value="2">2</option>
                           <option value="3">3</option>
                         </select>
                       </td>
-
+                      <td>
+                        <input type="number" name="anzahl" value="1"/>
+                      </td>
             <%
                     checked=true;
-                  db5.disconnectDatabase();
 
+                  db5.disconnectDatabase();
                   }
 
               }
@@ -161,10 +166,13 @@ else {
                           <option value="3">3</option>
                         </select>
                       </td>
+                      <td>
+                        <input type="number" name="anzahl" value="1"/>
+                      </td>
             <%
                   }
 
-
+                  db4.disconnectDatabase();
                 }
 
 
