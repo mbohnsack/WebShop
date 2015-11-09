@@ -18,7 +18,7 @@ public class addPaketServlet extends HttpServlet {
     //Ein neues Paket anlegen
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
-
+        String[] anzahl = request.getParameterValues("anzahl");
         String[] produkte = request.getParameterValues("produkte");
         List<Integer> prioList = new ArrayList<>();
 
@@ -28,7 +28,9 @@ public class addPaketServlet extends HttpServlet {
         String details = request.getParameter("details");
         String kategorie = request.getParameter("kategorie");
         String hersteller = request.getParameter("hersteller");
+
         double preis = Double.parseDouble(request.getParameter("preis"));
+
 
 
 
@@ -53,10 +55,13 @@ public class addPaketServlet extends HttpServlet {
 
             //Paketinhalte in die Pakettabelle schreiben
             int  anzahlProdukte = produkte.length;
-            for(int counterP =0;counterP<anzahlProdukte;counterP++){
-                db.addPaket(prodid,kategorie,prioList.get(counterP),Integer.parseInt( produkte[counterP].substring(0, produkte[counterP].length() - 1)));
-            }
+            for(int counterP =0;counterP<anzahlProdukte;counterP++) {
+                int anzahlInt = Integer.parseInt(anzahl[counterP]);
+                for (int i2 = 0; i2 < anzahlInt; i2++) {
+                    db.addPaket(prodid, kategorie, prioList.get(counterP), Integer.parseInt(produkte[counterP].substring(0, produkte[counterP].length() - 1)));
 
+                }
+            }
 
         }catch (Exception e){
             e.printStackTrace();

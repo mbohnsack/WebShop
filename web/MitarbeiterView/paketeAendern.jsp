@@ -2,6 +2,7 @@
 <%@ page import="project.DatabaseHelper" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="project.loginCookie" %>
+<%@ page import="com.sun.org.apache.xpath.internal.SourceTree" %>
 <%--
   Created by IntelliJ IDEA.
   User: Chris
@@ -118,32 +119,36 @@ else {
         <tr>
           <td>
             <%
-              DatabaseHelper db4 = new project.DatabaseHelper();
-                ResultSet rsPaketProdukte= db4.getProdukteOfPaket(paketID);
+                DatabaseHelper db4 = new project.DatabaseHelper();
+                ResultSet rsPaketProdukte= db4.getSingleProductOfPaket(paketID);
                 while(rsPaketProdukte.next())
                 {
-                  int idPaketPordukt= rsPaketProdukte.getInt(4);
-                  inhaltid = rsPaketProdukte.getInt(5);
+                  int idPaketPordukt= rsPaketProdukte.getInt(1);
+                  System.out.println(idPaketPordukt);
+                  System.out.println(id);
 
-                  int prio = rsPaketProdukte.getInt(3);
+                  DatabaseHelper db5 = new project.DatabaseHelper();
+                  ResultSet paketProdukt= db5.getProdukteOfPaket(id);
+                  System.out.println(paketProdukt.getInt(4));
 
                   if(idPaketPordukt==id){
             %>
                       <input type="checkbox"  checked name="produkte" value=<%=id%>/><%=hersteller %> <%=bezeichnung %><br/>
                       </td>
                       <td>
-                        <select name="<%=id%>" value="<%=prio%>" >
+                        <select name="<%=id%>" value="" >
                           <option value="1">1</option>
                           <option value="2">2</option>
                           <option value="3">3</option>
                         </select>
                       </td>
+
             <%
                     checked=true;
-
+                  db5.disconnectDatabase();
                   }
 
-                  }
+              }
               if (checked==false){
             %>
                         <input type="checkbox"  name="produkte" value=<%=id%>/><%=hersteller %> <%=bezeichnung %><br/>
@@ -157,7 +162,8 @@ else {
                       </td>
             <%
                   }
-                db4.disconnectDatabase();
+
+
                 }
 
 

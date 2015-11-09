@@ -87,6 +87,7 @@
                             <tr>
                                 <td>Produktname</td>
                                 <td>Prio</td>
+                                <td>Anzahl</td>
                             </tr>
                             <%
                                 DatabaseHelper db = new project.DatabaseHelper();
@@ -112,6 +113,9 @@
                                         <option value="2">2</option>
                                         <option value="3">3</option>
                                     </select>
+                                </td>
+                                <td>
+                                    <input type="number" name="anzahl" value="1"/>
                                 </td>
                             </tr>
 
