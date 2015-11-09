@@ -29,21 +29,22 @@
 
                 while(results.next()) {
                     unterKategorie = results.getString(1);      //holt sich den kategoriename
-                    if (datab.besitztProdukt(unterKategorie)) {
-                    }
-                    try {
-                        String einruecken = "";
-                        for (int ez = 0; ez < ebene - 1; ez++) {
-                            einruecken += "&nbsp;&nbsp;";
+                    if (datab2.besitztProdukt(unterKategorie)) {
+
+                        try {
+                            String einruecken = "";
+                            for (int ez = 0; ez < ebene - 1; ez++) {
+                                einruecken += "&nbsp;&nbsp;";
+                            }
+                            myOut.println("<li class='even'> <form id='category2' style='margin-bottom: 0' method='post' action='categories.jsp'> <button style='cursor:pointer;' name='category' type='submit' value=" + unterKategorie
+                                    + ">" + einruecken + unterKategorie + " </button></form></li>");
+
+                        } catch (Exception e) {
+
                         }
-                        myOut.println("<li class='even'> <form id='category2' style='margin-bottom: 0' method='post' action='categories.jsp'> <button style='cursor:pointer;' name='category' type='submit' value=" + unterKategorie
-                                + ">" + einruecken + unterKategorie + " </button></form></li>");
-
-                    } catch (Exception e) {
-
                     }
                 }
-                    checkUntKat(unterKategorie,myOut,ebene+1);
+                    checkUntKat(unterKategorie, myOut, ebene + 1);
                 }
             datab.disconnectDatabase();
             datab2.disconnectDatabase();
