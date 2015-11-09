@@ -1100,7 +1100,9 @@ public class DatabaseHelper{
             } else if(rs2.isBeforeFirst()){
                 while(rs2.next()){
                     unterKat = rs2.getString("kat_name");
-                    besitztProdukt(unterKat);
+                    if(vorhanden==false) {
+                       vorhanden=besitztProdukt(unterKat);
+                    }
                 }
             } else{
                 vorhanden = false;
