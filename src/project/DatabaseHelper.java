@@ -1135,7 +1135,7 @@ public class DatabaseHelper{
         ResultSet rs = null;
 
         try {
-            rs = stmt.executeQuery("SELECT pak_id, prod_id FROM tbl_paketinhalte WHERE pak_id = "+ paketid +" GROUP BY pak_id, prod_id");
+            rs = stmt.executeQuery("SELECT * FROM tbl_paketinhalte WHERE pak_id = "+ paketid +" GROUP BY pak_id, prod_id");
         } catch (SQLException e) {
             e.printStackTrace();
         }
