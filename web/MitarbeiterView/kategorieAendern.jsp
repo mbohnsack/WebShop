@@ -56,7 +56,7 @@
                 </tr>
                 <tr>
                     <td><label>Kategorie Name</label></td>
-                    <td><input type="text" name="kategorieName" value="<%=kategorie.getString(1)%>"/></td>
+                    <td><input type="text" name="kategorieName" disabled value="<%=kategorie.getString(1)%>"/></td>
                 </tr>
                 <tr>
                     <td><label>Übergeordnete Kategorie</label></td>
