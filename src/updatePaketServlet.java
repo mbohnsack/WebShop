@@ -67,7 +67,7 @@ public class updatePaketServlet extends HttpServlet {
                 int counterP=0;
                 while(counterP<anzahlProdukte){
                     for(int counter =0;counter<anzahlProdukte;counter++) {
-                        int temp=Integer.parseInt(produkte[counter]);
+                        int temp=Integer.parseInt(produkte[counter].substring(0,produkte[counter].length()-1));
                         int counter2=werte.indexOf(temp);
                         int anzahlInt = Integer.parseInt(anzahl[counter2]);
                         for (int i2 = 0; i2 < anzahlInt; i2++) {
