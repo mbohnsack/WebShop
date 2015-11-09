@@ -85,7 +85,7 @@ Warenkorb Anzeige
     %>
 
 
-    <table style="width: 98%" style="background-color: #a6847d" align="center">
+    <table style="width: 98%" style="background-color: #a6847d" align="center" >
         <tr>
             <td>
                 <form name="buchen" method="post" action="buchungAbsenden.jsp">
