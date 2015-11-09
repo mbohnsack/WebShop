@@ -130,9 +130,11 @@ else {
                   System.out.println(id);
 
                   DatabaseHelper db5 = new project.DatabaseHelper();
-                  ResultSet paketProdukt= db5.getPaketInhaltByProdukt(id);
+                  ResultSet paketProdukt= db5.getPaketInhaltByProdukt(idPaketPordukt);
                   paketProdukt.next();
                   int prio =  paketProdukt.getInt(4);
+
+                  int anzahl = db5.anzahlProduktImPaket(idPaketPordukt);
 
                   if(idPaketPordukt==id){
             %>
@@ -146,15 +148,13 @@ else {
                         </select>
                       </td>
                       <td>
-                        <input type="number" name="anzahl" value="1"/>
+                        <input type="number" name="anzahl" value="<%=anzahl%>"/>
                       </td>
             <%
                     checked=true;
-
-
-                  db5.disconnectDatabase();
+                    break;
                   }
-
+                db5.disconnectDatabase();
               }
               if (checked==false){
             %>

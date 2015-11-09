@@ -18,6 +18,7 @@ public class updatePaketServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
+        String[] anzahl = request.getParameterValues("anzahl");
         String[] produkte = request.getParameterValues("produkte");
         List<Integer> prioList = new ArrayList<>();
 
@@ -51,13 +52,17 @@ public class updatePaketServlet extends HttpServlet {
                 int  anzahlProdukte = produkte.length;
                 db.deletePaketKomponenten(paketid);
                 int counterP=0;
-                while(counterP<anzahlProdukte){
-                    System.out.println(counterP);
-                    System.out.println(prioList.get(counterP));
-                    System.out.println(produkte[counterP]);
-                    db.addPaket(paketid,kategorie,prioList.get(counterP),Integer.parseInt( produkte[counterP].substring(0, produkte[counterP].length() - 1)));
-                    counterP++;
-                }
+
+                    for(int counter =0;counter<anzahlProdukte;counter++) {
+                        int anzahlInt = Integer.parseInt(anzahl[counter]);
+                        System.out.println(anzahlInt+ "anzahl");
+                        for (int i2 = 0; i2 < anzahlInt; i2++) {
+                            db.addPaket(paketid, kategorie, prioList.get(counter), Integer.parseInt(produkte[counter].substring(0, produkte[counter].length() - 1)));
+
+                        }
+                    }
+                    //db.addPaket(paketid,kategorie,prioList.get(counterP),Integer.parseInt( produkte[counterP].substring(0, produkte[counterP].length() - 1)));
+
 
                 db.disconnectDatabase();
             }catch (Exception e){
