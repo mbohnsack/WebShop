@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,16 @@ public class updatePaketServlet extends HttpServlet {
 
         String[] anzahl = request.getParameterValues("anzahl");
         String[] produkte = request.getParameterValues("produkte");
+        DatabaseHelper data=new DatabaseHelper();
+        ResultSet rs=data.getAllProductsSortedByName();
+        List<Integer> werte=new ArrayList<Integer>();
+        try {
+            while(rs.next()){
+                werte.add(rs.getInt("prod_id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         List<Integer> prioList = new ArrayList<>();
 
 
@@ -55,7 +67,9 @@ public class updatePaketServlet extends HttpServlet {
                 int counterP=0;
                 while(counterP<anzahlProdukte){
                     for(int counter =0;counter<anzahlProdukte;counter++) {
-                        int anzahlInt = Integer.parseInt(anzahl[counter]);
+                        int temp=Integer.parseInt(produkte[counter]);
+                        int counter2=werte.indexOf(temp);
+                        int anzahlInt = Integer.parseInt(anzahl[counter2]);
                         for (int i2 = 0; i2 < anzahlInt; i2++) {
                             db.addPaket(paketid, kategorie, prioList.get(counterP), Integer.parseInt(produkte[counterP].substring(0, produkte[counterP].length() - 1)));
 
