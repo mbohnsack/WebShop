@@ -49,7 +49,7 @@ public class updatePaketServlet extends HttpServlet {
         if(produkte!=null){
             for (String produktId : produkte) {
                 System.out.println(produktId);
-                Integer prio = Integer.parseInt(request.getParameter(produktId));
+                Integer prio = Integer.parseInt(request.getParameter(produktId.substring(0, produktId.length() - 1)));
                 prioList.add(prio);
             }
 
