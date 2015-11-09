@@ -1,12 +1,10 @@
 package project;
 
 import MD5.MD5;
-import org.postgresql.largeobject.LargeObject;
-import org.postgresql.largeobject.LargeObjectManager;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,6 +17,7 @@ public class DatabaseHelper{
     Connection c;
     Statement stmt;
 
+    //Initieren des DatebaseHelper inkl. Verbindungsaufbau zum PostgreSQL-Server
     public DatabaseHelper() {
         try {
             Class.forName("org.postgresql.Driver");
@@ -31,6 +30,7 @@ public class DatabaseHelper{
         }
     }
 
+    //Anlegen eines neuen Mitarbeiter in der Datenbank
     public void createMitarbeiter(String name, String passwort, String typ){
         try {
             stmt.executeUpdate("INSERT INTO tbl_mitarbeiter (mit_benutzer,mit_passwort,mit_typ) VALUES ('" + name + "','" + MD5.getMD5(passwort) + "','"+typ+"');");
@@ -39,6 +39,7 @@ public class DatabaseHelper{
         }
     }
 
+    //Ändern der Rolle eines Mitarbeiters in der Datenbank
     public void updateMitarbeiter(String typ, String benutzerName){
         try {
             stmt.executeQuery("UPDATE tbl_mitarbeiter SET mit_typ = '"+ typ +"' WHERE mit_benutzer = '"+ benutzerName+"'");
@@ -47,6 +48,7 @@ public class DatabaseHelper{
         }
     }
 
+    //Rückgabe der Rolle eines Mitarbeiters
     public String getMitarbeiterRolle(String name){
         String rolle=null;
         try {
@@ -63,6 +65,7 @@ public class DatabaseHelper{
         return rolle;
     }
 
+    //LÖschen eines Mitarbeiters aus der Datenbank
     public void deleteMitarbeiter(String name){
         try {
             stmt.executeUpdate("DELETE FROM tbl_mitarbeiter WHERE mit_benutzer='"+name+"';");
@@ -71,6 +74,7 @@ public class DatabaseHelper{
         }
     }
 
+    //Löschen eines Kunden aus der Datenbank
     public void deleteKunde(String name){
         try {
             stmt.executeUpdate("DELETE FROM tbl_kunde WHERE kun_benutzer='"+name+"';");
@@ -79,6 +83,7 @@ public class DatabaseHelper{
         }
     }
 
+    //Rückgabe, ob der Mitarbeitername noch ungenutzt/verfügbar ist
     public boolean mitarbeiterFrei(String name){
         Boolean frei=false;
         try {
@@ -92,16 +97,18 @@ public class DatabaseHelper{
         return frei;
     }
 
+    //Rückgabe eines ReSultSets mit den 9 meistgebuchten Produkten
     public ResultSet getTopProducts(){
         ResultSet rs=null;
         try{
-            rs=stmt.executeQuery("SELECT * FROM tbl_produkt ORDER BY buch_anzahl DESC FETCH FIRST 10 ROWS ONLY ");
+            rs=stmt.executeQuery("SELECT * FROM tbl_produkt ORDER BY buch_anzahl DESC FETCH FIRST 9 ROWS ONLY ");
         }catch(Exception e){
             e.printStackTrace();
         }
         return rs;
     }
 
+    //Rüclgabe eines ResultSets mit dem Produkt, weches zur übergebenen ProduktId gehört
     public ResultSet getProductsById(Integer Id){
         ResultSet rs=null;
         try{
@@ -111,8 +118,8 @@ public class DatabaseHelper{
         }
         return rs;
     }
-    //test
 
+    //Rückgabe eines ResultSets mit allen Produkten der Datenbank (exkl. Pakete).
     public ResultSet getAllProducts(){
         ResultSet rs=null;
         try{
@@ -123,6 +130,7 @@ public class DatabaseHelper{
         return rs;
     }
 
+    //Anlegen eines neuen Kunden mit der Rückgabe, ob das anlegen erfolgreich war
     public boolean createKunde(String name,String passwort,String nname, String vname, String strasse, String hnummer, int plz,String ort, int tel, int mobil, String email, String orga){
         try{
             ResultSet rs =stmt.executeQuery( "SELECT MAX(kun_nummer) AS MaxID FROM tbl_kunde;" );
@@ -137,6 +145,7 @@ public class DatabaseHelper{
         }
     }
 
+    //Rückgabe, ob der Kundenname verfügbar/ungenutzt ist
     public boolean KundeFrei(String name){
         Boolean frei=false;
         try {
@@ -150,6 +159,7 @@ public class DatabaseHelper{
         return frei;
     }
 
+    //Rückgabe, ob die eingegebenen LoginDaten richtig sind (Kunde)
     public boolean loginKunde(String name, String password) {
         Boolean loginstate = false;
         try {
@@ -166,7 +176,7 @@ public class DatabaseHelper{
     }
 
 
-
+    //Rückgabe, ob die einggegebenen LoginDaten richtig sind (Mitarbeiter)
     public boolean loginMitarbeiter(String name, String password) {
         Boolean loginstate = false;
         try {
@@ -182,6 +192,7 @@ public class DatabaseHelper{
         return loginstate;
     }
 
+    @Deprecated
     public ResultSet draftBestellung(){
         ResultSet rs=null;
         try{
@@ -192,6 +203,7 @@ public class DatabaseHelper{
         return rs;
     }
 
+    @Deprecated
     public void submitBuchung (String buchung){
         try {
             int buchungi=Integer.parseInt(buchung);
@@ -206,6 +218,7 @@ public class DatabaseHelper{
         }
     }
 
+    //Erstellen einer neuen Buchung inkl. Prüfung, ob Produkte verfügbar, Ermittlung der physischen Geräte und erhöhen des Buchungszählers; Rückgabe der BuchungsID bei Erfolg, ansonsten -1
     public Integer createBuchung(String kundenmail, Date abholdatum, Date abgabedatum, List<Integer> produktids){
         java.sql.Date abholung = new java.sql.Date(abholdatum.getTime());
         java.sql.Date abgabe = new java.sql.Date(abgabedatum.getTime());
@@ -227,7 +240,7 @@ public class DatabaseHelper{
                     if(produktVerfuegbar(produkt, abholdatum, abgabedatum)){
                         rs = stmt.executeQuery("SELECT prod_code FROM tbl_lagerliste WHERE prod_id = "+ produkt);
                         if(rs.next()){
-                            c.createStatement().executeUpdate("UPDATE tbl_produkt SET buch_anzahl =(SELECT buch_anzahl+1 FROM tbl_produkt where prod_id = "+ produkt +") WHERE prod_id = "+ produkt);
+                            c.createStatement().executeUpdate("UPDATE tbl_produkt SET buch_anzahl =(SELECT buch_anzahl+1 FROM tbl_produkt where prod_id = " + produkt + ") WHERE prod_id = " + produkt);
                             String prodcode = rs.getString("prod_code");
                             hwcodes.add(prodcode);
                         } else{
@@ -255,6 +268,7 @@ public class DatabaseHelper{
         return buchcode;
     }
 
+    //Rückgabe eines ResultSets mit allen ausstehenden Buchungen
     public ResultSet getBuchungen(){
         ResultSet rs = null;
 
@@ -267,6 +281,7 @@ public class DatabaseHelper{
         return rs;
     }
 
+    //Rückgabe eines ResultSets mit allen Buchungen eines bestimmten Kunden
     public ResultSet getBuchungenByKunId(int kunId){
         ResultSet rs = null;
 
@@ -279,6 +294,7 @@ public class DatabaseHelper{
         return rs;
     }
 
+    //Rückgabe eines ResultSets mit einer Buchung, die mitHilde der BuchungsId ermittelt wird
     public ResultSet getBuchungById(int buchId){
         ResultSet rs = null;
 
@@ -291,6 +307,7 @@ public class DatabaseHelper{
         return rs;
     }
 
+    //Ändern des Buchungsstatus in angenommen oder abgelehnt; Rückgabe, ob erfolgreich
     public Boolean updateBuchungsstatus(Integer buchungsId, String status){
         Boolean erfolgreich = false;
 
@@ -304,6 +321,7 @@ public class DatabaseHelper{
         return erfolgreich;
     }
 
+    //Rückgabe, wie viele Tage ein Produkt gebucht ist
     public Integer getBuchungsdauerById(Integer id){
         Integer tage = null;
         Date abholung = null;
@@ -323,6 +341,7 @@ public class DatabaseHelper{
         return tage;
     }
 
+    //Rückgabe eines Buchungszeitraumes als String
     public String getZeitraum(Integer buchungId){
         String zeitraum = null;
         Date abholung = null;
@@ -341,6 +360,7 @@ public class DatabaseHelper{
         return zeitraum;
     }
 
+    //Anlegen eines neuen Produktes (exkl. Bild), Rückgabe der ProduktId
     public Integer addProduct(String kategorie, String hersteller, Double preis, String beschreibung, String details, String bezeichnung, String infBezeichnung){
         Integer id = null;
         try {
@@ -364,6 +384,7 @@ public class DatabaseHelper{
         return id;
     }
 
+    //Aktualisiren/updaten der Produktdaten (exkl. Bild)
     public void updateProduct(Integer id, String kategorie, String hersteller, Double preis, String beschreibung, String details, String bezeichnung, String infBezeichnung, Integer buchungAnzahl){
         try {
             stmt.executeQuery("UPDATE tbl_produkt SET prod_kategorie = '" + kategorie + "', prod_hersteller = '" + hersteller + "', prod_preis = " + preis + ", prod_beschreibung = '" + beschreibung + "', " +
@@ -373,6 +394,7 @@ public class DatabaseHelper{
         }
     }
 
+    //Löschen eines Produktes (inkl. Bilder)
     public void deleteProduct(Integer id){
         try {
             stmt.executeUpdate("DELETE FROM tbl_bild WHERE prod_id ="+ id);
@@ -382,6 +404,7 @@ public class DatabaseHelper{
         }
     }
 
+    //Neue Kategorie anegen (inkl. Bild)
     public void addKategorie(String name, String uebergeordnet, File bild) throws IOException, SQLException {
 
         FileInputStream fis = new FileInputStream(bild);
@@ -395,12 +418,14 @@ public class DatabaseHelper{
 
     }
 
+    //Neue Kategorie anlegen (exkl. Bild)
     public void addKategorie(String name, String uebergeordnet) throws IOException, SQLException {
 
         stmt.executeUpdate("INSERT INTO tbl_kategorie (kat_name, kat_uebergeordnet) VALUES ('"+ name +"', '"+ uebergeordnet +"')");
 
     }
 
+    //Aktualisiren/updaten der Kategorie (inkl. Bild)
     public void updateKategorie(String name, String uebergeordnet, File bild) throws IOException, SQLException {
 
         FileInputStream fis = new FileInputStream(bild);
@@ -414,12 +439,14 @@ public class DatabaseHelper{
 
     }
 
+    //Aktualisiren/updaten der Kategorie (exkl. Bild)
     public void updateKategorie(String name, String uebergeordnet) throws IOException, SQLException {
 
         stmt.executeUpdate("UPDATE tbl_kategorie SET kat_uebergeordnet = '"+ uebergeordnet +"' WHERE kat_name = '"+ name +"'");
 
     }
 
+    //Rückgabe des Produktpreises
     public double getPrice(Integer id){
         Double preis = null;
         try {
@@ -432,6 +459,7 @@ public class DatabaseHelper{
         return preis;
     }
 
+    //Rückgabe eines ResultSets mit den Produkten einer bestimmten Kategorie
     public ResultSet getProductsByKategorie(String kategorie){
         ResultSet rs = null;
         try {
@@ -442,6 +470,8 @@ public class DatabaseHelper{
         return rs;
     }
 
+    //Rückgabe der Anzahl aller Produkte
+    @Deprecated
     public Integer getAnzahlProdukte(){
         Integer anzahl = null;
         try {
@@ -454,6 +484,7 @@ public class DatabaseHelper{
         return anzahl;
     }
 
+    //Rückgabe der Anzahl an Produkten in einer bestimmten Kategorie
     public Integer getAnzahlProdukteInKategorie(String category){
         Integer anzahl = null;
         try {
@@ -466,6 +497,7 @@ public class DatabaseHelper{
         return anzahl;
     }
 
+    //Rückgabe eines ResultSets mit allen Kategorien
     public ResultSet getAllKategories(){
         ResultSet rs = null;
         try {
