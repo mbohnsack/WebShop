@@ -933,7 +933,6 @@ public class DatabaseHelper{
     }
 
     //Liefert das jeweilige Bild einer Kategorie zurück
-    @Deprecated
     public byte[] getBildKategorie(String kategorie) {
         PreparedStatement ps = null;
         byte[] imgBytes = null;
