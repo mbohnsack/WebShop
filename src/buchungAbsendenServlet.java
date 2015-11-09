@@ -196,7 +196,7 @@ public class buchungAbsendenServlet
                     request.setAttribute("buchCode", buchungsCode);
                     request.getRequestDispatcher("/summaryBuchung.jsp").forward(request, response);
                     System.out.println("hier");
-                    return;
+
                 }
                 else{
                     //Buchung fehlgeschlagen

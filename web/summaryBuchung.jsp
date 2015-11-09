@@ -6,6 +6,7 @@
 <%@ page import="project.loginCookie" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="java.text.DecimalFormat" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -202,37 +203,21 @@
                                     endsumme = endsumme - summeZwanzig;
                                 }
 
-                            %>
+                DecimalFormat df=new DecimalFormat("#.00");
 
-                            <tr>
-                                <td align="left"><strong>Mietzins/Tag</strong></td>
-                                <td align="left"><strong><%= mietzinsTag%>&euro;</strong></td>
-                            </tr>
-                            <tr></tr>
-                            <tr>
-                                <td align="left">Mietdauer</td>
-                                <td align="left"><%= diffDays%> Tage</td>
-                            </tr>
-                            <tr>
-                                <td align="left">Summe ohne Rabatt</td>
-                                <td align="left"><%= summeOhneRabatt%>&euro;</td>
-                            </tr>
-                            <tr>
-                                <td align="left">- Rabatt 40% ab Tag 2</td>
-                                <td align="left">- <%= rabattVierzig%>&euro;</td>
-                            </tr>
-                            <tr>
-                                <td align="left">- 20% Treuebonus</td>
-                                <td align="left">-<%= summeZwanzig%> &euro;</td>
-                            </tr>
-                            <tr>
-                                <td align="left"><strong>Endsumme</strong></td>
-                                <td align="left"><strong><%= endsumme%>&euro;</strong></td>
-                            </tr>
-                        </table>
-                        <%
-                            db.disconnectDatabase();
-                            shoppingCart.clearCart();
+              %>
+
+              <tr><td align="left"><strong>Mietzins/Tag</strong></td><td align="left"><strong><%= mietzinsTag%>&euro;</strong></td></tr>
+              <tr></tr>
+              <tr><td align="left">Mietdauer</td><td align="left"><%= diffDays%> Tage</td></tr>
+              <tr><td align="left">Summe ohne Rabatt</td><td align="left"><%= summeOhneRabatt%>&euro;</td></tr>
+              <tr><td align="left">- Rabatt 40% ab Tag 2</td><td align="left">- <%= df.format(rabattVierzig)%>&euro;</td></tr>
+              <tr><td align="left">- 20% Treuebonus</td><td align="left">-<%= df.format(summeZwanzig)%> &euro;</td></tr>
+              <tr><td align="left"><strong>Endsumme</strong></td><td align="left"><strong><%= df.format(endsumme)%>&euro;</strong></td> </tr>
+            </table>
+            <%
+              db.disconnectDatabase();
+              shoppingCart.clearCart();
 
                         %>
 
