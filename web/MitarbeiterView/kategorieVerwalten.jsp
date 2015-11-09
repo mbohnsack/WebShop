@@ -64,7 +64,9 @@ else {
           <td><%=allKategories.getString(i)%></td>
             <%}%>
           <td><form method="post" action="kategorieAendern.jsp"><br/><button  name="aendern" type="submit" value="<%=allKategories.getString(1)%>">Ändern</button></form>
-            <form method="post" action="../deleteKategorie"><button name="loeschen" type="submit" value="<%=allKategories.getString(1)%>">Löschen</button></form></td>
+            <form method="post" action="../deleteKategorie">
+              <button name="loeschen" type="submit" value="<%=allKategories.getString(1)%>">Löschen</button>
+            </form></td>
         <tr class="csstd">
             <%
 

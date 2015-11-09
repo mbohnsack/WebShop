@@ -5,9 +5,11 @@
 <%@ page import="java.util.List" %>
 <%@ page import="project.loginCookie" %>
 <%@ page import="java.util.ArrayList" %>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+<!--
+    Die Buchung wird zusammengefasst angezeigt und kann durch Eingabe der Daten getätigt werden.
+-->
 <head>
     <jsp:include page="head.html"/>
 </head>
@@ -41,6 +43,7 @@
                             cart shoppingCart;
                             shoppingCart = (cart) session.getAttribute("cart");
                             List<Integer> produktids = new ArrayList<Integer>();
+                            // Wenn Produkte im Warenkorb sind, hole die Produkte
                             if(shoppingCart != null){
                                 //unchecked
                                 produktids = shoppingCart.getCartItems();
@@ -52,7 +55,7 @@
                         <table style="width: 75%" style="background-color: #a6847d" align="center">
                         <th align="left">Artikel</th><th align="left">Preis</th><th align="left">Entf</th>
                             <%
-
+                            // Stelle die Produkte im Warenkorb dar
                             for (Integer produkt : produktids) {
 
                             %>
@@ -63,9 +66,11 @@
                                     while (produktDaten.next()) {
                                         gesamtpreis = gesamtpreis + Double.parseDouble(produktDaten.getString("prod_preis"));
                             %>
+                            <!-- Bezeichnung und Preis anzeigen -->
                         <td align="left"><%= produktDaten.getString("prod_bezeichn")%></td>
                         <td align="left"><%= produktDaten.getString("prod_preis")%>&euro;</td>
                         <td align="left">
+                            <!-- Buttons zum Absenden der Buchung und zum Leeren des Warenkorbs -->
                             <form id="cart" action="removeFromCart" method="post">
                                 <input type="hidden" name="produktID" value="<%= produktids.indexOf(produkt) %>"/>
                                 <input type="hidden" name="sourcepage" value="buchungAbsenden.jsp"/>
@@ -97,6 +102,7 @@
                             %>
 
                         <br/>
+                        <!-- Pflichtangaben, die der Kunde eingeben muss -->
                         <div class="form_row"><label><strong>Pflichtangaben</strong></label></div>
                         <form name="buchungKDform" method="post" action="buchungAbsendenservelet">
 
@@ -175,7 +181,7 @@
                                 </div>
 
                             <%}%>
-
+                            <!-- Button zum Buchen -->
                             <div class="form_row">
                                 <input type="submit" value="Jetzt buchen"/>
                             </div>

@@ -2,71 +2,93 @@
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
-<!DOCTYPE html>
-<html lang="en">
+<%@ page import="java.sql.SQLException" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title></title>
+    <jsp:include page="head.html" />
 </head>
 <body>
+<%!
+    public static List<String> checkUntKat (String kategorie) {
+        try {
+            // Ergbnis ist jetzt eine Liste mit der Unterkategorie der Kategorie, Unterkategorie der Unterkategorie usw. bis
+            // es keine unterkategorie mehr gibt
+            String unterKategorie = kategorie;
+            List<String> li = new ArrayList();
+            DatabaseHelper datab = new DatabaseHelper();
+            //schleife l�uft solange unterkategorie nicht null ist
+            while(unterKategorie!=null) {
 
+                ResultSet results = datab.getUnterkategorieRS(unterKategorie);
+                if (!results.isBeforeFirst()) {
+                    unterKategorie = null;
+                } else {
+
+                results.next();
+                unterKategorie = results.getString(1);      //holt sich den kategoriename
+                li.add(unterKategorie);                     // schreib den Kategorienamen in die list li
+                results.close();
+            }
+            }
+            datab.disconnectDatabase();
+            //gibt die liste mit allen unterkategorien zur�ck
+            return li;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+%>
     <div class="title_box">Kategorien</div>
     <ul class="left_menu">
 
         <%
             DatabaseHelper db = new DatabaseHelper();
-            ResultSet rs = db.getAllKategorienWithUnterkategorien();
+            DatabaseHelper db2 = new DatabaseHelper();
+            ResultSet rs = db2.getAllKategories();
 
             while(rs.next()){
-                DatabaseHelper db2 = new DatabaseHelper();
+                String kate = rs.getString(1);
+                String ueberKat = db.getUebergeordneteKategorie(kate);
+                int anzahl = db.getAnzahlProdukteInKategorie(kate);
+                if (ueberKat.equals("n. v.") && (anzahl > 0 || !db.getUnterkategorie(kate).isEmpty())) { %>
+                    <li class="odd">
+                    <form id="category" style="margin-bottom: 0" method="post" action="categories.jsp">
+                    <button style="cursor:pointer;" name="category" type="submit" value="<%= kate%>"><%= kate%></button>
+        </form>
+        </li>
+               <% if (!db.getUnterkategorie(kate).isEmpty()) {
+                   List<String> liste = checkUntKat(kate);
+                   for (String s : liste) {
+
+               %>
+                       <li class="even">
+                       <form id="category2" style="margin-bottom: 0" method="post" action="categories.jsp">
+                       <button style="cursor:pointer;" name="category" type="submit" value="<%= s%>">&nbsp;&nbsp;<%= s%></button>
+        </form>
+        </li>
+                       <%
+                   }
+               }
+
+
+                   }
+                           }
+                           db.disconnectDatabase();
+                           db2.disconnectDatabase();
 
                  %>
-        <li class="odd">
-            <form id="category" style="margin-bottom: 0" method="post" action="categories.jsp">
-                <button style="cursor:pointer;" name="category" type="submit" value="<%= rs.getString(1)%>"><%= rs.getString(1)%></button>
-            </form>
-        </li>
 
-        <% ResultSet unterkat = db2.getUnterkategorieRS(rs.getString(1));
-
-                    while (unterkat.next()) {
-                        DatabaseHelper db5 = new DatabaseHelper();
-                        int anzahl = db5.getAnzahlProdukteInKategorie(unterkat.getString(1));
-                        if (anzahl > 0) {
-        %>
-
-        <li class="even">
-            <form id="category2" style="margin-bottom: 0" method="post" action="categories.jsp">
-                <button style="cursor:pointer;" name="category" type="submit" value="<%= unterkat.getString(1)%>">&nbsp;&nbsp;<%= unterkat.getString(1)%></button>
-            </form>
-        </li>
-
-        <% } db5.disconnectDatabase(); } db2.disconnectDatabase(); } db.disconnectDatabase();
-
-            DatabaseHelper db3 = new DatabaseHelper();
-            ResultSet rs2 = db3.getAllKategories();
-            while(rs2.next()){
-                DatabaseHelper db4 = new DatabaseHelper();
-                int anzahl = db4.getAnzahlProdukteInKategorie(rs2.getString(1));
-                if (anzahl > 0 && db4.getUebergeordneteKategorie(rs2.getString(1)).equals("n. v.") && db4.getUnterkategorie(rs2.getString(1)).isEmpty()) {
-        %>
-        <li class="odd">
-            <form id="category3" style="margin-bottom: 0" method="post" action="categories.jsp">
-                <button style="cursor:pointer;" name="category" type="submit" value="<%= rs2.getString(1)%>"><%= rs2.getString(1)%></button>
-            </form>
-        </li>
-
-        <%
-            }
-        db4.disconnectDatabase(); }
-         db3.disconnectDatabase();%>
 
     </ul>
-    <div class="title_box">Paket</div>
+    <div class="title_box">Special!!!!</div>
     <div class="border_box">
-        <div class="product_title"><a href="details.html">Motorola 156 MX-VL</a></div>
-        <div class="product_img"><a href="details.html"><img src="images/platzhalter.jpg" alt="" border="0" /></a></div>
-        <div class="prod_price"><span class="reduce">350$</span> <span class="price">270$</span></div>
+        <div class="product_title"></div>
+        <div class="product_img"><img width="120px" height="120px" src="images/rabatt40.jpg" alt="" border="0" /></div>
+        <div class="prod_price"></div>
     </div>
 </div>
 </body>

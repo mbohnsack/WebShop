@@ -545,6 +545,7 @@ label.contactCustomText{
     color: #333333;
 }
 input.contact_input{
+    margin-left:10px;
     width:253px;
     height:18px;
     background-color:#fff;
@@ -606,3 +607,4 @@ a.contact{
     color:#666666;
     padding:10px 0 0 60px;
 }
+

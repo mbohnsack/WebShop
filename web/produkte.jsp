@@ -2,6 +2,9 @@
 <%@ page import="java.sql.ResultSet" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+<%--
+    Anzeige aller in der Datenbank vorhandenen Produkte, nach Namen sortiert.
+--%>
 <head>
     <jsp:include page="head.html"/>
 </head>
@@ -22,13 +25,13 @@
             <%
                 DatabaseHelper db = new DatabaseHelper();
                 ResultSet rs = db.getAllProductsSortedByName();
-                    while (rs.next()) {
-                        request.setAttribute("id", rs.getString(1));
-                        request.setAttribute("herst", rs.getString(3));
-                        request.setAttribute("preis", rs.getString(4));
-                        request.setAttribute("bezeichn", rs.getString(7));
-                        request.setAttribute("sourcepage","produkte.jsp");
-                    %>
+                while (rs.next()) {
+                    request.setAttribute("id", rs.getString(1));
+                    request.setAttribute("herst", rs.getString(3));
+                    request.setAttribute("preis", rs.getString(4));
+                    request.setAttribute("bezeichn", rs.getString(7));
+                    request.setAttribute("sourcepage", "produkte.jsp");
+            %>
             <jsp:include page="prodBox.jsp"/>
             <% }
                 db.disconnectDatabase();%>

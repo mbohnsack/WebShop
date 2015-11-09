@@ -65,11 +65,11 @@ else {
       </tr>
       <tr>
         <td><label >Paketbeschreibung</label></td>
-        <td><textarea class="medium" name="paketbeschreibung" cols="40" rows="5"  ><%=paket.getString(5)%></textarea></td>
+        <td><textarea class="medium" name="paketbeschreibung" cols="80" rows="5"  ><%=paket.getString(5)%></textarea></td>
       </tr>
       <tr>
         <td><label >Technische Daten</label></td>
-        <td><textarea class="medium" name="details" cols="40" rows="5" ><%=paket.getString(6)%></textarea></td>
+        <td><textarea class="medium" name="details" cols="80" rows="5" ><%=paket.getString(6)%></textarea></td>
       </tr>
       <tr>
         <td><label >Kategorie</label></td>
