@@ -2,6 +2,7 @@ import project.DatabaseHelper;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -10,7 +11,7 @@ import java.io.IOException;
  * Created by Malte on 09.11.2015.
  */
 @WebServlet("/kategorieBild")
-public class kategorieBild {
+public class kategorieBild extends HttpServlet {
     //Ausgeben eines Bildes für die Nutzung in <img>
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
