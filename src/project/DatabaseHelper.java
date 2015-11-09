@@ -662,7 +662,7 @@ public class DatabaseHelper{
     //Löscht das jeweilige Paket
     public void deletePaket(Integer id){
         try {
-            stmt.executeUpdate("DELETE FROM tbl_bild WHERE prod_id"+ id);
+            stmt.executeUpdate("DELETE FROM tbl_bild WHERE prod_id = "+ id);
             stmt.executeUpdate("DELETE FROM tbl_paketinhalte WHERE pak_id = "+ id +";");
             stmt.executeUpdate("DELETE FROM tbl_produkt WHERE prod_id = "+ id +";");
         } catch (SQLException e) {
@@ -1068,6 +1068,19 @@ public class DatabaseHelper{
             e.printStackTrace();
         }
         return anzahl;
+    }
+
+
+    public ResultSet getAllProductsInLagerliste(){
+        ResultSet rs = null;
+
+        try {
+            rs = stmt.executeQuery("SELECT * FROM tbl_lagerliste");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return rs;
     }
 
 }
