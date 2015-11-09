@@ -1115,12 +1115,12 @@ public class DatabaseHelper{
     }
 
     //gibt an, wie oft das Produkt im Paket vorhanden ist
-    public Integer anzahlProduktImPaket(Integer prodid){
+    public Integer anzahlProduktImPaket(Integer prodid, Integer paketid){
         Integer anzahl = null;
         ResultSet rs = null;
 
         try {
-            rs = stmt.executeQuery("SELECT count(prod_id) AS anzahl FROM tbl_paketinhalte WHERE prod_id = "+ prodid);
+            rs = stmt.executeQuery("SELECT count(prod_id) AS anzahl FROM tbl_paketinhalte WHERE prod_id = "+ prodid + " AND pak_id = "+ paketid);
             rs.next();
             anzahl = rs.getInt("anzahl");
         } catch (SQLException e) {
