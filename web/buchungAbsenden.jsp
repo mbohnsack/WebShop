@@ -5,6 +5,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="project.loginCookie" %>
 <%@ page import="java.util.ArrayList" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -32,6 +33,7 @@
                     <div class="top_prod_box_big"></div>
                     <div class="center_prod_box_big">
 
+                            <!-- Inhalte des Einkaufswagens und Datumseingabe Formular anzeigen -->
                         <div><strong>Bitte bestätigen Sie die Buchung durch Eingabe Ihren Daten. </strong></div>
                         <br/>
                         <%
@@ -82,10 +84,12 @@
                             }
                             %>
 
-                        <tr><td align="left"><strong>Mietzins pro Tag</strong></td>
-                            <td align="left"><strong><%= gesamtpreis%>&euro;</strong></td> </tr>
-                        <tr><td align="left">Der gewährte Rabatt wird Ihnen auf der nächsten Seite angezeigt.</td>
-                                 </tr>
+                            <tr><td align="left"><strong>Mietzins pro Tag</strong></td>
+                                <td align="left"><strong><%= gesamtpreis%>&euro;</strong></td> </tr>
+                            <tr><td align="left">Ab dem zweiten Tag erhalten Sie 40% Rabatt.</td></tr>
+                            <tr><td align="left">Registrierten Kunden, die Bereits drei Buchungen getätigt haben, weitere 20% Rabatt ab dem ersten Tag.</td></tr>
+                            <tr><td align="left">Eine detailierte Aufstellung erhalten Sie auf der nächsten Seite.</td></tr>
+                            <tr><td align="left">In der Zukunft liegende Buchungen können Sie jederzeit kostenfrei stornieren.</td></tr>
                         </table>
                             <%
                                 db.disconnectDatabase();
@@ -117,12 +121,12 @@
                               // wenn der KD angemeldet ist
                               if (loginDaten != null) {
                                 %>
-                                <div><p align="left"> Mit Knopfdruck best&auml;tigen Sie Ihre Bestellung.
+                                <div><p  style="width: 75%" align="left"> Mit Knopfdruck best&auml;tigen Sie Ihre Bestellung.
                                     Unter "Buchungen" k&ouml;nnen Sie alle Buchungen einsehen und ggf. stornieren.
                                 </p></div>
                             
                             <%
-                            //wenn der KD NICHT angemeldet ist
+                            //wenn der KD NICHT angemeldet ist werden weitere Formularfelder angezeigt
                             }else{%>
 
                                 <div class="form_row">

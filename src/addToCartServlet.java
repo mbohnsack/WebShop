@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
 
 @WebServlet("/addToCartServlet")
@@ -18,7 +17,6 @@ public class addToCartServlet extends HttpServlet {
                           HttpServletResponse response) throws ServletException, IOException {
 
         String sourcePage = request.getParameter("sourcepage");
-
         String pIDstring = request.getParameter("produktID");
         int pID = Integer.parseInt(pIDstring);
 
@@ -31,8 +29,6 @@ public class addToCartServlet extends HttpServlet {
         }
         shoppingCart.addToCart(pID);
         session.setAttribute("cart", shoppingCart);
-
-        List<Integer> aktuellerInhalt = shoppingCart.getCartItems();
 
         response.sendRedirect(sourcePage);
     }

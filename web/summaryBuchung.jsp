@@ -3,9 +3,9 @@
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.sql.SQLException" %>
 <%@ page import="java.util.List" %>
-<%@ page import="project.loginCookie" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="java.text.DecimalFormat" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -29,6 +29,8 @@
          jedProd.add(prodData.getString(7));
       } }
 %>
+
+<!-- Facebook anbindung -->
 <div id="fb-root"></div>
 <script>
   window.fbAsyncInit = function() {
@@ -125,6 +127,7 @@
               %>
               <tr>
                 <%
+                  // Produktliste ausm Cart generieren
                   ResultSet produktDaten = db.getProductsById(produkt);
                   try {
                     while (produktDaten.next()) {
@@ -159,7 +162,7 @@
                 double rabattVierzig = 0;
 
                 //ab dem zweiten tag gibts 40% rabatt
-                double summeVierzig = summeOhneRabatt;
+                double summeVierzig;
                 if (diffDays > 1){
                   summeVierzig = (mietzinsTag * (diffDays - 1)) *0.6 + mietzinsTag;
                   rabattVierzig = summeOhneRabatt - summeVierzig;
@@ -187,15 +190,17 @@
                   endsumme = endsumme - summeZwanzig;
                 }
 
+                DecimalFormat df=new DecimalFormat("#.00");
+
               %>
 
               <tr><td align="left"><strong>Mietzins/Tag</strong></td><td align="left"><strong><%= mietzinsTag%>&euro;</strong></td></tr>
               <tr></tr>
               <tr><td align="left">Mietdauer</td><td align="left"><%= diffDays%> Tage</td></tr>
               <tr><td align="left">Summe ohne Rabatt</td><td align="left"><%= summeOhneRabatt%>&euro;</td></tr>
-              <tr><td align="left">- Rabatt 40% ab Tag 2</td><td align="left">- <%= rabattVierzig%>&euro;</td></tr>
-              <tr><td align="left">- 20% Treuebonus</td><td align="left">-<%= summeZwanzig%> &euro;</td></tr>
-              <tr><td align="left"><strong>Endsumme</strong></td><td align="left"><strong><%= endsumme%>&euro;</strong></td> </tr>
+              <tr><td align="left">- Rabatt 40% ab Tag 2</td><td align="left">- <%= df.format(rabattVierzig)%>&euro;</td></tr>
+              <tr><td align="left">- 20% Treuebonus</td><td align="left">-<%= df.format(summeZwanzig)%> &euro;</td></tr>
+              <tr><td align="left"><strong>Endsumme</strong></td><td align="left"><strong><%= df.format(endsumme)%>&euro;</strong></td> </tr>
             </table>
             <%
               db.disconnectDatabase();
@@ -204,6 +209,7 @@
             %>
 
             <br/><br/>
+            <!-- der FB Button -->
               <img src = "images/facebook_button.png" id = "share_button2" style="cursor:pointer">
             <form name="shoppen" method="post" action="index.jsp">
               <button>weiter shoppen</button>
