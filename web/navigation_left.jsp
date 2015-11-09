@@ -14,20 +14,24 @@
 <%!
     public static List<String> checkUntKat (String kategorie) {
         try {
-            // Ergbnis ist jetzt eine List mit der Unterkategorie der Kategorie, Unterkategorie der Unterkategorie usw. bis
+            // Ergbnis ist jetzt eine Liste mit der Unterkategorie der Kategorie, Unterkategorie der Unterkategorie usw. bis
             // es keine unterkategorie mehr gibt
             String unterKategorie = kategorie;
             List<String> li = new ArrayList();
             DatabaseHelper datab = new DatabaseHelper();
             //schleife läuft solange unterkategorie nicht null ist
-            while(unterKategorie!=null){
+            while(unterKategorie!=null) {
 
                 ResultSet results = datab.getUnterkategorieRS(unterKategorie);
+                if (!results.isBeforeFirst()) {
+
+                } else {
 
                 results.next();
                 unterKategorie = results.getString(1);      //holt sich den kategoriename
                 li.add(unterKategorie);                     // schreib den Kategorienamen in die list li
-               results.close();
+                results.close();
+            }
             }
             datab.disconnectDatabase();
             //gibt die liste mit allen unterkategorien zurück
