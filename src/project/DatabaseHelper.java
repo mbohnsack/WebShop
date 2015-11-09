@@ -1070,7 +1070,7 @@ public class DatabaseHelper{
         return anzahl;
     }
 
-
+    //Rückgabe eines ResultSets mit allen Physikalisch vorhandenen Produkten aus der Lagerliste
     public ResultSet getAllProductsInLagerliste(){
         ResultSet rs = null;
 
