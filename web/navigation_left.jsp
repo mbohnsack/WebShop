@@ -19,12 +19,12 @@
             String unterKategorie = kategorie;
             List<String> li = new ArrayList();
             DatabaseHelper datab = new DatabaseHelper();
-            //schleife läuft solange unterkategorie nicht null ist
+            //schleife lï¿½uft solange unterkategorie nicht null ist
             while(unterKategorie!=null) {
 
                 ResultSet results = datab.getUnterkategorieRS(unterKategorie);
                 if (!results.isBeforeFirst()) {
-
+                    unterKategorie = null;
                 } else {
 
                 results.next();
@@ -34,7 +34,7 @@
             }
             }
             datab.disconnectDatabase();
-            //gibt die liste mit allen unterkategorien zurück
+            //gibt die liste mit allen unterkategorien zurï¿½ck
             return li;
         } catch (SQLException e) {
             e.printStackTrace();
