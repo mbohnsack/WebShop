@@ -508,6 +508,7 @@ public class DatabaseHelper{
         return rs;
     }
 
+    //Rückgabe eines ResultSets mit allen Kategorien, die Unterkategorien besitzen
     public ResultSet getAllKategorienWithUnterkategorien(){
         ResultSet rs = null;
 
@@ -520,6 +521,7 @@ public class DatabaseHelper{
         return rs;
     }
 
+    //Rückgabe eines ResultSets mit allen Attributen der jeweiligen Kategorie
     public ResultSet getKategorie(String category){
         ResultSet cat = null;
         try {
@@ -530,6 +532,7 @@ public class DatabaseHelper{
         return cat;
     }
 
+    //Rückgabe eines ResultSets mit allen Produkten, die nach Namen sortiert sind
     public ResultSet getAllProductsSortedByName(){
         ResultSet rs = null;
 
@@ -542,6 +545,7 @@ public class DatabaseHelper{
         return rs;
     }
 
+    //Gibt die Bezeichnung eines Produktes zurück
     public String getBezeichnung(Integer produktid){
         String bezeichnung = null;
         try {
@@ -554,6 +558,7 @@ public class DatabaseHelper{
         return bezeichnung;
     }
 
+    //Prüft ob ein Produkt verfügbar ist
     public Boolean produktVerfuegbar(Integer produktid, Date abholungTemp, Date abgabeTemp){
         java.sql.Date abholung = new java.sql.Date(abholungTemp.getTime());
         java.sql.Date abgabe = new java.sql.Date(abgabeTemp.getTime());
@@ -595,6 +600,7 @@ public class DatabaseHelper{
         return verfuegbar;
     }
 
+    //Fügt einen HardwareCode in der Lagerliste hinzu
     public void addHWCode(Integer produktid, String hwcode){
         try {
             stmt.executeUpdate("INSERT INTO tbl_lagerliste (prod_id, prod_code)" +
@@ -604,6 +610,8 @@ public class DatabaseHelper{
         }
     }
 
+    //Gibt den HardwareCode zurück
+    @Deprecated
     public Integer getHWCode (Integer produktid, Date abholung, Date abgabe){
         List<String> codes = new ArrayList<String>();
         List<Integer> bCodes = new ArrayList<Integer>();
@@ -642,6 +650,7 @@ public class DatabaseHelper{
         return produktid;
     }
 
+    //Löscht die jeweilige Kategorie
     public void deleteKategorie(String name){
         try {
             stmt.executeUpdate("DELETE FROM tbl_kategorie WHERE kat_name = '"+ name +"'");
@@ -650,6 +659,7 @@ public class DatabaseHelper{
         }
     }
 
+    //Löscht das jeweilige Paket
     public void deletePaket(Integer id){
         try {
             stmt.executeUpdate("DELETE FROM tbl_bild WHERE prod_id"+ id);
@@ -660,6 +670,7 @@ public class DatabaseHelper{
         }
     }
 
+    //Rückgabe eines ResultSets mit allen Paketen
     public ResultSet getAllPakete(){
         ResultSet rs = null;
         try {
@@ -670,6 +681,8 @@ public class DatabaseHelper{
         return rs;
     }
 
+    //Rückgabe eines ResultSets mit allen Mitarbeitern
+    @Deprecated
     public ResultSet getMitarbeiter(){
         ResultSet rs=null;
         try {
@@ -680,6 +693,8 @@ public class DatabaseHelper{
         return rs;
     }
 
+    //Rückgabe eines ResultSets mit allen Admins
+    @Deprecated
     public ResultSet getAdmin(){
         ResultSet rs=null;
         try {
@@ -690,6 +705,7 @@ public class DatabaseHelper{
         return rs;
     }
 
+    //Rückgabe eines ResultSets mit allen Admins und Mitarbeitern
     public ResultSet getAllMitarbeiter(){
         ResultSet rs=null;
         try {
@@ -700,6 +716,7 @@ public class DatabaseHelper{
         return rs;
     }
 
+    //Rückgabe eines ResultSets mit den jeweiligen Kundendaten
     public ResultSet getKundenDatenByNr(Integer kundenNR){
         ResultSet rs=null;
         try{
@@ -709,6 +726,8 @@ public class DatabaseHelper{
         }
         return rs;
     }
+
+    //Rückgabe eines ResultSets mit den jeweiligen Kundendaten
     public ResultSet getKundenDatenByLogin(String login){
         ResultSet rs=null;
         try{
@@ -718,6 +737,8 @@ public class DatabaseHelper{
         }
         return rs;
     }
+
+    //Rückgabe eines ResultSets mit den jeweiligen Kundendaten
     public ResultSet getKundenDatenByMail(String mail){
         ResultSet rs=null;
         try{
@@ -727,15 +748,19 @@ public class DatabaseHelper{
         }
         return rs;
     }
+
+    //Verändert die Kundendaten
     public void updateKundenDaten(Integer kundenNR, String nname, String vname, String strasse, String ort, String email, String hausn, int plz, int tele, int mobil, String passwort, String login, String orga){
         try{
             stmt.executeUpdate("UPDATE tbl_kunde " +
                     "SET kun_name = '"+nname+"', kun_vorname = '"+vname+"', kun_strasse = '"+strasse+"', kun_ort = '"+ort+"', kun_email = '"+email+"', kun_hausnummer = '"+hausn+"', kun_plz = '"+plz+"', kun_telefon = '"+tele+"', kun_mobil = '"+mobil+"', kun_passwort = '"+ MD5.getMD5(passwort)+"', kun_benutzer = '"+login+"', kun_orga = '"+orga+"' WHERE kun_nummer = '"+kundenNR+"' ");
         }catch(Exception e){
             e.printStackTrace();
-}
-}
+        }
+    }
 
+    //Gibt die Anzahl der Buchungen des jeweiligen Produktes zurück
+    @Deprecated
     public Integer getAnzahlBuchungById(Integer produktid){
         Integer anzahl = null;
         ResultSet rs = null;
@@ -751,6 +776,7 @@ public class DatabaseHelper{
         return anzahl;
     }
 
+    //Gibt die übergeordnete Kategorie einer Kategorie zurück
     public String getUebergeordneteKategorie(String kname) {
         String uebergeordnet = null;
         ResultSet rs = null;
@@ -766,6 +792,7 @@ public class DatabaseHelper{
         return uebergeordnet;
     }
 
+    //Rückgabe eines ResultSets mit der Unterkategorie einer jeweiligen Kategorie
     public ResultSet getUnterkategorieRS(String kategorie){
         ResultSet rs = null;
 
@@ -778,6 +805,7 @@ public class DatabaseHelper{
         return rs;
     }
 
+    //Gibt eine Liste aller Unterkategorien zurück
      public List<String> getUnterkategorie(String kategorie){
          List<String> unterkategorie = new ArrayList<String>();
          ResultSet rs = null;
@@ -786,14 +814,15 @@ public class DatabaseHelper{
                 rs = stmt.executeQuery("SELECT kat_name FROM tbl_kategorie WHERE kat_uebergeordnet = '" + kategorie + "'");
             while(rs.next()){
                 unterkategorie.add(rs.getString("kat_name"));
-     }
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
          return unterkategorie;
-        }
+     }
 
+    //Gibt die Kundenmail anhand der Buchungs Id zurück
     public String getKundenMail(Integer buchungId){
         ResultSet rs = null;
         ResultSet rs2 = null;
@@ -813,6 +842,7 @@ public class DatabaseHelper{
         return mail;
     }
 
+    //Fügt ein Paket hinzu
     public void addPaket(Integer paketId, String pakettyp, Integer prio, Integer prodId){
         ResultSet rs = null;
         try {
@@ -829,6 +859,7 @@ public class DatabaseHelper{
         }
     }
 
+    //Verändert ein Paket
     public void updatePaket(Integer paketId, String pakettyp, Integer prio, Integer prodId, Integer id){
         try {
                 stmt.executeUpdate("UPDATE tbl_paketinhalte SET pak_id = "+ paketId +", pak_typ = '"+ pakettyp +"', pak_priorisierung = "+ prio +", prod_id = "+ prodId +" WHERE inhalt_id = "+ id);
@@ -837,6 +868,7 @@ public class DatabaseHelper{
         }
     }
 
+    //Löscht den Inhalt eines Paketes
     public void deletePaketKomponenten(Integer id){
         try {
             stmt.executeUpdate("DELETE FROM tbl_paketinhalte WHERE pak_id = "+ id);
@@ -846,6 +878,7 @@ public class DatabaseHelper{
 
     }
 
+    //Rückgabe eines ResultSets mit allen Produkten eines Paketes
     public ResultSet getProdukteOfPaket(Integer paketid){
         ResultSet rs = null;
 
@@ -858,6 +891,7 @@ public class DatabaseHelper{
         return rs;
     }
 
+    //Speichert ein Bild zum jeweiligen Produkt
     public void saveBildProdukt(File bild, int prodid) throws SQLException, IOException {
 
         FileInputStream fis = new FileInputStream(bild);
@@ -870,6 +904,7 @@ public class DatabaseHelper{
 
     }
 
+    //Liefert das jeweilige Bild eines Produktes zurück
     public byte[] getBildProdukt(Integer prodid, Integer number){
 
         PreparedStatement ps = null;
@@ -896,6 +931,8 @@ public class DatabaseHelper{
         return imgBytes;
     }
 
+    //Liefert das jeweilige Bild einer Kategorie zurück
+    @Deprecated
     public byte[] getBildKategorie(String kategorie) {
         PreparedStatement ps = null;
         byte[] imgBytes = null;
@@ -919,6 +956,7 @@ public class DatabaseHelper{
         return imgBytes;
     }
 
+    //Trennt die Verbindung zur Datenbank
     public void disconnectDatabase(){
         try {
             stmt.close();
@@ -928,6 +966,7 @@ public class DatabaseHelper{
         }
     }
 
+    //Liefert alle gebuchten Produkte zurück
     public List<String> getGebuchteProdukte(int buchung){
         Statement stmt2 = null;
         try {
@@ -963,6 +1002,7 @@ public class DatabaseHelper{
         return produkte;
     }
 
+    //Liefert alle Preis der gebuchten Produkte zurück
     public List<Double> getGebuchteProduktePreis(int buchung){
         Statement stmt2 = null;
         try {
@@ -996,6 +1036,7 @@ public class DatabaseHelper{
         return preise;
     }
 
+    //Gibt die Anzahl der Buchungen über die Kundenmail zurück
     public int getBuchungsZahlByMail(String mail){
         int anzahl=0;
         ResultSet rs=null;
@@ -1009,6 +1050,7 @@ public class DatabaseHelper{
         return anzahl;
     }
 
+    //Gibt die Anzahl der Buchungen über den Benutzernamen des Kunden zurück
     public int getBuchungsZahlByLogin(String login){
         int anzahl=0;
         ResultSet rs=null;
