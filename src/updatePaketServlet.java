@@ -56,7 +56,6 @@ public class updatePaketServlet extends HttpServlet {
                 while(counterP<anzahlProdukte){
                     for(int counter =0;counter<anzahlProdukte;counter++) {
                         int anzahlInt = Integer.parseInt(anzahl[counter]);
-                        System.out.println(anzahlInt+ "anzahl");
                         for (int i2 = 0; i2 < anzahlInt; i2++) {
                             db.addPaket(paketid, kategorie, prioList.get(counterP), Integer.parseInt(produkte[counterP].substring(0, produkte[counterP].length() - 1)));
 
