@@ -12,25 +12,31 @@
 </head>
 <body>
 <%!
-    public static List<String> checkUntKat (List list, String kategorie) {
-        DatabaseHelper datab = new DatabaseHelper();
-        ResultSet results = datab.getUnterkategorieRS(kategorie);
-        List<String> li = new ArrayList();
-
+    public static List<String> checkUntKat (String kategorie) {
         try {
-            while (results.next()) {
-                if (!results.getString(1).equals("")){
-                kategorie = results.getString(1);
-                list.add(kategorie);
-                checkUntKat(li, kategorie);
-            }}
+            // Ergbnis ist jetzt eine List mit der Unterkategorie der Kategorie, Unterkategorie der Unterkategorie usw. bis
+            // es keine unterkategorie mehr gibt
+            String unterKategorie = kategorie;
+            List<String> li = new ArrayList();
+
+            //schleife läuft solange unterkategorie nicht null ist
+            while(unterKategorie!=null){
+                DatabaseHelper datab = new DatabaseHelper();
+                ResultSet results = datab.getUnterkategorieRS(unterKategorie);
+
+                results.next();
+                unterKategorie = results.getString(1);      //holt sich den kategoriename
+                li.add(unterKategorie);                     // schreib den Kategorienamen in die list li
+                datab.disconnectDatabase();
+            }
+            //gibt die liste mit allen unterkategorien zurück
+            return li;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        datab.disconnectDatabase();
-        return list;
+        return null;
     }
+
 
 %>
     <div class="title_box">Kategorien</div>
@@ -51,8 +57,7 @@
         </form>
         </li>
                <% if (!db.getUnterkategorie(kate).isEmpty()) {
-                   List<String> lis = new ArrayList();
-                   List<String> liste = checkUntKat(lis, kate);
+                   List<String> liste = checkUntKat(kate);
                    for (String s : liste) {
 
                %>

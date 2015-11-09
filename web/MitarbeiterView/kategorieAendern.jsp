@@ -56,7 +56,7 @@
                 </tr>
                 <tr>
                     <td><label>Kategorie Name</label></td>
-                    <td><input type="text" name="kategorieName" value="<%=kategorie.getString(1)%>"/></td>
+                    <td><input type="text" name="kategorieName" disabled value="<%=kategorie.getString(1)%>"/></td>
                 </tr>
                 <tr>
                     <td><label>Übergeordnete Kategorie</label></td>
@@ -68,8 +68,7 @@
                             while (allKategories.next()) {
                                 if (allKategories.getString(1).equals(kategorie.getString(2))) {
                         %>
-                        <option value="<%=allKategories.getString(1)%>" selected="selected"><%=allKategories.getString(1)%>
-                        </option>
+                        <option value="<%=allKategories.getString(1)%>" selected><%=allKategories.getString(1)%></option>
                         <%
                         } else {
                         %>
