@@ -10,36 +10,46 @@
 </head>
 <body>
 <%!
-    public static List<String> checkUntKat (String kategorie) {
+    public static void checkUntKat (String kategorie, javax.servlet.jsp.JspWriter myOut, int ebene) {
         try {
             // Ergbnis ist jetzt eine Liste mit der Unterkategorie der Kategorie, Unterkategorie der Unterkategorie usw. bis
             // es keine unterkategorie mehr gibt
             String unterKategorie = kategorie;
-            List<String> li = new ArrayList();
+
             DatabaseHelper datab = new DatabaseHelper();
             //schleife l�uft solange unterkategorie nicht null ist
-            while(unterKategorie!=null) {
+           // while(unterKategorie!=null) {
 
                 ResultSet results = datab.getUnterkategorieRS(unterKategorie);
                 if (!results.isBeforeFirst()) {
                     unterKategorie = null;
                 } else {
 
-                results.next();
-                unterKategorie = results.getString(1);      //holt sich den kategoriename
-                li.add(unterKategorie);                     // schreib den Kategorienamen in die list li
-                results.close();
+                while(results.next()) {
+                    unterKategorie = results.getString(1);      //holt sich den kategoriename
+                    try{
+                        String einruecken="";
+                       for(int ez=0; ez<ebene-1;ez++) {
+                           einruecken+="&nbsp;&nbsp;";
+                       }
+                    myOut.println("<li class='even'> <form id='category2' style='margin-bottom: 0' method='post' action='categories.jsp'> <button style='cursor:pointer;' name='category' type='submit' value="+ unterKategorie
+                            + ">"+einruecken + unterKategorie + " </button></form></li>");
+
+                    }catch (Exception e){
+
+                    }
+                    checkUntKat(unterKategorie,myOut,ebene+1);
+                }
             }
-            }
+          //  }
             datab.disconnectDatabase();
             //gibt die liste mit allen unterkategorien zur�ck
-            return li;
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
-    }
 
+    }
 
 %>
     <div class="title_box">Kategorien</div>
@@ -58,28 +68,17 @@
                     <li class="odd">
                     <form id="category" style="margin-bottom: 0" method="post" action="categories.jsp">
                     <button style="cursor:pointer;" name="category" type="submit" value="<%= kate%>"><%= kate%></button>
-        </form>
-        </li>
+                    </form>
+                    </li>
                <% if (!db.getUnterkategorie(kate).isEmpty()) {
-                   List<String> liste = checkUntKat(kate);
-                   for (String s : liste) {
-
-               %>
-                       <li class="even">
-                       <form id="category2" style="margin-bottom: 0" method="post" action="categories.jsp">
-                       <button style="cursor:pointer;" name="category" type="submit" value="<%= s%>">&nbsp;&nbsp;<%= s%></button>
-        </form>
-        </li>
-                       <%
-                   }
-               }
-
+                   checkUntKat(kate, out, 2);
 
                    }
                            }
-                           db.disconnectDatabase();
-                           db2.disconnectDatabase();
 
+               }
+                   db.disconnectDatabase();
+                   db2.disconnectDatabase();
                  %>
 
 
