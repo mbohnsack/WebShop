@@ -1084,12 +1084,12 @@ public class DatabaseHelper{
         return rs;
     }
 
+    //prüft ob ein Produkt in der Kategorie bzw. in der untersten Kategorie vorhanden ist
     public Boolean besitztProdukt(String katName){
         Boolean vorhanden = false;
         String unterKat = null;
         ResultSet rs = null;
         ResultSet rs2 = null;
-
 
         try {
             Statement stmt2 = c.createStatement();
@@ -1113,6 +1113,35 @@ public class DatabaseHelper{
         }
 
         return vorhanden;
+    }
+
+    //gibt an, wie oft das Produkt im Paket vorhanden ist
+    public Integer anzahlProduktImPaket(Integer prodid){
+        Integer anzahl = null;
+        ResultSet rs = null;
+
+        try {
+            rs = stmt.executeQuery("SELECT count(prod_id) AS anzahl FROM tbl_paketinhalte WHERE prod_id = "+ prodid);
+            rs.next();
+            anzahl = rs.getInt("anzahl");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return anzahl;
+    }
+
+    //gibt den jeweiligen Paketinhalt zurück wobei jedes Produkt nur einmal aufgelistet wird
+    public ResultSet getSinglieProductOfPaket(Integer paketid){
+        ResultSet rs = null;
+
+        try {
+            rs = stmt.executeQuery("SELECT pak_id, prod_id FROM tbl_paketinhalte WHERE pak_id = "+ paketid +" GROUP BY pak_id, prod_id");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return rs;
     }
 
 }
