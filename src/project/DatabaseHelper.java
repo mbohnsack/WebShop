@@ -1070,4 +1070,17 @@ public class DatabaseHelper{
         return anzahl;
     }
 
+
+    public ResultSet getAllProductsInLagerliste(){
+        ResultSet rs = null;
+
+        try {
+            rs = stmt.executeQuery("SELECT * FROM tbl_lagerliste");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return rs;
+    }
+
 }
