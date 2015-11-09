@@ -61,26 +61,26 @@ public class updateKategorieServlet extends HttpServlet {
                     String fileName = new File(item.getName()).getName();
                     String filePath = uploadPath + File.separator + fileName;
                     storeFile = new File(filePath);
-
                     // saves the file on disk
-                    try {
-                        item.write(storeFile);
-                        bild=true;
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    if(item.getSize()!=0) {
+                        try {
+                            item.write(storeFile);
+                            bild = true;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }else{
                     String name=item.getFieldName();
-
                     if(name!=null) {
                         switch (name) {
-                            case "kategorieName":
+                            case "produktid":
                                 kategorieName = item.getString();
-                                System.out.println(kategorieName);
                                 break;
                             case "ueberKategorie":
                                 ueberKategorie = item.getString();
                                 break;
+
                         }
                     }
                 }
@@ -88,6 +88,7 @@ public class updateKategorieServlet extends HttpServlet {
             }
             try {
                 if(bild) {
+
                     db.updateKategorie(kategorieName, ueberKategorie, storeFile);
                 }else{
                     db.updateKategorie(kategorieName, ueberKategorie);
@@ -99,7 +100,7 @@ public class updateKategorieServlet extends HttpServlet {
         }
         db.disconnectDatabase();
         String url = "/MitarbeiterView/kategorieVerwalten.jsp";
-        response.sendRedirect( url );
+        response.sendRedirect(url);
 
     }
 }
